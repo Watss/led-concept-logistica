@@ -18,3 +18,5 @@ yarn-error.log
 /.vscode
 /public/js
 mix-manifest.json
+draft.yaml
+.blueprint
