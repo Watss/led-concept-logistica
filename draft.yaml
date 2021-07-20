@@ -1,0 +1,97 @@
+models:
+  Client:
+    name: string:255
+    rut: string:20
+    type: enum:persona,empresa
+    address: string:255
+    phone: string:20
+    email: string:100
+    draft: string:255
+
+
+  Brand:
+    name: string:100
+    description: string:255
+
+
+  Product:
+    sku: string:100
+    name: longText
+    barcode: string:20
+    brand_id: integer,null
+    temporary: boolean
+    price: double
+    status: boolean
+    type: enum:servicio,producto
+    relationships:
+      belongsTo: Brand
+      hasMany: DetailsBudget
+
+
+  Budget:
+    neto: string:100
+    iva: double
+    total: string:20
+    reference: string:255,null
+    client_id: foreign
+    user_id: foreign
+    relationships:
+      hasMany: DetailsBudget
+
+
+  DetailsBudget:
+    product_id: foreign
+    budget_id: foreign
+    quantity: integer
+    product_price: double
+    product_sku: string:255
+    total: double
+
+controllers:
+  Client:
+    index:
+      query: all
+      render: client.index with:budgets
+    create:
+      render: client.create
+    store:
+      validate: name, rut
+      save: client
+      redirect: client.index
+    edit:
+      render: client.edit with:client
+    destroy:
+      delete: client
+      redirect: client.index
+  Product:
+    index:
+      query: all
+      render: product.index with:budgets
+    create:
+      render: product.create
+    store:
+      validate: name
+      save: product
+      redirect: product.index
+    edit:
+      render: product.edit with:product
+    destroy:
+      delete: product
+      redirect: product.index
+  Brand:
+    index:
+      query: all
+      render: brand.index with:budgets
+    create:
+      render: brand.create
+    store:
+      validate: name
+      save: brand
+      redirect: brand.index
+    edit:
+      render: brand.edit with:brand
+    destroy:
+      delete: brand
+      redirect: brand.index
+
+
