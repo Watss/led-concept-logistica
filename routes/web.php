@@ -22,3 +22,10 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
+
+
+Route::resource('client', 'ClientController')->except('update', 'show');
+
+Route::resource('product', 'ProductController')->except('update', 'show');
+
+Route::resource('brand', 'BrandController')->except('update', 'show');
