@@ -1,5 +1,5 @@
 const mix = require('laravel-mix');
-
+require('laravel-mix-blade-reload');
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -16,3 +16,6 @@ mix.js('resources/js/app.js', 'public/js').postCss('resources/css/app.css', 'pub
     require('tailwindcss'),
     require('autoprefixer'),
 ]);
+
+mix.bladeReload();
+mix.browserSync('http://led-concept-cotizador.test/');

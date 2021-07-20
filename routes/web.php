@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,8 +26,8 @@ Route::get('/dashboard', function () {
 require __DIR__.'/auth.php';
 
 
-Route::resource('client', 'ClientController')->except('update', 'show');
+Route::resource('client', ClientController::class)->except('update', 'show');
 
-Route::resource('product', 'ProductController')->except('update', 'show');
+Route::resource('product', ProductController::class)->except('update', 'show');
 
-Route::resource('brand', 'BrandController')->except('update', 'show');
+Route::resource('brand', BrandController::class)->except('update', 'show');
