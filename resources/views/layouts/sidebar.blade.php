@@ -23,17 +23,17 @@
       <!-- end link -->
 
       <!-- link -->
-      <a href="{{route('client.index')}}" class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out duration-500 {{Request::is('client*') ? 'text-yellow-400' : '' }}">
+      <a href="{{route('clients.index')}}" class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out duration-500 {{Request::is('clients*') ? 'text-yellow-400' : '' }}">
         <i class="fad fa-users text-xs mr-2"></i>
         Clientes
       </a>
 
-      <a href="{{route('product.index')}}" class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out duration-500 {{Request::is('product*') ? 'text-yellow-400' : '' }}">
+      <a href="{{route('users.index')}}" class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out duration-500 {{Request::is('users*') ? 'text-yellow-400' : '' }}">
         <i class="fad fa-user-lock text-xs mr-2"></i>
         Usuarios
       </a>
 
-      <a href="{{route('product.index')}}" class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out duration-500 {{Request::is('client*') ? 'text-yellow-400' : '' }}">
+      <a href="{{route('products.index')}}" class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out duration-500 {{Request::is('clients*') ? 'text-yellow-400' : '' }}">
         <i class="fad fa-boxes text-xs mr-2"></i>
         Productos
       </a>

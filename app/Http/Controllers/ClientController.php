@@ -14,9 +14,7 @@ class ClientController extends Controller
      */
     public function index(Request $request)
     {
-        $clients = Client::With('budgets')->get();
-
-        return view('client.index',compact('clients'));
+        return view('client.index');
     }
 
     /**
@@ -25,7 +23,8 @@ class ClientController extends Controller
      */
     public function create(Request $request)
     {
-        return view('client.create');
+        $client = new Client();
+        return view('client.create',compact('client'));
     }
 
     /**
