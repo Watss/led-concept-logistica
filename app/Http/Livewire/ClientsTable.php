@@ -9,12 +9,13 @@ use Livewire\WithPagination;
 class ClientsTable extends Component
 {
     use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     public $search = '';
 
     public function render()
     {
-        return view('livewire.clients-table', [
-            'clients' => Client::paginate(5),
+        return view('client.clients-table', [
+            'clients' => Client::search($this->search)->paginate(5),
             'search' => $this->search
         ]);
     }

@@ -13,8 +13,8 @@
 	<link rel="shortcut icon" href="img/icons/icon-48x48.png" />
 
 	<title>Blank Page | AdminKit Demo</title>
-
-	<link href="css/app.css" rel="stylesheet">
+    @livewireStyles
+	<link href="{{asset('css/app.css')}}" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 
@@ -37,21 +37,21 @@
 						</a>
 					</li>
 
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="pages-profile.html">
-							<i class="align-middle" data-feather="user"></i> <span class="align-middle">Clientes</span>
+					<li class="sidebar-item {{Request::is('clients*') ? 'active' : '' }}">
+						<a class="sidebar-link" href="{{route('clients.index')}}">
+							<i class="fas fa-users"></i> <span class="align-middle">Clientes</span>
 						</a>
 					</li>
 
 					<li class="sidebar-item">
 						<a class="sidebar-link" href="pages-sign-in.html">
-							<i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Usuarios</span>
+							<i class="fas fa-users-cog"></i> <span class="align-middle">Usuarios</span>
 						</a>
 					</li>
 
 					<li class="sidebar-item {{Request::is('products*') ? 'active' : '' }}">
 						<a class="sidebar-link " href="{{route('products.index')}}">
-							<i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">Productos</span>
+							<i class="fas fa-boxes"></i> <span class="align-middle">Productos</span>
 						</a>
 					</li>
 
@@ -63,12 +63,12 @@
 
 					<li class="sidebar-item">
 						<a class="sidebar-link" href="icons-feather.html">
-							<i class="align-middle" data-feather="coffee"></i> <span class="align-middle">Administrar Cotizaciones</span>
+							<i class="fas fa-file-invoice"></i> <span class="align-middle">Administrar Cotizaciones</span>
 						</a>
 					</li>
 					<li class="sidebar-item">
 						<a class="sidebar-link" href="ui-buttons.html">
-							<i class="align-middle" data-feather="square"></i> <span class="align-middle">Marcas</span>
+							<i class="fas fa-th-large"></i> <span class="align-middle">Marcas</span>
 						</a>
 					</li>
 
@@ -234,7 +234,7 @@
 	</div>
 
 	<script src="js/app.js"></script>
-
+    @livewireScripts
 </body>
 
 </html>

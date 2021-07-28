@@ -32,4 +32,10 @@ class Client extends Model
     protected $casts = [
         'id' => 'integer',
     ];
+
+    public function scopeSearch($query, $search)
+    {
+        if ($search)
+            return $query->orWhere('name', 'like', "%$search%")->orWhere('rut', 'like', "%$search%");
+    }
 }

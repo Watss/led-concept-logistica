@@ -25,6 +25,7 @@
         "tailwindcss": "^2.0.2"
     },
     "dependencies": {
+        "@fortawesome/fontawesome-free": "^5.15.3",
         "@popperjs/core": "^2.9.2",
         "bootstrap": "5.0.1",
         "browser-sync-webpack-plugin": "^2.3.0",

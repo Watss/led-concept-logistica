@@ -29,7 +29,7 @@ class ClientFactory extends Factory
             'address' => $this->faker->regexify('[A-Za-z0-9]{255}'),
             'phone' => $this->faker->phoneNumber,
             'email' => $this->faker->safeEmail,
-            'draft' => $this->faker->regexify('[A-Za-z0-9]{255}'),
+            'draft' => 'Empresa',
         ];
     }
 }
