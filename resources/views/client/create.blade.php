@@ -9,7 +9,7 @@
                 <div class="row">
                     <div class="mb-3 col-md-6">
                         <label class="form-label">Nombre o Razón social</label>
-                        <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{$client->name}}">
+                        <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{old('name') ?? $client->name ?? ''}}">
                         @error('name')
                         <div class="invalid-feedback">
                             <div class="alert alert-danger">{{ $message }}</div>
@@ -18,7 +18,7 @@
                     </div>
                     <div class="mb-3 col-md-6">
                         <label class="form-label">Rut</label>
-                        <input type="text" class="form-control @error('rut') is-invalid @enderror" name="rut" value="{{$client->rut}}">
+                        <input type="text" class="form-control @error('rut') is-invalid @enderror" name="rut" value="{{old('rut') ?? $client->rut ?? ''}}">
                         @error('rut')
                         <div class="invalid-feedback">
                             <div class="alert alert-danger">{{ $message }}</div>
@@ -29,7 +29,7 @@
                 <div class="row">
                     <div class="mb-3 col-md-6">
                         <label class="form-label">Dirección</label>
-                        <input type="text" class="form-control @error('address') is-invalid @enderror" name="address" value="{{$client->address}}">
+                        <input type="text" class="form-control @error('address') is-invalid @enderror" name="address" value="{{old('address') ?? $client->address ?? ''}}">
                         @error('address')
                         <div class="invalid-feedback">
                             <div class="alert alert-danger">{{ $message }}</div>
@@ -38,7 +38,7 @@
                     </div>
                     <div class="mb-3 col-md-6">
                         <label class="form-label">Teléfono</label>
-                        <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{$client->phone}}">
+                        <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{old('phone') ?? $client->phone ?? ''}}">
                         @error('phone')
                         <div class="invalid-feedback">
                             <div class="alert alert-danger">{{ $message }}</div>
@@ -49,7 +49,7 @@
                 <div class="row">
                     <div class="mb-3 col-md-4">
                         <label class="form-label">Email</label>
-                        <input type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{$client->email}}">
+                        <input type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{old('email') ?? $client->email ?? ''}}">
                         @error('email')
                         <div class="invalid-feedback">
                             <div class="alert alert-danger">{{ $message }}</div>
@@ -58,7 +58,7 @@
                     </div>
                     <div class="mb-3 col-md-4">
                         <label class="form-label">Giro (Opcional)</label>
-                        <input type="text" class="form-control @error('draft') is-invalid @enderror" name="draft" value="{{$client->draft}}">
+                        <input type="text" class="form-control @error('draft') is-invalid @enderror" name="draft" value="{{old('draft') ?? $client->draft ?? ''}}">
                         @error('draft')
                         <div class="invalid-feedback">
                             <div class="alert alert-danger">{{ $message }}</div>
@@ -67,7 +67,7 @@
                     </div>
                     <div class="mb-3 col-md-4">
                         <label class="form-label" for="inputState">Tipo</label>
-                        <select id="inputState" name="type" class="form-control @error('type') is-invalid @enderror">
+                        <select id="inputState" name="type" class="form-control @error('type') is-invalid @enderror" value="{{old('type') ?? $client->type ?? 'empresa'}}">
                             <option value="empresa">Empresa</option>
                             <option value="persona">Persona Natural</option>
                         </select>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ClientStoreRequest;
 use App\Models\Client;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert as Alert;
 
 class ClientController extends Controller
 {
@@ -34,8 +35,8 @@ class ClientController extends Controller
     public function store(ClientStoreRequest $request)
     {
         $client = Client::create($request->validated());
-
-        return redirect()->route('client.index');
+        Alert::success('Cliente Guardado', '');
+        return redirect()->route('clients.index');
     }
 
     /**
@@ -45,7 +46,7 @@ class ClientController extends Controller
      */
     public function edit(Request $request, Client $client)
     {
-        return view('client.edit', compact('client'));
+        return view('clients.edit', compact('client'));
     }
 
     /**

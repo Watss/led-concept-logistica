@@ -25,7 +25,11 @@ class ClientStoreRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'rut' => ['required', 'string', 'max:20'],
+            'rut' => ['required', 'string', 'max:20','unique:clients'],
+            'address' => ['required','string'],
+            'phone' => ['required','string'],
+            'email' => ['required','email'],
+            'draft' => ['string']
         ];
     }
 }
