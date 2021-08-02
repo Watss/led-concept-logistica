@@ -15,7 +15,7 @@ class ClientsTable extends Component
     public function render()
     {
         return view('client.clients-table', [
-            'clients' => Client::search($this->search)->paginate(5),
+            'clients' => Client::search($this->search)->paginate(10),
             'search' => $this->search
         ]);
     }

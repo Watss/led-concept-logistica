@@ -27,7 +27,7 @@ Route::get('/dashboard', function () {
 require __DIR__.'/auth.php';
 
 
-Route::resource('clients', ClientController::class)->except('update', 'show');
+Route::resource('clients', ClientController::class)->except('show');
 
 Route::resource('products', ProductController::class)->except('update', 'show');
 
