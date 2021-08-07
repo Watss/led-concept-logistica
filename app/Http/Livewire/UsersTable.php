@@ -15,7 +15,7 @@ class UsersTable extends Component
     public function render()
     {
         return view('user.users-table', [
-            'users' => User::search($this->search)->paginate(5),
+            'users' => User::search($this->search)->latest()->paginate(5),
             'search' => $this->search
         ]);
     }

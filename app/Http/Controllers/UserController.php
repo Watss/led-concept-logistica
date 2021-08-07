@@ -34,7 +34,7 @@ class UserController extends Controller
         ]);
 
         $user->assignRole($validated['role']);
-
+        Alert::success('Creado Correctamente');
         return redirect()->route('users.index');
     }
 
@@ -66,6 +66,7 @@ class UserController extends Controller
         }
         $user->syncRoles($validated['role']);
 
+        Alert::success('Actualizado Correctamente');
         return redirect()->route('users.index');
 
     }
@@ -73,7 +74,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
        $user->delete();
-       Alert::success('Success Title', 'Success Message');
+       Alert::success('Eliminado Correctamente');
        return redirect()->route('users.index');
     }
 }
