@@ -46,7 +46,13 @@ class ClientController extends Controller
      */
     public function edit(Request $request, Client $client)
     {
-        return view('clients.edit', compact('client'));
+        return view('client.create', compact('client'));
+    }
+
+    public function update(ClientStoreRequest $request, Client $client){
+        $client->update($request->validated());
+        Alert::success('Actualizado Correctamente');
+        return redirect()->route('clients.index');
     }
 
     /**
