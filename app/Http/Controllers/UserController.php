@@ -2,11 +2,78 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserStoreRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use RealRashid\SweetAlert\Facades\Alert;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         return view('user.index');
+    }
+    public function create()
+    {
+        $user = new User();
+        $roles = Role::all();
+        return view('user.create')->with(['roles' => $roles, 'user' => $user]);
+    }
+    public function store(UserStoreRequest $request)
+    {
+
+        $validated = $request->validated();
+
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'area' => $validated['area'],
+            'password' => Hash::make($validated['password'])
+        ]);
+
+        $user->assignRole($validated['role']);
+
+        return redirect()->route('users.index');
+    }
+
+    public function edit(User $user)
+    {
+        $roles = Role::all();
+        return view('user.create')->with(['user' => $user, 'roles' => $roles]);
+    }
+
+    public function update(UserStoreRequest $request, User $user)
+    {
+
+        $validated = $request->validated();
+
+        if (isset($validated['password'])) {
+
+            $user->update([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'area' => $validated['area'],
+                'password' => Hash::make($validated['password'])
+            ]);
+        } else {
+            $user->update([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'area' => $validated['area']
+            ]);
+        }
+        $user->syncRoles($validated['role']);
+
+        return redirect()->route('users.index');
+
+    }
+
+    public function destroy(User $user)
+    {
+       $user->delete();
+       Alert::success('Success Title', 'Success Message');
+       return redirect()->route('users.index');
     }
 }

@@ -43,8 +43,8 @@
 						</a>
 					</li>
 
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="pages-sign-in.html">
+					<li class="sidebar-item {{Request::is('users*') ? 'active' : '' }}">
+						<a class="sidebar-link" href="{{route('users.index')}}">
 							<i class="fas fa-users-cog"></i> <span class="align-middle">Usuarios</span>
 						</a>
 					</li>

@@ -1,12 +1,10 @@
 <x-app-layout>
-    <div class="rounded bg-white border border-gray-300 mt-6">
-
-        <!-- header -->
-        <div class="border-b p-6 flex flex-row justify-between">
-            <h1 class="h6">Productos</h1>
-        </div>
-        <!-- end header -->
+    <div class="mb-3 d-flex justify-content-between">
+        <h1 class="h3 d-inline align-middle">Usuarios </h1>
+        <a role="button" href="{{route('users.create')}}" type="button" class="btn btn-primary btn-dark d-flex align-items-center justify-content-center" style="border-radius: 20px;" >
+            <span style="margin-right: 10px;">   Agregar Usuario</span> <i class="align-middle"  data-feather="plus"></i>
+           </a>
+    </div>
         <livewire:users-table></livewire:users-table>
 
-    </div>
 </x-app-layout>
