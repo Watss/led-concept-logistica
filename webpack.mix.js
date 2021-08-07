@@ -13,4 +13,4 @@ require('laravel-mix-blade-reload');
 
 mix.js('resources/js/app.js', 'public/js').sass('resources/css/app.scss', 'public/css');
 mix.bladeReload();
-mix.browserSync('http://led-concept-cotizador.test/');
+mix//.browserSync('http://led-concept-cotizador.test/');
