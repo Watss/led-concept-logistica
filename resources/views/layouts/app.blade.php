@@ -67,11 +67,6 @@
 							<i class="fas fa-file-invoice"></i> <span class="align-middle">Administrar Cotizaciones</span>
 						</a>
 					</li>
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="ui-buttons.html">
-							<i class="fas fa-th-large"></i> <span class="align-middle">Marcas</span>
-						</a>
-					</li>
 
 					<li class="sidebar-item">
 						<a class="sidebar-link" href="ui-forms.html">
