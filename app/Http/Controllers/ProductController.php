@@ -5,18 +5,21 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductStoreRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Livewire\WithFileUploads;
 
 class ProductController extends Controller
 {
+
+    use WithFileUploads;
+
+    public $photo;
     /**
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
-        $products = Product::all();
-
-        return view('product.index', compact('products'));
+        return view('product.index');
     }
 
     /**
@@ -25,7 +28,16 @@ class ProductController extends Controller
      */
     public function create(Request $request)
     {
-        return view('product.create');
+        $product = new Product();
+        
+        return view('product.create',compact('product'));
+    }
+
+    public function update(ProductStoreRequest $request, Product $product){
+
+        $product->update($request->validated());
+
+        return redirect()->route('product.index');
     }
 
     /**
@@ -33,10 +45,18 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(ProductStoreRequest $request)
-    {
-        $product = Product::create($request->validated());
+    {    
+        $target_request = $request->validated();
 
-        return redirect()->route('product.index');
+        $imageName = $request->name.'-'.time().'.'.$request->image->extension();  
+        
+        $path = $request->image->storeAs('public/images', $imageName);
+        
+        $target_request['image'] = 'images/'.$imageName;
+        
+        Product::create($target_request);
+
+        return redirect()->route('products.index')->with('message','Producto creado con éxito');
     }
 
     /**
@@ -59,5 +79,11 @@ class ProductController extends Controller
         $product->delete();
 
         return redirect()->route('product.index');
+    }
+
+    public function saveImage()
+    {
+       
+        $this->photo->store('imagesProducts');
     }
 }

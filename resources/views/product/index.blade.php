@@ -1,87 +1,20 @@
 <x-app-layout>
-  <div class="mb-3">
-    <h1 class="h3 d-inline align-middle">Productos </h1>
-    <!-- <a class="badge bg-dark text-white ms-2" href="upgrade-to-pro.html">
-      Get more card examples
-    </a> -->
-  </div>
-  <div class="row">
-    <div class="col-12 col-lg-12 col-xxl-12 d-flex">
-      <div class="card flex-fill p-4">
-
-        <table class="table table-hover my-0">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th class="d-none d-xl-table-cell">Start Date</th>
-              <th class="d-none d-xl-table-cell">End Date</th>
-              <th>Status</th>
-              <th class="d-none d-md-table-cell">Assignee</th>
-            </tr>
-          </thead>
-          <tbody>
-
-            
-            <tr>
-              <td>Project Apollo</td>
-              <td class="d-none d-xl-table-cell">01/01/2021</td>
-              <td class="d-none d-xl-table-cell">31/06/2021</td>
-              <td><span class="badge bg-success">Done</span></td>
-              <td class="d-none d-md-table-cell">Vanessa Tucker</td>
-            </tr>
-            <tr>
-              <td>Project Fireball</td>
-              <td class="d-none d-xl-table-cell">01/01/2021</td>
-              <td class="d-none d-xl-table-cell">31/06/2021</td>
-              <td><span class="badge bg-danger">Cancelled</span></td>
-              <td class="d-none d-md-table-cell">William Harris</td>
-            </tr>
-            <tr>
-              <td>Project Hades</td>
-              <td class="d-none d-xl-table-cell">01/01/2021</td>
-              <td class="d-none d-xl-table-cell">31/06/2021</td>
-              <td><span class="badge bg-success">Done</span></td>
-              <td class="d-none d-md-table-cell">Sharon Lessman</td>
-            </tr>
-            <tr>
-              <td>Project Nitro</td>
-              <td class="d-none d-xl-table-cell">01/01/2021</td>
-              <td class="d-none d-xl-table-cell">31/06/2021</td>
-              <td><span class="badge bg-warning">In progress</span></td>
-              <td class="d-none d-md-table-cell">Vanessa Tucker</td>
-            </tr>
-            <tr>
-              <td>Project Phoenix</td>
-              <td class="d-none d-xl-table-cell">01/01/2021</td>
-              <td class="d-none d-xl-table-cell">31/06/2021</td>
-              <td><span class="badge bg-success">Done</span></td>
-              <td class="d-none d-md-table-cell">William Harris</td>
-            </tr>
-            <tr>
-              <td>Project X</td>
-              <td class="d-none d-xl-table-cell">01/01/2021</td>
-              <td class="d-none d-xl-table-cell">31/06/2021</td>
-              <td><span class="badge bg-success">Done</span></td>
-              <td class="d-none d-md-table-cell">Sharon Lessman</td>
-            </tr>
-            <tr>
-              <td>Project Romeo</td>
-              <td class="d-none d-xl-table-cell">01/01/2021</td>
-              <td class="d-none d-xl-table-cell">31/06/2021</td>
-              <td><span class="badge bg-success">Done</span></td>
-              <td class="d-none d-md-table-cell">Christina Mason</td>
-            </tr>
-            <tr>
-              <td>Project Wombat</td>
-              <td class="d-none d-xl-table-cell">01/01/2021</td>
-              <td class="d-none d-xl-table-cell">31/06/2021</td>
-              <td><span class="badge bg-warning">In progress</span></td>
-              <td class="d-none d-md-table-cell">William Harris</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+    <div class="mb-3 d-flex justify-content-between">
+        <h1 class="h3 d-inline align-middle">Productos </h1>
+        <a role="button" href="{{ route('products.create') }}" type="button"
+            class="btn btn-primary btn-dark d-flex align-items-center justify-content-center"
+            style="border-radius: 20px;">
+            <span style="margin-right: 10px;"> Agregar Producto</span> <i class="align-middle" data-feather="plus"></i>
+        </a>
     </div>
 
-  </div>
+    @if (Session::has('message'))
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <strong> {{session('message')}}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+
+    <livewire:products-table></livewire:products-table>
 </x-app-layout>

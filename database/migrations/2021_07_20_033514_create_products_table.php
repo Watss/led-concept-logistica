@@ -17,12 +17,13 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('sku', 100);
             $table->longText('name');
-            $table->string('barcode', 20);
-            $table->string('brand_id');
-            $table->boolean('temporary');
+            $table->string('barcode', 20)->nullable();
+            $table->string('brand_id')->nullable();
+            $table->boolean('temporary')->default(0);
             $table->double('price');
-            $table->boolean('status');
+            $table->boolean('status')->default(0);
             $table->enum('type', ["servicio","producto"]);
+            $table->string('image', 300)->nullable();
             $table->timestamps();
         });
     }
