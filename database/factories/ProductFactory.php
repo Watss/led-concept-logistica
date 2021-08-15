@@ -23,7 +23,7 @@ class ProductFactory extends Factory
     public function definition()
     {
         return [
-            'sku' => $this->faker->regexify('[A-Za-z0-9]{100}'),
+            'sku' => $this->faker->regexify('[A-Za-z0-9]{15}'),
             'name' => $this->faker->name,
             'barcode' => $this->faker->regexify('[A-Za-z0-9]{20}'),
             'brand_id' => $this->faker->word,

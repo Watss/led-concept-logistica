@@ -22,6 +22,7 @@ class Product extends Model
         'temporary',
         'price',
         'status',
+        'image',
         'type',
     ];
 
@@ -46,5 +47,11 @@ class Product extends Model
     public function detailsBudgets()
     {
         return $this->hasMany(\App\Models\DetailsBudget::class);
+    }
+
+    public function scopeSearch($query, $search)
+    {
+        if ($search)
+            return $query->orWhere('name', 'like', "%$search%")->orWhere('sku', 'like', "%$search%");
     }
 }
