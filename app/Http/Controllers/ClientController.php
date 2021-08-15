@@ -34,6 +34,7 @@ class ClientController extends Controller
      */
     public function store(ClientStoreRequest $request)
     {
+
         $client = Client::create($request->validated());
         Alert::success('Cliente Guardado', '');
         return redirect()->route('clients.index');

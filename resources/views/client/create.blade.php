@@ -10,7 +10,7 @@
                 <div class="row">
                     <div class="mb-3 col-md-6">
                         <label class="form-label">Nombre o Razón social</label>
-                        <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{old('name') ?? $client->name ?? ''}}">
+                        <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{old('name') ?? $client->name ?? null}}">
                         @error('name')
                         <div class="invalid-feedback">
                             <div class="alert alert-danger">{{ $message }}</div>
@@ -19,7 +19,7 @@
                     </div>
                     <div class="mb-3 col-md-6">
                         <label class="form-label">Rut</label>
-                        <input type="text" class="form-control @error('rut') is-invalid @enderror" name="rut" oninput="checkRut(this)" value="{{old('rut') ?? $client->rut ?? ''}}">
+                        <input type="text" class="form-control @error('rut') is-invalid @enderror" name="rut" oninput="checkRut(this)" value="{{old('rut') ?? $client->rut ?? null}}">
                         @error('rut')
                         <div class="invalid-feedback">
                             <div class="alert alert-danger">{{ $message }}</div>
@@ -30,7 +30,7 @@
                 <div class="row">
                     <div class="mb-3 col-md-6">
                         <label class="form-label">Dirección</label>
-                        <input type="text" class="form-control @error('address') is-invalid @enderror" name="address" value="{{old('address') ?? $client->address ?? ''}}">
+                        <input type="text" class="form-control @error('address') is-invalid @enderror" name="address" value="{{old('address') ?? $client->address ?? null}}">
                         @error('address')
                         <div class="invalid-feedback">
                             <div class="alert alert-danger">{{ $message }}</div>
@@ -39,7 +39,7 @@
                     </div>
                     <div class="mb-3 col-md-6">
                         <label class="form-label">Teléfono</label>
-                        <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{old('phone') ?? $client->phone ?? ''}}">
+                        <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{old('phone') ?? $client->phone ?? null}}">
                         @error('phone')
                         <div class="invalid-feedback">
                             <div class="alert alert-danger">{{ $message }}</div>
@@ -50,7 +50,7 @@
                 <div class="row">
                     <div class="mb-3 col-md-4">
                         <label class="form-label">Email</label>
-                        <input type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{old('email') ?? $client->email ?? ''}}">
+                        <input type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{old('email') ?? $client->email ?? null}}">
                         @error('email')
                         <div class="invalid-feedback">
                             <div class="alert alert-danger">{{ $message }}</div>
@@ -59,7 +59,7 @@
                     </div>
                     <div class="mb-3 col-md-4">
                         <label class="form-label">Giro (Opcional)</label>
-                        <input type="text" class="form-control @error('draft') is-invalid @enderror" name="draft" value="{{old('draft') ?? $client->draft ?? ''}}">
+                        <input type="text" class="form-control @error('draft') is-invalid @enderror" name="draft" value="{{old('draft') ?? $client->draft ?? null}}">
                         @error('draft')
                         <div class="invalid-feedback">
                             <div class="alert alert-danger">{{ $message }}</div>
@@ -69,7 +69,7 @@
                     <div class="mb-3 col-md-4">
                         <label class="form-label" for="inputState">Tipo</label>
                         <select id="inputState" name="type" class="form-control @error('type') is-invalid @enderror" value="{{old('type') ?? $client->type ?? 'empresa'}}">
-                            <option value="empresa" >Empresa</option>
+                            <option value="empresa">Empresa</option>
                             <option value="persona">Persona Natural</option>
                         </select>
                         @error('type')
