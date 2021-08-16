@@ -34,8 +34,15 @@ class ClientController extends Controller
      */
     public function store(ClientStoreRequest $request)
     {
-
         $client = Client::create($request->validated());
+
+        if($request->isJson()){
+            return response()->json([
+                "success" => true,
+                "client" => $client
+            ]);
+        }
+
         Alert::success('Cliente Guardado', '');
         return redirect()->route('clients.index');
     }
@@ -52,6 +59,14 @@ class ClientController extends Controller
 
     public function update(ClientStoreRequest $request, Client $client){
         $client->update($request->validated());
+
+        if($request->isJson()){
+            return response()->json([
+                "success" => true,
+                "client" => $client
+            ]);
+        }
+
         Alert::success('Actualizado Correctamente');
         return redirect()->route('clients.index');
     }
@@ -66,5 +81,13 @@ class ClientController extends Controller
         $client->delete();
 
         return redirect()->route('client.index');
+    }
+
+    public function searchClient(Request $request){
+        $clients = Client::Search($request->search)->orderBy('name', 'asc')->get();
+        return response()->json([
+            "success" => true,
+            "clients" => $clients
+        ]);
     }
 }

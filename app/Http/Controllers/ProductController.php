@@ -29,7 +29,7 @@ class ProductController extends Controller
     public function create(Request $request)
     {
         $product = new Product();
-        
+
         return view('product.create',compact('product'));
     }
 
@@ -45,15 +45,15 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(ProductStoreRequest $request)
-    {    
+    {
         $target_request = $request->validated();
 
-        $imageName = $request->name.'-'.time().'.'.$request->image->extension();  
-        
+        $imageName = $request->name.'-'.time().'.'.$request->image->extension();
+
         $path = $request->image->storeAs('public/images', $imageName);
-        
+
         $target_request['image'] = 'images/'.$imageName;
-        
+
         Product::create($target_request);
 
         return redirect()->route('products.index')->with('message','Producto creado con éxito');
@@ -83,7 +83,15 @@ class ProductController extends Controller
 
     public function saveImage()
     {
-       
+
         $this->photo->store('imagesProducts');
+    }
+
+    public function searchProduct(Request $request){
+        $products = Product::Search($request->search)->orderBy('name', 'asc')->get();
+        return response()->json([
+            "success" => true,
+            "products" => $products
+        ]);
     }
 }
