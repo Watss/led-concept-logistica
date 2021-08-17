@@ -36,7 +36,6 @@ class BudgetStoreRequest extends FormRequest
             'products.*.product_price' => ['required','numeric'],
             'products.*.product_sku' => ['required'],
             'products.*.total' => ['required','numeric']
-
         ];
     }
 }
