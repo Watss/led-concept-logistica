@@ -17,6 +17,12 @@ class ProductController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+       $this->middleware(['role:Administrador'])->except('index');
+    }
+
     public function index(Request $request)
     {
         return view('product.index');
@@ -29,12 +35,14 @@ class ProductController extends Controller
     public function create(Request $request)
     {
         $product = new Product();
-        
+        $this->authorize('create',$product);
+
         return view('product.create',compact('product'));
     }
 
     public function update(ProductStoreRequest $request, Product $product){
 
+        $this->authorize($product);
         $product->update($request->validated());
 
         return redirect()->route('product.index');
@@ -45,15 +53,16 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(ProductStoreRequest $request)
-    {    
+    {
+        $this->authorize(new Product());
         $target_request = $request->validated();
 
-        $imageName = $request->name.'-'.time().'.'.$request->image->extension();  
-        
+        $imageName = $request->name.'-'.time().'.'.$request->image->extension();
+
         $path = $request->image->storeAs('public/images', $imageName);
-        
+
         $target_request['image'] = 'images/'.$imageName;
-        
+
         Product::create($target_request);
 
         return redirect()->route('products.index')->with('message','Producto creado con éxito');
@@ -66,6 +75,7 @@ class ProductController extends Controller
      */
     public function edit(Request $request, Product $product)
     {
+        $this->authorize('edit',$product);
         return view('product.edit', compact('product'));
     }
 
@@ -76,6 +86,7 @@ class ProductController extends Controller
      */
     public function destroy(Request $request, Product $product)
     {
+        $this->authorize($product);
         $product->delete();
 
         return redirect()->route('product.index');
@@ -83,7 +94,7 @@ class ProductController extends Controller
 
     public function saveImage()
     {
-       
+
         $this->photo->store('imagesProducts');
     }
 }
