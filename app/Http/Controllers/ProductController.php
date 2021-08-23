@@ -88,7 +88,7 @@ class ProductController extends Controller
     }
 
     public function searchProduct(Request $request){
-        $products = Product::Search($request->search)->orderBy('name', 'asc')->get();
+        $products = Product::Search($request->search)->Temporary(false)->orderBy('name', 'asc')->get();
         return response()->json([
             "success" => true,
             "products" => $products

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use phpDocumentor\Reflection\Types\Boolean;
 
 class Product extends Model
 {
@@ -53,5 +54,10 @@ class Product extends Model
     {
         if ($search)
             return $query->orWhere('name', 'like', "%$search%")->orWhere('sku', 'like', "%$search%");
+    }
+
+    public function scopeTemporary($query,Boolean $value){
+        if ($value != null)
+            return $query->where('temporary','=',$value);
     }
 }
