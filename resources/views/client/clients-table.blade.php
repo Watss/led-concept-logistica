@@ -47,8 +47,12 @@
                                         <div class="dropdown-menu"
                                             style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(-95px, 35px, 0px);"
                                             data-popper-placement="bottom-end">
+                                            @can('client:edit')
                                             <a class="dropdown-item" href="{{route('clients.edit',$client)}}">Editar</a>
+                                            @endcan
+                                            @can('client:delete')
                                             <a class="dropdown-item" href="#">Eliminar</a>
+                                            @endcan
                                         </div>
                                     </div>
                                 </td>
