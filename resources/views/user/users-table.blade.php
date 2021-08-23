@@ -43,13 +43,16 @@
                                         <div class="dropdown-menu"
                                             style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(-95px, 35px, 0px);"
                                             data-popper-placement="bottom-end">
+                                            @can('user:edit')
                                             <a class="dropdown-item" href="{{route('users.edit',$user)}}">Editar</a>
+                                            @endcan
+                                            @can('user:delete')
                                             <form method="POST" action="{{route('users.destroy',$user)}}">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="dropdown-item">Eliminar</button>
                                             </form>
-
+                                            @endcan
                                         </div>
                                     </div>
                                 </td>
