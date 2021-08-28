@@ -54,4 +54,10 @@ class Product extends Model
         if ($search)
             return $query->orWhere('name', 'like', "%$search%")->orWhere('sku', 'like', "%$search%");
     }
+
+    public function scopeActive($query){
+
+        $query->where('status',1);
+
+    }
 }

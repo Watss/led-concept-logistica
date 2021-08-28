@@ -73,6 +73,11 @@
 							<i class="align-middle" data-feather="check-square"></i> <span class="align-middle">Estados de Cotización</span>
 						</a>
 					</li>
+					<li class="sidebar-item {{Request::is('reports*') ? 'active' : '' }}">
+						<a class="sidebar-link" href="{{route('reports.index')}}">
+							<i class="align-middle" data-feather="check-square"></i> <span class="align-middle">Reportes</span>
+						</a>
+					</li>
 
 
 
