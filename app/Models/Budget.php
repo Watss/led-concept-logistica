@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -35,6 +36,20 @@ class Budget extends Model
         'user_id' => 'integer',
     ];
 
+    public function getNetoAttribute($value)
+    {
+        return "$ " . number_format($value, 0, ',', '.');
+    }
+
+    public function getIvaAttribute($value)
+    {
+        return "$ " . number_format($value, 0, ',', '.');
+    }
+    public function getTotalAttribute($value)
+    {
+        return "$ " . number_format($value, 0, ',', '.');
+    }
+
 
     public function detailsBudgets()
     {
@@ -49,5 +64,20 @@ class Budget extends Model
     public function user()
     {
         return $this->belongsTo(\App\Models\User::class);
+    }
+
+
+    public function scopeDates($query, $values)
+    {
+        foreach ($values as $key => $value) {
+            if ($key == 0) {
+                $values[$key] = Carbon::createFromFormat('Y-m-d H:i:s', $value . '00:00:00')->toDateTimeString();
+
+            } else {
+                $values[$key] = Carbon::createFromFormat('Y-m-d H:i:s', $value . '23:59:59')->toDateTimeString();
+            }
+        }
+
+        $query->whereBetween('created_at', $values);
     }
 }

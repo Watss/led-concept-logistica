@@ -25,10 +25,10 @@ class BudgetFactory extends Factory
     public function definition()
     {
         return [
-            'neto' => $this->faker->regexify('[A-Za-z0-9]{100}'),
-            'iva' => $this->faker->randomFloat(0, 0, 9999999999.),
-            'total' => $this->faker->regexify('[A-Za-z0-9]{20}'),
-            'reference' => $this->faker->regexify('[A-Za-z0-9]{255}'),
+            'neto' => $this->faker->numberBetween(10000, 100000),
+            'iva' => $this->faker->numberBetween(10000, 100000),
+            'total' => $this->faker->numberBetween(10000, 100000),
+            'reference' => $this->faker->paragraph(2),
             'client_id' => Client::factory(),
             'user_id' => User::factory(),
         ];
