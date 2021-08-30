@@ -75,7 +75,7 @@
 					</li>
 					<li class="sidebar-item {{Request::is('reports*') ? 'active' : '' }}">
 						<a class="sidebar-link" href="{{route('reports.index')}}">
-							<i class="align-middle" data-feather="check-square"></i> <span class="align-middle">Reportes</span>
+							<i class="align-middle" data-feather="check-square"></i> <span class="align-middle">Reporte Cotizaciones</span>
 						</a>
 					</li>
 
@@ -234,8 +234,8 @@
 		</div>
 	</div>
     @stack('scripts')
-	<script src="{{asset('js/app.js')}}"></script>
     @livewireScripts
+	<script src="{{asset('js/app.js')}}"></script>
 
 </body>
 

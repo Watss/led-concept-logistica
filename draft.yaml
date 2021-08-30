@@ -47,6 +47,9 @@ models:
     product_sku: string:255
     total: double
 
+  BudgetStatus:
+    name: string:30
+    softDeletes
 controllers:
   Client:
     index:

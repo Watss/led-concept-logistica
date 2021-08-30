@@ -2,13 +2,30 @@
     <div class="col-12 col-lg-12 col-xxl-12 d-flex">
         <div class="card flex-fill p-4">
             <div class="row justify-content-end mb-3">
-                <div class="col-3">
+                <div class="col-1">
+                    <div class="input-group input-group-navbar">
+                        <button type="button btn btn-primary" class="form-control mr-2"
+                             name="pdf" wire:click="makePdf"> PDF
+                            </button>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="input-group input-group-navbar">
+                        <select class="form-control mr-2" name="status" id="" wire:model="status">
+                            <option value="">Todas</option>
+                            @foreach ($statuses as $status )
+                            <option value="{{$status->id}}">{{$status->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="col-2">
                     <div class="input-group input-group-navbar">
                         <input type="date" class="form-control mr-2"
                              aria-label="Desde" name="start_date" wire:model="start_date">
                     </div>
                 </div>
-                <div class="col-3">
+                <div class="col-2">
                     <div class="input-group input-group-navbar">
                         <input type="date" class="form-control ml-2" name="end_date"  wire:model="end_date"
                             aria-label="Hasta">
@@ -33,8 +50,9 @@
                         <th class="d-none d-xl-table-cell">Neto</th>
                         <th class="d-none d-xl-table-cell">Iva</th>
                         <th class="">Total</th>
+                        <th class="">Estado</th>
                         <th class="d-none d-xl-table-cell">Fecha Creacion</th>
-                        <th class="text-center">Acciones</th>
+                        {{-- <th class="text-center">Acciones</th> --}}
                     </tr>
                 </thead>
                 <tbody>
@@ -46,8 +64,9 @@
                             <td class="d-none d-xl-table-cell text-right">{{ $budget->neto }}</td>
                             <td class="d-none d-xl-table-cell text-right">{{ $budget->iva }}</td>
                             <td class="text-right">{{ $budget->total }}</td>
+                            <td class="text-right">{{ $budget->status->name }}</td>
                             <td class="d-none d-xl-table-cell">{{ $budget->created_at }}</td>
-                            <td class="text-center">
+                            {{-- <td class="text-center">
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-light" style="border-radius: 20px;
                                     padding: 5px;
@@ -65,7 +84,7 @@
 
                                     </div>
                                 </div>
-                            </td>
+                            </td> --}}
                         </tr>
                     @endforeach
 
