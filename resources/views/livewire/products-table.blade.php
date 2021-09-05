@@ -13,13 +13,15 @@
                     </div>
                 </div>
             </div>
-            <table class="table table-hover my-0">
+            
+            <table class="table table-hover my-0" style="width:100%">
                 <thead>
                     <tr>
                         <th>#</th>
                         <th class="d-none d-xl-table-cell">Sku</th>
                         <th class="d-none d-xl-table-cell">Nombre</th>
                         <th class="d-none d-xl-table-cell">Estado</th>
+                        <th class="d-none d-xl-table-cell">Precio</th>
                         <th class="text-center">Creado hace</th>
                         <th class="text-center">Acciones</th>
                     </tr>
@@ -27,16 +29,15 @@
                 <tbody>
                     @foreach ($products as $product)
                         <tr>
-                            {{-- {{dd($product->image);}} --}}
-                            <td>
-                                <div class="container-image ">
-                                    <img  class="img-product img-fluid" src="{{ asset($product->image) }}" alt="">
-                                </div>
+
+                            <td  style="width: 90px;padding: 5px;"">
+                                <img style="border-radius: 8%;" class="img-product img-fluid" src="{{ asset($product->image) }}" alt="">
                             </td>
                             <td class="d-none d-xl-table-cell">{{ $product->sku }}</td>
                             <td class="d-none d-xl-table-cell">{{ $product->name }}</td>
                             <td class="d-none d-xl-table-cell"><span
                                     class="badge bg-success">{{ $product->status }}</span></td>
+                                    <td class="text-center">{{ $product->price }}</td>
                             <td class="text-center">{{ $product->created_at }}</td>
 
                             <td class="d-none d-md-table-cell text-center">
@@ -58,9 +59,6 @@
                             </td>
                         </tr>
                     @endforeach
-
-
-
                 </tbody>
             </table>
             <div class="d-flex justify-content-end mt-4">
@@ -71,3 +69,7 @@
     </div>
 
 </div>
+
+<style>
+
+</style>

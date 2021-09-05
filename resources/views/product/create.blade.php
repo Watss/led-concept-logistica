@@ -22,7 +22,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="mb-3 col-md-12">
+                                <div class="pt-1 pb-1 col-md-12">
                                     <label class="form-label">Nombre</label>
                                     <input type="text" class="form-control @error('name') is-invalid @enderror"
                                         name="name" value="{{ old('name') ?? ($product->name ?? '') }}">
@@ -32,7 +32,7 @@
                                         </div>
                                     @enderror
                                 </div>
-                                <div class="mb-3 col-md-12">
+                                <div class=" pt-1 pb-1 col-md-12">
                                     <label class="form-label">Sku</label>
                                     <input type="text" class="form-control @error('sku') is-invalid @enderror"
                                         name="sku" value="{{ old('sku') ?? ($product->sku ?? '') }}">
@@ -42,7 +42,7 @@
                                         </div>
                                     @enderror
                                 </div>
-                                <div class="mb-3 col-md-12">
+                                <div class="pt-1 pb-1 col-md-12">
                                     <label class="form-label">Codigo de barras</label>
                                     <input type="text" class="form-control @error('barcode') is-invalid @enderror"
                                         name="barcode" value="{{ old('barcode') ?? ($product->barcode ?? '') }}">
@@ -54,7 +54,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="mb-3 col-md-12">
+                                <div class="pt-1 pb-1 col-md-12">
                                     <label class="form-label">Precio</label>
                                     <input type="text" class="form-control @error('price') is-invalid @enderror"
                                         name="price" value="{{ old('price') ?? ($product->price ?? '') }}">
@@ -68,10 +68,10 @@
                                    
                                 </div>
                             </div>
-                            <br>
+                          
 
-                            <div class="d-grid gap-2 col-12 mx-auto">
-                                <button type="submit" class="btn btn-dark  float-right">Guardar</button>
+                            <div class="d-grid gap-2 col-12 mx-auto p-0">
+                                <button type="submit" class="btn btn-dark text-white  float-right">Guardar</button>
                             </div>
                         </form>
 

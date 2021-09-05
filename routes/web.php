@@ -28,6 +28,7 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 
+Route::resource('budget', BudgetController::class)->except('show');
 
 Route::resource('clients', ClientController::class)->except('show');
 

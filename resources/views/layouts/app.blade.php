@@ -8,11 +8,12 @@
 	<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
 	<meta name="author" content="AdminKit">
 	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
-
+	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link rel="shortcut icon" href="img/icons/icon-48x48.png" />
 
-	<title>Blank Page | AdminKit Demo</title>
+	<title>Led Concept</title>
     @livewireStyles
 	<link href="{{asset('css/app.css')}}" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
@@ -21,7 +22,7 @@
 <body>
     @include('sweetalert::alert')
 	<div class="wrapper">
-		<nav id="sidebar" class="sidebar js-sidebar">
+		<nav id="sidebar" class="sidebar js-sidebar" >
 			<div class="sidebar-content js-simplebar">
 				<a class="sidebar-brand" href="index.html">
 					<span class="align-middle" style="color: rgba(0,0,0,0.5); !default;"> <img src="https://www.ledconcept.cl/new/wp-content/uploads/2018/02/Logo-led-concept.png" width="40" alt=""> Led Concept</span>
@@ -63,7 +64,7 @@
 					</li>
 
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="icons-feather.html">
+						<a class="sidebar-link"  href="{{route('budget.index')}}">
 							<i class="fas fa-file-invoice"></i> <span class="align-middle">Administrar Cotizaciones</span>
 						</a>
 					</li>
@@ -84,7 +85,7 @@
 		</nav>
 
 		<div class="main">
-			<nav class="navbar navbar-expand navbar-light navbar-bg">
+			<nav class="navbar navbar-expand navbar-light navbar-bg" style="padding: 5px 10px 5px 10px;">
 				<a class="sidebar-toggle js-sidebar-toggle">
 					<i class="hamburger align-self-center"></i>
 				</a>
@@ -181,20 +182,6 @@
 				<div class="container-fluid p-0">
 
 					{{ $slot }}
-
-					{{-- <h1 class="h3 mb-3">Blank Page</h1>
-
-					<div class="row">
-						<div class="col-12">
-							<div class="card">
-								<div class="card-header">
-									<h5 class="card-title mb-0">Empty card</h5>
-								</div>
-								<div class="card-body">
-								</div>
-							</div>
-						</div>
-					</div> --}}
 
 				</div>
 			</main>
