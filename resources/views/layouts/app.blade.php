@@ -73,15 +73,16 @@
 							<i class="align-middle" data-feather="check-square"></i> <span class="align-middle">Estados de Cotización</span>
 						</a>
 					</li>
-					<li class="sidebar-item {{Request::is('reports*') ? 'active' : '' }}">
-						<a class="sidebar-link" href="{{route('reports.index')}}">
+					<li class="sidebar-item {{Request::is('reports/budget*') ? 'active' : '' }}">
+						<a class="sidebar-link" href="{{route('reports.budget')}}">
 							<i class="align-middle" data-feather="check-square"></i> <span class="align-middle">Reporte Cotizaciones</span>
 						</a>
 					</li>
-
-
-
-
+					<li class="sidebar-item {{Request::is('reports/client*') ? 'active' : '' }}">
+						<a class="sidebar-link" href="{{route('reports.client')}}">
+							<i class="align-middle" data-feather="check-square"></i> <span class="align-middle">Reporte Clientes</span>
+						</a>
+					</li>
 				</ul>
 
 

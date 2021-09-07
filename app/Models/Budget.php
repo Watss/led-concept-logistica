@@ -79,15 +79,22 @@ class Budget extends Model
 
     public function scopeDates($query, $values)
     {
-        foreach ($values as $key => $value) {
-            if ($key == 0) {
-                $values[$key] = Carbon::createFromFormat('Y-m-d H:i:s', $value . '00:00:00')->toDateTimeString();
-            } else {
-                $values[$key] = Carbon::createFromFormat('Y-m-d H:i:s', $value . '23:59:59')->toDateTimeString();
+        try {
+//no pude controlar la excepcion asi que dejare esto mientras D:
+            foreach ($values as $key => $value) {
+                if ($key == 0) {
+                    $values[$key] = Carbon::createFromFormat('Y-m-d H:i:s', $value . '00:00:00')->toDateTimeString();
+                } else {
+                    $values[$key] = Carbon::createFromFormat('Y-m-d H:i:s', $value . '23:59:59')->toDateTimeString();
+                }
             }
+
+            $query->whereBetween('created_at', $values);
+        } catch (\Throwable $th) {
+
         }
 
-        $query->whereBetween('created_at', $values);
+
     }
     public function scopeStatus($query, $value)
     {
@@ -99,7 +106,7 @@ class Budget extends Model
     public function scopeSearch($query, $value)
     {
         if ($value)
-            return $query->orWhere('neto', 'LIKE', "%$value%")
+            return $query->where('neto', 'LIKE', "%$value%")
                 ->orWhere('iva', 'LIKE', "%$value%")
                 ->orWhere('total', 'LIKE', "%$value%")
                 ->orWhereHas('user', function ($q) use ($value) {
