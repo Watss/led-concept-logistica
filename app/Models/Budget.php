@@ -76,6 +76,11 @@ class Budget extends Model
         return $this->belongsTo(\App\Models\BudgetStatus::class, 'budget_statuses_id');
     }
 
+    public function statusTrashed()
+    {
+        return $this->belongsTo(\App\Models\BudgetStatus::class, 'budget_statuses_id')->withTrashed();
+    }
+
 
     public function scopeDates($query, $values)
     {

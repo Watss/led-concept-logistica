@@ -79,7 +79,7 @@
                                 <td class="">{{ $budget->neto }}</td>
                                 <td class="">{{ $budget->iva }}</td>
                                 <td class="">{{ $budget->total }}</td>
-                                <td class="">{{ $budget->status->name }}</td>
+                                <td class="">{{ $budget->statusTrashed->name }}</td>
                                 <td class="">{{ $budget->created_at }}</td>
                             </tr>
                         @endforeach
