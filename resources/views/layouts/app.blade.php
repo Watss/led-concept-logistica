@@ -83,6 +83,11 @@
 							<i class="align-middle" data-feather="check-square"></i> <span class="align-middle">Reporte Clientes</span>
 						</a>
 					</li>
+					<li class="sidebar-item {{Request::is('budget-status*') ? 'active' : '' }}">
+						<a class="sidebar-link" href="{{route('budget-status.index')}}">
+							<i class="align-middle" data-feather="check-square"></i> <span class="align-middle">Estados de cotizaciones</span>
+						</a>
+					</li>
 				</ul>
 
 
