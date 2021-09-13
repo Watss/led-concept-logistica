@@ -3,15 +3,7 @@
         <div class="card flex-fill p-4">
             <div class="row justify-content-end mb-3">
 
-                <div class="col-3">
-                    <div class="input-group input-group-navbar">
-                        <input type="text" class="form-control"
-                            placeholder="Buscar..." aria-label="Search">
-                        <button class="btn" type="button">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </div>
-                </div>
+
             </div>
             <table class="table table-hover my-0">
                 <thead>
