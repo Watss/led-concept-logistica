@@ -23,8 +23,13 @@ class BudgetStatusStoreRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            "name"=>['required','max:30']
-        ];
+
+
+                return [
+                    'name' =>  request()->method() =='PUT' ?  ['required', 'max:30', "unique:budget_statuses,name,{$this->budget_status->id},id"] :  ['required', 'max:30', 'unique:budget_statuses,name'],
+                    'color' => request()->method() =='PUT' ? ['required', "unique:budget_statuses,color,{$this->budget_status->id},id"] : ['required', 'unique:budget_statuses,color']
+                ];
+
+
     }
 }

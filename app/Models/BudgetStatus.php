@@ -17,6 +17,7 @@ class BudgetStatus extends Model
      */
     protected $fillable = [
         'name',
+        'color'
     ];
 
     /**

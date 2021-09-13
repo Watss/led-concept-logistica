@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\BudgetStatusStoreRequest;
 use App\Models\BudgetStatus;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class BudgetStatusController extends Controller
 {
@@ -59,9 +60,12 @@ class BudgetStatusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(BudgetStatus $budgetStatus)
     {
-        //
+        //dd($budgetStatus);
+        return view('budget-status.create',[
+            'budgetStatus'=>$budgetStatus
+        ]);
     }
 
     /**
@@ -71,9 +75,13 @@ class BudgetStatusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(BudgetStatusStoreRequest $request, BudgetStatus $budgetStatus)
     {
-        //
+        $budgetStatus->update($request->validated());
+        Alert::success('Actualizado Correctamente');
+
+        return redirect()->route('budget-status.index');
+
     }
 
     /**

@@ -22,6 +22,16 @@
                                         </div>
                                     @enderror
                                 </div>
+                                <div class="mb-3 col-md-12">
+                                    <label class="form-label">Color</label>
+                                    <input type="color" class="form-control @error('color') is-invalid @enderror"
+                                        name="color" value="{{ old('color') ?? ($budgetStatus->color ?? '') }}">
+                                    @error('color')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
 
 
                             </div>
