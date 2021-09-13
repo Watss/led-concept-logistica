@@ -48,12 +48,19 @@
                                         data-popper-placement="bottom-end">
 
                                         @if ($status->deleted_at)
-                                        <a class="dropdown-item" href="#">Restaurar</a>
+                                        <form method="POST" action="{{route('budget-status.restore',$status->id )}}">
+                                            @method('DELETE')
+                                            @csrf
+                                            <button type="submit" class="dropdown-item">Restaurar</button>
+                                        </form>
                                         @else
-                                        <a class="dropdown-item"
-                                        href="{{route('budget-status.edit',$status)}}">Editar</a>
+                                        <a class="dropdown-item" href="{{route('budget-status.edit',$status)}}">Editar</a>
 
-                                        <a class="dropdown-item" href="#">Eliminar</a>
+                                        <form method="POST" action="{{route('budget-status.destroy',$status)}}">
+                                            @method('DELETE')
+                                            @csrf
+                                            <button type="submit" class="dropdown-item">Eliminar</button>
+                                        </form>
                                         @endif
 
 

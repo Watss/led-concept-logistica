@@ -62,7 +62,6 @@ class BudgetStatusController extends Controller
      */
     public function edit(BudgetStatus $budgetStatus)
     {
-        //dd($budgetStatus);
         return view('budget-status.create',[
             'budgetStatus'=>$budgetStatus
         ]);
@@ -90,8 +89,25 @@ class BudgetStatusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(BudgetStatus $budgetStatus)
     {
-        //
+        $budgetStatus->delete();
+        Alert::success('Eliminado Correctamente');
+
+        return redirect()->route('budget-status.index');
+    }
+
+    public function restore($id)
+    {
+        $status=BudgetStatus::onlyTrashed()->find($id);
+        if ($status) {
+            $status->restore();
+            Alert::success('Restaurado Correctamente');
+
+        }else{
+            Alert::success('Ya se encuentra restaurado!');
+        }
+
+        return redirect()->route('budget-status.index');
     }
 }

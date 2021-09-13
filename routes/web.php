@@ -37,6 +37,7 @@ Route::resource('brands', BrandController::class)->except('update', 'show');
 Route::resource('users',UserController::class);
 
 Route::resource('budget-status',BudgetStatusController::class);
+Route::DELETE('budget-status/restore/{id}',[BudgetStatusController::class,'restore'])->name('budget-status.restore');
 
 
 Route::get('reports',[ReportsController::class,'index'])->name('reports.index');
