@@ -64,7 +64,8 @@
                             <td class="d-none d-xl-table-cell text-right">{{ $budget->neto }}</td>
                             <td class="d-none d-xl-table-cell text-right">{{ $budget->iva }}</td>
                             <td class="text-right">{{ $budget->total }}</td>
-                            <td class="text-right">{{ $budget->statusTrashed->name }}</td>
+                            <td class="text-right">  <span class="badge" style="background-color:{{ $budget->statusTrashed->color }} ">{{ $budget->statusTrashed->name }} </span>
+                            </td>
                             <td class="d-none d-xl-table-cell">{{ $budget->created_at }}</td>
                             {{-- <td class="text-center">
                                 <div class="btn-group">

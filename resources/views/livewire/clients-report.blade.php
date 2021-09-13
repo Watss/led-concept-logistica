@@ -1,12 +1,12 @@
 <div class="row">
     <div class="col-12 col-lg-12 col-xxl-12 d-flex">
         <div class="row justify-content-start mb-3 flex-fill" style="background-color: white">
-            <div class="row mb-3 my-3">
-                <div class="col-2 my-2">
+            <div class="row mb-3 my-3 justify-content-between">
+                <div class="col my-2">
                     <h4>Bucador de clientes</h4>
                 </div>
 
-                <div class="col-3">
+                <div class="col">
                     <div class="input-group input-group-navbar d-flex flex-column">
                         <div class="___class_+?7___">
                             <input type="text" id="search" class="form-control " wire:model="search"
@@ -26,7 +26,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-7">
+                {{-- <div class="col-7">
                     @if (strlen($name) >= 1)
                         <div class="d-flex align-items-start">
                             <img src="https://ui-avatars.com/api/?name={{ $name }}&rounded=true&size=30"
@@ -44,7 +44,7 @@
 
                     @endif
 
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
@@ -116,7 +116,7 @@
                         <td class="d-none d-xl-table-cell text-right">{{ $budget->neto }}</td>
                         <td class="d-none d-xl-table-cell text-right">{{ $budget->iva }}</td>
                         <td class="text-right">{{ $budget->total }}</td>
-                        <td class="text-right">{{ $budget->statusTrashed->name }}</td>
+                        <td class="text-right"> <span class="badge" style="background-color:{{ $budget->statusTrashed->color }} ">{{ $budget->statusTrashed->name }} </span></td>
                         <td class="d-none d-xl-table-cell">{{ $budget->created_at }}</td>
                         <td class="text-center">
                             <div class="btn-group">
