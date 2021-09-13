@@ -6,42 +6,52 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cotizaciones</title>
-    {{-- <link  href="{{asset('css/bootstrap5.css')}}" rel="stylesheet"> --}}
     <style>
         body {
-            font-size: 11px;
+            font-size: 11px
         }
 
-        body>.container-fluid {
-            padding: 20px 15px 0;
+        table {
+            width: 100%;
+            vertical-aling: left;
         }
 
-        .table {
-            margin: auto;
+        td {
+            padding-top: 5px;
+            padding-bottom: 5px;
+            padding-right: 5px;
         }
 
-        tbody,
-        td,
-        tfoot,
-        th,
-        thead,
         tr {
-            border-color: inherit;
-            border-style: solid;
-            border-width: 0;
+            border: 1px solid black;
         }
 
         th {
-            display: table-cell;
-            vertical-align: inherit;
-            font-weight: bold;
-            text-align: -internal-center;
+            padding-top: 15px;
+            padding-bottom: 15px;
+            padding-right: 15px;
         }
 
-        tr {
-            display: table-row;
-            vertical-align: inherit;
-            border-color: black;
+        table {
+            border-collapse: collapse;
+        }
+
+        td {
+            border-bottom: 1pt solid gray;
+        }
+
+        .text-rigth {
+            text-align: right;
+
+        }
+
+        .padding-rigth {
+            padding-right: 20px;
+        }
+
+        .img {
+            position: initial;
+
         }
 
     </style>
@@ -51,6 +61,9 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
+                <img class="img"
+                src="https://www.ledconcept.cl/new/wp-content/uploads/2018/02/Logo-led-concept.png" width="40"
+                alt="">
                 <h1 class="titulo"> Reportes de Cotizaciones </h1>
                 <br>
             </div>
@@ -63,11 +76,11 @@
                             <th>id</th>
                             <th class="">Cliente</th>
                             <th class="">Encargado</th>
-                            <th class="">Neto</th>
+                            <th class="      ">Neto</th>
                             <th class="">Iva</th>
                             <th class="">Total</th>
-                            <th class="">Estado</th>
-                            <th class="">Fecha Creacion</th>
+                            <th class="     ">Estado</th>
+                            <th class=" ">Fecha Creacion</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -75,14 +88,24 @@
                             <tr>
                                 <td class="">{{ $budget->id }}</td>
                                 <td class="">{{ $budget->client->name }}</td>
-                                <td class="">{{ $budget->user->name }}</td>
-                                <td class="">{{ $budget->neto }}</td>
-                                <td class="">{{ $budget->iva }}</td>
-                                <td class="">{{ $budget->total }}</td>
+                                <td class="
+                                    ">{{ $budget->user->name }}</td>
+                                <td class="text-rigth">
+                                    {{ $budget->netoAppends }}</td>
+                                <td class="text-rigth">{{ $budget->ivaAppends }}</td>
+                                <td class="text-rigth padding-rigth">{{ $budget->totalAppends }}</td>
                                 <td class="">{{ $budget->statusTrashed->name }}</td>
                                 <td class="">{{ $budget->created_at }}</td>
                             </tr>
-                        @endforeach
+
+                         @endforeach
+                            <tr>
+                                <td colspan="3">Totales</td>
+                                <td class="text-rigth">$ {{ number_format($neto, 0, ',', '.') }}</td>
+                                <td class="text-rigth">$ {{ number_format($iva, 0, ',', '.') }}</td>
+                                <td class="text-rigth">$ {{ number_format($total, 0, ',', '.') }}</td>
+                                <td colspan="2"></td>
+                            </tr>
                     </tbody>
                 </table>
             </div>

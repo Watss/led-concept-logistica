@@ -61,9 +61,9 @@
                             <td class="">{{ $budget->id }}</td>
                             <td class="">{{ $budget->client->name }}</td>
                             <td class="">{{ $budget->user->name }}</td>
-                            <td class="d-none d-xl-table-cell text-right">{{ $budget->neto }}</td>
-                            <td class="d-none d-xl-table-cell text-right">{{ $budget->iva }}</td>
-                            <td class="text-right">{{ $budget->total }}</td>
+                            <td class="d-none d-xl-table-cell text-right">{{ $budget->netoAppends }}</td>
+                            <td class="d-none d-xl-table-cell text-right">{{ $budget->ivaAppends }}</td>
+                            <td class="text-right">{{ $budget->totalAppends }}</td>
                             <td class="text-right">  <span class="badge" style="background-color:{{ $budget->statusTrashed->color }} ">{{ $budget->statusTrashed->name }} </span>
                             </td>
                             <td class="d-none d-xl-table-cell">{{ $budget->created_at }}</td>
