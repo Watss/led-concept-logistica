@@ -2,7 +2,24 @@
   <div>
     <v-data-table :headers="headers" :items="products" hide-default-footer>
       <template v-slot:item.img="props">
-                {{ props.item.img }}
+        <div class="m-1">
+          <div v-if="props.item.img">
+            <img
+              width="60"
+              height="60"
+              :src="'../' + props.item.img"
+              alt=""
+              style="border-radius: 5px"
+            />
+          </div>
+          <div v-else>
+            <div class="bg-secondary no-image">
+              <div class="text-no-imagen">
+                <div>Sin Imagen</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </template>
 
       <template v-slot:item.name="props">
@@ -87,6 +104,27 @@
         <div class="container"></div>
       </template>
     </v-data-table>
+    <div class="container row d-flex justify-content-end">
+      <div class="col-5">
+        <div class="d-flex justify-content-between">
+          <div class="mr-5">Parcial</div>
+          <div>$3.000</div>
+        </div>
+        <div class="d-flex justify-content-between">
+          <div class="mr-5">Descuento</div>
+          <div>$3.000</div>
+        </div>
+        <div class="d-flex justify-content-between">
+          <div class="mr-5">Neto</div>
+          <div>$3.000</div>
+        </div>
+        <br class="" />
+        <div class="d-flex justify-content-between">
+          <div class="mr-5 font-weight-bold">Total</div>
+          <div>$3.000</div>
+        </div>
+      </div>
+    </div>
 
     <v-snackbar v-model="snack" :timeout="3000" :color="snackColor">
       {{ snackText }}
@@ -99,7 +137,7 @@
 </template>
 <script>
 export default {
-  props:['products'],
+  props: ["products"],
   data: () => ({
     products: [],
     clients: [],
@@ -118,7 +156,7 @@ export default {
         sortable: false,
         value: "img",
       },
-      { text: "Descripción", value: "description" },
+      { text: "Descripción", value: "name" },
       { text: "Cantidad", value: "amount" },
       { text: "Pre. Unitario", value: "price" },
       { text: "Desc.", value: "desc" },
@@ -168,5 +206,21 @@ export default {
   > .v-input__slot {
   box-shadow: 0px 1px 0px -2px rgb(0 0 0 / 20%), 0px 0px 0px 0 rgb(0 0 0 / 14%),
     0 1px 5px 0 rgb(0 0 0 / 12%);
+}
+
+.no-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px;
+  background: #1d34486e !important;
+}
+
+.text-no-imagen {
+  font-size: 9px;
+  color: white;
 }
 </style>

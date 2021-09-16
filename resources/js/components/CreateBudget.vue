@@ -47,7 +47,7 @@
                   </template> -->
                 </v-autocomplete>
               </div>
-              <list-products v-bind:products = productsSelected />
+              <list-products v-bind:products="productsSelected" />
             </div>
           </div>
         </div>
@@ -62,11 +62,12 @@ import ActionsBudget from "./ActionsBudget.vue";
 import ListProducts from "./ListProducts.vue";
 export default {
   components: { ActionsBudget, ListProducts },
+  props: ["products"],
   data: () => ({
     products: [],
     clients: [],
     value: null,
-    productsSelected : []
+    productsSelected: [],
   }),
   mounted() {
     console.log("load products.");
@@ -78,18 +79,22 @@ export default {
       this.clients = clients;
     });
   },
-  watch:{
-    value : function name(val) {
-      this.productsSelected = [...this.productsSelected, {
-        img:val.image,
-        amount: 2,
-        description: "dfsdf fsdf",
-        price: 6.0,
-        desc: 24,
-        total: 4.0,
-        actions: "1%",
-      } ]
-    }
+  watch: {
+    value: function name(val) {
+      this.productsSelected = [
+        ...this.productsSelected,
+        {
+          img: val.image,
+          amount: 2,
+          description: "dfsdf fsdf",
+          price: 6.0,
+          desc: 24,
+          total: 4.0,
+          actions: "1%",
+          name: val.name,
+        },
+      ];
+    },
   },
   methods: {
     async fetchClients() {

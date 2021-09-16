@@ -5,9 +5,22 @@ namespace App\Http\Controllers;
 use App\Http\Requests\BudgetStoreRequest;
 use App\Models\Budget;
 use App\Models\DetailsBudget;
+use App\Models\Product;
 
 class BudgetController extends Controller
 {
+
+    public function index(){
+        return view('budget.index');
+    }
+
+    public function create(){
+
+        $products = Product::all();
+        
+        return view('budget.create')->with('products',$products);
+    }
+    
     public function store(BudgetStoreRequest $request){
         $budget = Budget::create($request->except('products'));
 
