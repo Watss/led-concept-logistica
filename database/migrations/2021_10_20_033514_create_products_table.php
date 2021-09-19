@@ -15,16 +15,18 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('type_id')->nullable()->constrained();
             $table->string('sku', 100);
             $table->longText('name');
             $table->string('barcode', 20)->nullable();
             $table->string('brand_id')->nullable();
             $table->boolean('temporary')->default(0);
-            $table->double('price');
+            $table->integer('price');
             $table->boolean('status')->default(0);
-            $table->enum('type', ["servicio","producto"]);
             $table->string('image', 300)->nullable();
             $table->timestamps();
+
+            Schema::enableForeignKeyConstraints();
         });
     }
 

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use phpDocumentor\Reflection\Types\Boolean;
-
+use App\Models\Type;
 class Product extends Model
 {
     use HasFactory;
@@ -24,7 +24,7 @@ class Product extends Model
         'price',
         'status',
         'image',
-        'type',
+        'types',
     ];
 
     /**
@@ -43,6 +43,11 @@ class Product extends Model
     public function brand()
     {
         return $this->belongsTo(\App\Models\Brand::class);
+    }
+
+    public function type()
+    {
+        return $this->belongsTo(\App\Models\Type::class);
     }
 
     public function detailsBudgets()
