@@ -36,14 +36,14 @@ class ClientsReport extends Component
     {
 
         return view('livewire.clients-report', [
-            'budgets'=>Budget::with('client', 'user','status')
+            'budgets'=>Budget::with('client', 'user','statusTrashed')
                         ->where('client_id',$this->clientId)
                         ->search($this->searchBudget)
                         ->dates([$this->start_date, $this->end_date])
                         ->status($this->status)
                         ->orderBy('created_at', 'desc')
                         ->paginate(10),
-            'statuses' => BudgetStatus::all(),
+            'statuses' => BudgetStatus::withTrashed()->get(),
             'searchBudget' => $this->searchBudget,
         ]);
 
@@ -65,7 +65,7 @@ class ClientsReport extends Component
 
     public function makePdf()
     {
-        $budgets=Budget::with('client', 'user','status')
+        $budgets=Budget::with('client', 'user','statusTrashed')
         ->where('client_id',$this->clientId)
         ->search($this->search)
         ->dates([$this->start_date, $this->end_date])
@@ -74,7 +74,7 @@ class ClientsReport extends Component
         ->get();
 
         $pdf=resolve('dompdf.wrapper');
-        $pdf->loadView('reports.budget-pdf',['budgets'=>$budgets]);
+        $pdf->loadView('reports.budget-pdf',['budgets'=>$budgets,'neto'=>$budgets->sum('neto'),'iva'=>$budgets->sum('iva'),'total'=>$budgets->sum('total')]);
 
         return response()->streamDownload(function () use ($pdf) {
             echo $pdf->stream();

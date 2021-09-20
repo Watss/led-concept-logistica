@@ -29,7 +29,7 @@ class RolesSeeder extends Seeder
 
         Role::insert($data);
 
-        $resources= ['product','user','budget','client','brand'];
+        $resources= ['product','user','budget','client','brand','budget-status'];
         $abilities=['index','view','create','edit','update','delete'];
         foreach ($resources as $resource ) {
 
@@ -56,6 +56,7 @@ class RolesSeeder extends Seeder
         $Admin->givePermissionTo(['budget:index','budget:view','budget:create','budget:edit','budget:update','budget:delete']);
         $Admin->givePermissionTo(['client:index','client:view','client:create','client:edit','client:update','client:delete']);
         $Admin->givePermissionTo(['brand:index','brand:view','brand:create','brand:edit','brand:update','brand:delete']);
+        $Admin->givePermissionTo(['budget-status:index','budget-status:view','budget-status:create','budget-status:edit','budget-status:update','budget-status:delete']);
 
 
         $Vendedor->givePermissionTo(['product:index','product:view']);

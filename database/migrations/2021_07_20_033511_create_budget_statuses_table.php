@@ -16,6 +16,7 @@ class CreateBudgetStatusesTable extends Migration
         Schema::create('budget_statuses', function (Blueprint $table) {
             $table->id();
             $table->string('name', 30);
+            $table->string('color', 30)->unique()->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -10,6 +10,11 @@ class Budget extends Model
 {
     use HasFactory;
 
+    protected  $appends=[
+        "netoAppends",
+        "ivaAppends",
+        "totalAppends",
+     ];
     /**4
      * The attributes that are mass assignable.
      *
@@ -32,29 +37,32 @@ class Budget extends Model
      */
     protected $casts = [
         'id' => 'integer',
+        'neto' => 'double',
         'iva' => 'double',
+        'total' => 'double',
         'client_id' => 'integer',
         'user_id' => 'integer',
     ];
 
-    public function getNetoAttribute($value)
-    {
-        return "$ " . number_format($value, 0, ',', '.');
-    }
     public function getCreatedAtAttribute($value)
     {
         return Carbon::createFromFormat('Y-m-d H:i:s', $value)->format('Y-m-d');
     }
 
-    public function getIvaAttribute($value)
+    public function getNetoAppendsAttribute()
     {
-        return "$ " . number_format($value, 0, ',', '.');
-    }
-    public function getTotalAttribute($value)
-    {
-        return "$ " . number_format($value, 0, ',', '.');
-    }
+        return "$".number_format($this->neto,0,',','.');
 
+    }
+    public function getIvaAppendsAttribute()
+    {
+        return "$".number_format($this->iva,0,',','.');
+
+    }
+    public function getTotalAppendsAttribute()
+    {
+        return "$".number_format($this->total,0,',','.');
+    }
 
     public function detailsBudgets()
     {
@@ -74,6 +82,11 @@ class Budget extends Model
     public function status()
     {
         return $this->belongsTo(\App\Models\BudgetStatus::class, 'budget_statuses_id');
+    }
+
+    public function statusTrashed()
+    {
+        return $this->belongsTo(\App\Models\BudgetStatus::class, 'budget_statuses_id')->withTrashed();
     }
 
 

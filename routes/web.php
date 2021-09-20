@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\BrandController;
-use App\Http\Controllers\BudgetController;
+use App\Http\Controllers\BudgetStatusController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
@@ -36,6 +36,9 @@ Route::resource('products', ProductController::class)->except('show');
 Route::resource('brands', BrandController::class)->except('update', 'show');
 
 Route::resource('users',UserController::class);
+
+Route::resource('budget-status',BudgetStatusController::class);
+Route::DELETE('budget-status/restore/{id}',[BudgetStatusController::class,'restore'])->name('budget-status.restore');
 
 
 Route::get('reports',[ReportsController::class,'index'])->name('reports.index');

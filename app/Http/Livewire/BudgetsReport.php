@@ -28,17 +28,17 @@ class BudgetsReport extends Component
     public function render()
     {
         return view('livewire.budgets-report', [
-            'budgets' => Budget::with('client', 'user','status')->search($this->search)->dates([$this->start_date, $this->end_date])->status($this->status)->orderBy('created_at', 'desc')->paginate(10),
-            'statuses' => BudgetStatus::all(),
+            'budgets' => Budget::with('client', 'user','statusTrashed')->search($this->search)->dates([$this->start_date, $this->end_date])->status($this->status)->orderBy('created_at', 'desc')->paginate(10),
+            'statuses' => BudgetStatus::withTrashed()->get(),
             'search' => $this->search
         ]);
     }
 
     public function makePdf()
     {
-        $budgets=Budget::with('client', 'user','status')->search($this->search)->dates([$this->start_date, $this->end_date])->status($this->status)->orderBy('created_at', 'desc')->get();
+        $budgets=Budget::with('client', 'user','statusTrashed')->search($this->search)->dates([$this->start_date, $this->end_date])->status($this->status)->orderBy('created_at', 'desc')->get();
         $pdf=resolve('dompdf.wrapper');
-        $pdf->loadView('reports.budget-pdf',['budgets'=>$budgets]);
+        $pdf->loadView('reports.budget-pdf',['budgets'=>$budgets,'neto'=>$budgets->sum('neto'),'iva'=>$budgets->sum('iva'),'total'=>$budgets->sum('total')]);
 
         return response()->streamDownload(function () use ($pdf) {
             echo $pdf->stream();
