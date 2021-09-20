@@ -22,27 +22,13 @@
         </div>
       </template>
 
-      <template v-slot:item.name="props">
-        <v-edit-dialog
-          :return-value.sync="props.item.name"
-          @save="save"
-          @cancel="cancel"
-          @open="open"
-          @close="close"
-        >
-          {{ props.item.name }}
-          <template v-slot:input>
-            <v-text-field
-              v-model="props.item.name"
-              :rules="[max25chars]"
-              label="Edit"
-              single-line
-              counter
-            ></v-text-field>
-          </template>
-        </v-edit-dialog>
+    
+      <template v-slot:item.price="props">
+        {{ formatPrice(props.item.price) }}
       </template>
-
+       <template v-slot:item.total="props">
+        {{ formatPrice(props.item.total) }}
+      </template>
       <template v-slot:item.amount="props">
         <v-edit-dialog
           :return-value.sync="props.item.amount"
@@ -120,8 +106,8 @@
         </div>
         <br class="" />
         <div class="d-flex justify-content-between">
-          <div class="mr-5 font-weight-bold">Total</div>
-          <div>$3.000</div>
+          <div class="mr-5 font-weight-bold h4">Total</div>
+          <div class="h4 fw-bold">{{ this.formatPrice(totals.total) }}</div>
         </div>
       </div>
     </div>
@@ -137,12 +123,12 @@
 </template>
 <script>
 export default {
-  props: ["products"],
+  props: ["products", "totals"],
   data: () => ({
     products: [],
     clients: [],
-    items: ["foo", "bar", "fizz", "buzz"],
-    values: ["foo", "bar"],
+    // items: ["foo", "bar", "fizz", "buzz"],
+    // values: ["foo", "bar"],  
     value: null,
     snack: false,
     snackColor: "",
@@ -164,7 +150,20 @@ export default {
       { text: "Acciones", value: "actions" },
     ],
   }),
+  watch: {
+    products: function (val) {
+      console.log("productos actualizados");
+    },
+  },
   methods: {
+    formatPrice(value) {
+      var formatter = new Intl.NumberFormat("en-CL", {
+        style: "currency",
+        currency: "CLP",
+        minimumFractionDigits: 2,
+      });
+      return formatter.format(value);
+    },
     save() {
       this.snack = true;
       this.snackColor = "success";

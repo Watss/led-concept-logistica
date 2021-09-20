@@ -47,7 +47,10 @@
                   </template> -->
                 </v-autocomplete>
               </div>
-              <list-products v-bind:products="productsSelected" />
+              <list-products
+                v-bind:products="productsSelected"
+                :totals="totals"
+              />
             </div>
           </div>
         </div>
@@ -68,6 +71,11 @@ export default {
     clients: [],
     value: null,
     productsSelected: [],
+    totals: {
+      partial: 0,
+      desc: 0,
+      total: 0,
+    },
   }),
   mounted() {
     console.log("load products.");
@@ -85,15 +93,16 @@ export default {
         ...this.productsSelected,
         {
           img: val.image,
-          amount: 2,
-          description: "dfsdf fsdf",
-          price: 6.0,
-          desc: 24,
-          total: 4.0,
+          amount: 1,
+          description: val.description,
+          price: val.price,
+          desc: 0,
+          total: val.price * 1,
           actions: "1%",
           name: val.name,
         },
       ];
+      this.totals = this.setTotals(this.productsSelected);
     },
   },
   methods: {
@@ -112,6 +121,13 @@ export default {
       } catch (error) {
         console.log("failed load products.");
       }
+    },
+    setTotals(arr) {
+      return {
+        partial: null,
+        desc: arr.reduce((sum, value) => sum + value.desc, 0),
+        total: arr.reduce((sum, value) => sum + value.price, 0),
+      };
     },
   },
 };
