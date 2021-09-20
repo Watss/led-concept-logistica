@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
@@ -26,6 +27,7 @@ Route::get('/dashboard',[DashboardController::class,'index'])->middleware(['auth
 
 require __DIR__.'/auth.php';
 
+Route::resource('budget', BudgetController::class)->except('show');
 
 Route::resource('clients', ClientController::class)->except('show');
 

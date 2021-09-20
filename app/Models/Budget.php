@@ -58,7 +58,7 @@ class Budget extends Model
 
     public function detailsBudgets()
     {
-        return $this->hasMany(\App\Models\DetailsBudget::class);
+        return $this->hasMany(\App\Models\DetailsBudget::class)->with('Product');
     }
 
     public function client()

@@ -17,10 +17,10 @@ class CreateBudgetsTable extends Migration
 
         Schema::create('budgets', function (Blueprint $table) {
             $table->id();
-            $table->string('neto', 100);
-            $table->double('iva');
-            $table->string('total', 20);
-            $table->string('reference', 255, null);
+            $table->string('neto', 100)->default(0);
+            $table->double('iva')->default(0);
+            $table->string('total', 20)->default(0);
+            $table->string('reference', 255, null)->nullable();
             $table->foreignId('client_id')->constrained();
             $table->foreignId('user_id')->constrained();
             $table->timestamps();

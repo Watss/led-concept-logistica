@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use phpDocumentor\Reflection\Types\Boolean;
 
 class Product extends Model
 {
@@ -58,6 +59,9 @@ class Product extends Model
     public function scopeActive($query){
 
         $query->where('status',1);
-
+    }
+    public function scopeTemporary($query,Boolean $value){
+        if ($value != null)
+            return $query->where('temporary','=',$value);
     }
 }

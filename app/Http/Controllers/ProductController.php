@@ -35,8 +35,6 @@ class ProductController extends Controller
     public function create(Request $request)
     {
         $product = new Product();
-        $this->authorize('create',$product);
-
         return view('product.create',compact('product'));
     }
 
@@ -54,7 +52,6 @@ class ProductController extends Controller
      */
     public function store(ProductStoreRequest $request)
     {
-        $this->authorize(new Product());
         $target_request = $request->validated();
 
         $imageName = $request->name.'-'.time().'.'.$request->image->extension();
@@ -96,5 +93,13 @@ class ProductController extends Controller
     {
 
         $this->photo->store('imagesProducts');
+    }
+
+    public function searchProduct(Request $request){
+        $products = Product::Search($request->search)->Temporary(false)->orderBy('name', 'asc')->get();
+        return response()->json([
+            "success" => true,
+            "products" => $products
+        ]);
     }
 }
