@@ -61,7 +61,7 @@ class Product extends Model
             return $query->orWhere('name', 'like', "%$search%")->orWhere('sku', 'like', "%$search%");
     }
 
-    public function scopeTemporary($query,Boolean $value){
+    public function scopeTemporary($query, $value){
         if ($value != null)
             return $query->where('temporary','=',$value);
     }
