@@ -18,5 +18,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::resource('budgets', BudgetController::class);
-    Route::get('products/search', [ProductController::class,'searchProduct'])->name('products.search');
-    Route::get('clients/search', [ClientController::class,'searchClient'])->name('clients.search');
+Route::get('products/search', [ProductController::class,'searchProduct'])->name('products.search');
+Route::get('clients/search', [ClientController::class,'searchClient'])->name('clients.search');
