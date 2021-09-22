@@ -1,6 +1,9 @@
 <template>
   <div>
     <v-data-table :headers="headers" :items="products" hide-default-footer>
+      <template v-slot:no-data>
+        <p>No hay productos seleccionados.</p>
+      </template>
       <template v-slot:item.img="props">
         <div class="m-1">
           <div v-if="props.item.img">
@@ -22,11 +25,10 @@
         </div>
       </template>
 
-    
       <template v-slot:item.price="props">
         {{ formatPrice(props.item.price) }}
       </template>
-       <template v-slot:item.total="props">
+      <template v-slot:item.total="props">
         {{ formatPrice(props.item.total) }}
       </template>
       <template v-slot:item.amount="props">
@@ -34,7 +36,9 @@
           :return-value.sync="props.item.amount"
           large
           persistent
-          @save="save"
+          cancel-text="Cerrar"
+          save-text="Guardar"
+          @save="save('amount')"
           @cancel="cancel"
           @open="open"
           @close="close"
@@ -44,7 +48,6 @@
             <div class="mt-4 text-h6">Modificar cantidad</div>
             <v-text-field
               v-model="props.item.amount"
-              :rules="[max25chars]"
               label="Edit"
               single-line
               counter
@@ -55,10 +58,12 @@
       </template>
       <template v-slot:item.desc="props">
         <v-edit-dialog
+          cancel-text="Cerrar"
+          save-text="Guardar"
           :return-value.sync="props.item.desc"
           large
           persistent
-          @save="save"
+          @save="save('desc')"
           @cancel="cancel"
           @open="open"
           @close="close"
@@ -67,9 +72,10 @@
           <template v-slot:input>
             <div class="mt-4 text-h6">Modificar Descuento</div>
             <v-text-field
+              :rules="[max90chars]"
+              type="number"
               v-model="props.item.desc"
-              :rules="[max25chars]"
-              label="Edit"
+              label="Editar"
               single-line
               counter
               autofocus
@@ -77,11 +83,12 @@
           </template>
         </v-edit-dialog>
       </template>
-      <template v-slot:item.actions="{ item }">
+      <template v-slot:item.actions="{ item, index }">
         <button
           type="button"
           class="btn btn-light btn-sm"
           style="border-radius: 20px"
+          @click="deleteItem(item, index)"
         >
           Eliminar
         </button>
@@ -94,15 +101,15 @@
       <div class="col-5">
         <div class="d-flex justify-content-between">
           <div class="mr-5">Parcial</div>
-          <div>$3.000</div>
+          <div>{{ this.formatPrice(totals.partial) }}</div>
         </div>
         <div class="d-flex justify-content-between">
           <div class="mr-5">Descuento</div>
-          <div>$3.000</div>
+          <div>{{ this.formatPrice(totals.desc) }}</div>
         </div>
         <div class="d-flex justify-content-between">
           <div class="mr-5">Neto</div>
-          <div>$3.000</div>
+          <div>{{ this.formatPrice(totals.neto) }}</div>
         </div>
         <br class="" />
         <div class="d-flex justify-content-between">
@@ -116,7 +123,7 @@
       {{ snackText }}
 
       <template v-slot:action="{ attrs }">
-        <v-btn v-bind="attrs" text @click="snack = false"> Close </v-btn>
+        <v-btn v-bind="attrs" text @click="snack = false"> Cerrar </v-btn>
       </template>
     </v-snackbar>
   </div>
@@ -125,15 +132,11 @@
 export default {
   props: ["products", "totals"],
   data: () => ({
-    products: [],
     clients: [],
-    // items: ["foo", "bar", "fizz", "buzz"],
-    // values: ["foo", "bar"],  
     value: null,
     snack: false,
     snackColor: "",
     snackText: "",
-    max25chars: (v) => v.length <= 10 || "Input too long!",
     pagination: {},
     headers: [
       {
@@ -142,32 +145,32 @@ export default {
         sortable: false,
         value: "img",
       },
-      { text: "Descripción", value: "name" },
+      { text: "Descripción", value: "name", width: "27em" },
       { text: "Cantidad", value: "amount" },
-      { text: "Pre. Unitario", value: "price" },
+      { text: "Pre. Uni.", value: "price" },
       { text: "Desc.", value: "desc" },
       { text: "Total", value: "total" },
-      { text: "Acciones", value: "actions" },
+      { text: "..", value: "actions" },
     ],
   }),
-  watch: {
-    products: function (val) {
-      console.log("productos actualizados");
-    },
-  },
+
   methods: {
+    max90chars: (v) => {
+      return v > 90 ? "Excede el máximo" : true;
+    },
     formatPrice(value) {
       var formatter = new Intl.NumberFormat("en-CL", {
         style: "currency",
         currency: "CLP",
-        minimumFractionDigits: 2,
+        minimumFractionDigits: 0,
       });
       return formatter.format(value);
     },
-    save() {
+    save(type) {
       this.snack = true;
       this.snackColor = "success";
       this.snackText = "Datos Guardados";
+      this.$emit("change", this.products);
     },
     cancel() {
       this.snack = true;
@@ -176,10 +179,11 @@ export default {
     },
     open() {},
     close() {
-      console.log("Dialog closed");
+      console.log("Datos guarda");
     },
-    deleteItem(item) {
-      this.editedIndex = this.desserts.indexOf(item);
+    deleteItem(item, index) {
+      this.$emit("delete", [item, index]);
+      this.editedIndex = this.products.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialogDelete = true;
     },
