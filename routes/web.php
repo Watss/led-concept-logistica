@@ -22,9 +22,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('dashboard');
 });
-Route::get('/dashboard',[DashboardController::class,'index'])->middleware(['auth'])->name('dashboard');
+
+Route::get('/dashboard', DashboardController::class)->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
 

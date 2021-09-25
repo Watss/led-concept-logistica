@@ -13,16 +13,15 @@
                     </div>
                 </div>
             </div>
-            
+
             <table class="table table-hover my-0" style="width:100%">
                 <thead>
                     <tr>
                         <th>#</th>
                         <th class="d-none d-xl-table-cell">Sku</th>
                         <th class="d-none d-xl-table-cell">Nombre</th>
-                        <th class="d-none d-xl-table-cell">Estado</th>
+                        <th class="d-none d-xl-table-cell">Tipo producto</th>
                         <th class="d-none d-xl-table-cell">Precio</th>
-                        <th class="text-center">Creado hace</th>
                         <th class="text-center">Acciones</th>
                     </tr>
                 </thead>
@@ -30,38 +29,38 @@
                     @foreach ($products as $product)
                         <tr>
 
-                            <td  style="width: 90px;padding: 5px;"">
-                                <img style="border-radius: 8%;" class="img-product img-fluid" src="{{ asset($product->image) }}" alt="">
-                            </td>
-                            <td class="d-none d-xl-table-cell">{{ $product->sku }}</td>
-                            <td class="d-none d-xl-table-cell">{{ $product->name }}</td>
-                            <td class="d-none d-xl-table-cell"><span
-                                    class="badge bg-success">{{ $product->status }}</span></td>
-                                    <td class="text-center">{{ $product->price }}</td>
-                            <td class="text-center">{{ $product->created_at }}</td>
+                            <td style="width: 90px;padding: 5px;"">
 
-                            <td class="d-none d-md-table-cell text-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-light" style="border-radius: 20px;
+                            @if (empty($product->image))
+                               <div class="sn-image" >S/A</div>
+                            @else
+                                <img style=" border-radius: 8%; width:60px; height:60px" class="img-product img-fluid"
+                                    src="{{ asset($product->image) }}" alt="">
+                            @endif
+                    </td>
+                    <td class="d-none d-xl-table-cell">{{ $product->sku }}</td>
+                    <td class="d-none d-xl-table-cell">{{ $product->name }}</td>
+
+                    <td class="d-none d-xl-table-cell">{{ $product->type->name }}</td>
+
+                    <td class="text-center">@money( $product->price, 'CLP')</td>
+                    <td class="d-none d-md-table-cell text-center">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-light" style="border-radius: 20px;
                                     padding: 5px;
                                     display: flex;" data-bs-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false">
-                                        <i class="fa fa-ellipsis-v"></i>
-                                    </button>
-                                    <div class="dropdown-menu"
-                                        style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(-95px, 35px, 0px);"
-                                        data-popper-placement="bottom-end">
-                                        @can('product:edit')
-                                        <a class="dropdown-item"
-                                            href="{{ route('products.edit', $product) }}">Editar</a>
-                                        @endcan
-                                        @can('product:delete')
-                                        <a class="dropdown-item" href="#">Eliminar</a>
-                                        @endcan
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
+                                aria-expanded="false">
+                                <i class="fa fa-ellipsis-v"></i>
+                            </button>
+                            <div class="dropdown-menu"
+                                style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(-95px, 35px, 0px);"
+                                data-popper-placement="bottom-end">
+                                <a class="dropdown-item" href="{{ route('products.edit', $product) }}">Editar</a>
+                                <a class="dropdown-item" href="#">Eliminar</a>
+                            </div>
+                        </div>
+                    </td>
+                    </tr>
                     @endforeach
                 </tbody>
             </table>

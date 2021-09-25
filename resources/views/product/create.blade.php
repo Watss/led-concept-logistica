@@ -64,11 +64,55 @@
                                         </div>
                                     @enderror
                                 </div>
-                                <div class="mb-3 col-md-12">
-                                   
-                                </div>
+
                             </div>
-                          
+                            <div class="row mb-2 mt-3">
+                                <label for="">Tipo</label>
+                                <div class="col-md-12">
+
+                                    <select class="form-select"
+                                        class="form-control @error('price') is-invalid @enderror">
+                                        <option selected value="">--Sin Tipo--</option>
+                                        @foreach ($types as $type)
+                                            <option value="{{$type->id}}">{{$type->name}}</option>
+                                        @endforeach
+
+                                    </select>
+                                    @error('price')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                {{-- <div class="col-md-2 container">
+                                    <div class="d-grid gap-2">
+                                        <div class="dropdown">
+                                            <button class="btn btn-light w-100" type="button" id="dropdownMenuButton1"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="far fa-plus-square"></i>
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                <form action="">
+                                                    <div class="container m-3">
+                                                        <div class="row">
+                                                            <div class="col"></div>
+                                                            <div class="col">
+                                                                <button class="btn btn-secondary">Guardar</button>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </form>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                </div> --}}
+
+                            </div>
+
+
 
                             <div class="d-grid gap-2 col-12 mx-auto p-0">
                                 <button type="submit" class="btn btn-dark text-white  float-right">Guardar</button>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductStoreRequest;
+use App\Models\Type;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Livewire\WithFileUploads;
@@ -35,7 +36,9 @@ class ProductController extends Controller
     public function create(Request $request)
     {
         $product = new Product();
-        return view('product.create',compact('product'));
+        $types = Type::all();
+
+        return view('product.create',compact('product','types'));
     }
 
     public function update(ProductStoreRequest $request, Product $product){
@@ -59,6 +62,9 @@ class ProductController extends Controller
         $path = $request->image->storeAs('public/images', $imageName);
 
         $target_request['image'] = 'images/'.$imageName;
+
+        $target_request['type_id'] = null;
+
 
         Product::create($target_request);
 

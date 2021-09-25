@@ -5,21 +5,24 @@ namespace App\Http\Controllers;
 use App\Models\Budget;
 use App\Models\Client;
 use App\Models\Product;
-use Carbon\Carbon;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function __invoke()
     {
-       $now= Carbon::createFromFormat('Y-m-d H:i:s', now()->toDateString(). '00:00:00')->toDateTimeString();
-       $products= Product::active()->get()->count();
-       $clients= Client::all()->count();
-       $budgets= Budget::whereDate('created_at',$now)->get();
+        $users = User::all()->count();
+        $products = Product::all()->count();
+        $clients = Client::all()->count();
+        $budgets = Budget::all()->count();
 
-       $budgetAcept=$budgets->where('budget_statuses_id',1)->count();
-       $budgetRejected=$budgets->where('budget_statuses_id',2)->count();
+        $new_users = User::where('created_at', '>=', now()->subDays(15))->count();
+        $new_products = Product::where('created_at', '>=', now()->subDays(15))->count();
+        $new_clients = Client::where('created_at', '>=', now()->subDays(15))->count();
+        $new_budgets = Budget::where('created_at', '>=', now()->subDays(15))->count();
 
-        return view('dashboard',['products'=>$products,'clients'=>$clients,'budgetAcept'=>$budgetAcept,'budgetRejected'=>$budgetRejected]);
+
+        return view('dashboard',compact('users','products','clients','budgets','new_users','new_products','new_clients','new_budgets'));
     }
 }
