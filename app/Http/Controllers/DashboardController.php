@@ -21,7 +21,7 @@ class DashboardController extends Controller
         $new_products = Product::where('created_at', '>=', now()->subDays(15))->count();
         $new_clients = Client::where('created_at', '>=', now()->subDays(15))->count();
         $new_budgets = Budget::where('created_at', '>=', now()->subDays(15))->count();
-        
+
 
         return view('dashboard',compact('users','products','clients','budgets','new_users','new_products','new_clients','new_budgets'));
     }

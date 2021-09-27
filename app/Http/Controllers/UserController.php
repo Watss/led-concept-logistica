@@ -11,6 +11,11 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['role:Administrador'])->except('index');
+    }
+
     public function index()
     {
         return view('user.index');
@@ -18,12 +23,13 @@ class UserController extends Controller
     public function create()
     {
         $user = new User();
+        $this->authorize('create',$user);
         $roles = Role::all();
         return view('user.create')->with(['roles' => $roles, 'user' => $user]);
     }
     public function store(UserStoreRequest $request)
     {
-
+        $this->authorize('create',new User());
         $validated = $request->validated();
 
         $user = User::create([
@@ -40,13 +46,14 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
+        $this->authorize('edit',$user);
         $roles = Role::all();
         return view('user.create')->with(['user' => $user, 'roles' => $roles]);
     }
 
     public function update(UserStoreRequest $request, User $user)
     {
-
+        $this->authorize($user);
         $validated = $request->validated();
 
         if (isset($validated['password'])) {
@@ -73,6 +80,7 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+    $this->authorize($user);
        $user->delete();
        Alert::success('Eliminado Correctamente');
        return redirect()->route('users.index');

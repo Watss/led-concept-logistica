@@ -15,7 +15,6 @@
         "alpinejs": "^2.7.3",
         "autoprefixer": "^10.1.0",
         "axios": "^0.21",
-        "bootstrap": "^4.6.0",
         "browser-sync": "^2.27.4",
         "jquery": "^3.6",
         "laravel-mix": "^6.0.6",
@@ -34,6 +33,7 @@
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.15.3",
         "@popperjs/core": "^2.9.2",
+        "babel-preset-es2015": "^6.24.1",
         "bootstrap": "5.0.1",
         "browser-sync-webpack-plugin": "^2.3.0",
         "feather-icons": "4.28.0",

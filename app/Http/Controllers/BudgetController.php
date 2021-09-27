@@ -6,6 +6,7 @@ use App\Http\Requests\BudgetStoreRequest;
 use App\Models\Budget;
 use App\Models\DetailsBudget;
 use App\Models\Product;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class BudgetController extends Controller
 {
@@ -17,10 +18,10 @@ class BudgetController extends Controller
     public function create(){
 
         $products = Product::all();
-        
+
         return view('budget.create')->with('products',$products);
     }
-    
+
     public function store(BudgetStoreRequest $request){
         $budget = Budget::create($request->except('products'));
 
@@ -55,5 +56,11 @@ class BudgetController extends Controller
                 $product['budget_id'] = $budget->id;
                 DetailsBudget::updateOrCreate($product);
             }
+    }
+
+    public function print(Budget $budget){
+        /* return view('budget.pdf_format'); */
+        $pdf = PDF::loadView('budget.pdf_format',['budget' => $budget])->setPaper('a4');
+        return $pdf->stream();
     }
 }

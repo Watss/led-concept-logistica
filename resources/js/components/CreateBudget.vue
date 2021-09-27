@@ -54,7 +54,7 @@
                 >
                   <!-- <template v-slot:item="{ parent, item }">
                     <v-list-tile-content>
-                  
+
                       <v-list-tile-title
                         v-html="`${parent.genFilteredText(item.name)}`"
                       ></v-list-tile-title>
@@ -79,7 +79,7 @@
     />
   </div>
 </template>
-               
+
 
 <script>
 import ActionsBudget from "./ActionsBudget.vue";

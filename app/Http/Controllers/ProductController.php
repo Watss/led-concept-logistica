@@ -18,6 +18,12 @@ class ProductController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+       $this->middleware(['role:Administrador'])->except('index');
+    }
+
     public function index(Request $request)
     {
         return view('product.index');
@@ -37,6 +43,7 @@ class ProductController extends Controller
 
     public function update(ProductStoreRequest $request, Product $product){
 
+        $this->authorize($product);
         $product->update($request->validated());
 
         return redirect()->route('product.index');
@@ -71,6 +78,7 @@ class ProductController extends Controller
      */
     public function edit(Request $request, Product $product)
     {
+        $this->authorize('edit',$product);
         return view('product.edit', compact('product'));
     }
 
@@ -81,6 +89,7 @@ class ProductController extends Controller
      */
     public function destroy(Request $request, Product $product)
     {
+        $this->authorize($product);
         $product->delete();
 
         return redirect()->route('product.index');

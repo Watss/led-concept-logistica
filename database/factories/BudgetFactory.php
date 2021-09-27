@@ -5,6 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use App\Models\Budget;
+use App\Models\BudgetStatus;
 use App\Models\Client;
 use App\Models\User;
 
@@ -25,12 +26,13 @@ class BudgetFactory extends Factory
     public function definition()
     {
         return [
-            'neto' => $this->faker->regexify('[A-Za-z0-9]{100}'),
-            'iva' => $this->faker->randomFloat(0, 0, 9999999999.),
-            'total' => $this->faker->regexify('[A-Za-z0-9]{20}'),
-            'reference' => $this->faker->regexify('[A-Za-z0-9]{255}'),
+            'neto' => $this->faker->numberBetween(10000, 100000),
+            'iva' => $this->faker->numberBetween(10000, 100000),
+            'total' => $this->faker->numberBetween(10000, 100000),
+            'reference' => $this->faker->paragraph(2),
             'client_id' => Client::factory(),
             'user_id' => User::factory(),
+            'budget_statuses_id' => BudgetStatus::factory()
         ];
     }
 }

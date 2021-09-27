@@ -1,5 +1,5 @@
 <template>
-    
+
          <div class="col d-flex justify-content-end">
                 <button
                   type="button"
@@ -23,11 +23,10 @@
                   Guardar
                 </button>
               </div>
-    </div>
 </template>
 
 <script>
 export default {
-    
+
 }
 </script>

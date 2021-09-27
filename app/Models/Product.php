@@ -24,7 +24,7 @@ class Product extends Model
         'price',
         'status',
         'image',
-        'types',
+        'type_id'
     ];
 
     /**
@@ -61,7 +61,12 @@ class Product extends Model
             return $query->orWhere('name', 'like', "%$search%")->orWhere('sku', 'like', "%$search%");
     }
 
-    public function scopeTemporary($query, $value){
+    public function scopeActive($query){
+
+        $query->where('status',1);
+    }
+    
+    public function scopeTemporary($query,Boolean $value){
         if ($value != null)
             return $query->where('temporary','=',$value);
     }

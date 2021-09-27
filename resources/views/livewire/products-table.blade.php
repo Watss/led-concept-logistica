@@ -30,7 +30,7 @@
                         <tr>
 
                             <td style="width: 90px;padding: 5px;"">
-                               
+
                             @if (empty($product->image))
                                <div class="sn-image" >S/A</div>
                             @else

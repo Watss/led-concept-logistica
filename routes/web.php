@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\BudgetController;
+use App\Http\Controllers\BudgetStatusController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -37,4 +39,14 @@ Route::resource('brands', BrandController::class)->except('update', 'show');
 
 Route::resource('users',UserController::class);
 
+Route::resource('budget-status',BudgetStatusController::class);
+Route::DELETE('budget-status/restore/{id}',[BudgetStatusController::class,'restore'])->name('budget-status.restore');
 
+
+Route::get('reports',[ReportsController::class,'index'])->name('reports.index');
+
+Route::get('reports/budget',[ReportsController::class,'budgetReport'])->name('reports.budget');
+
+Route::get('reports/client',[ReportsController::class,'clientReport'])->name('reports.client');
+
+Route::get('print-budget/{budget}',[BudgetController::class, 'print'])->name('budgets.print');
