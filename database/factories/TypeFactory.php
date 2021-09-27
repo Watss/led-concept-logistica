@@ -2,18 +2,17 @@
 
 namespace Database\Factories;
 
+use App\Models\Type;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
-use App\Models\BudgetStatus;
 
-class BudgetStatusFactory extends Factory
+class TypeFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = BudgetStatus::class;
+    protected $model = Type::class;
 
     /**
      * Define the model's default state.
@@ -23,7 +22,7 @@ class BudgetStatusFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name(),
+            "name" => $this->faker->name()
         ];
     }
 }

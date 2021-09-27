@@ -5,6 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use App\Models\Product;
+use App\Models\Type;
 
 class ProductFactory extends Factory
 {
@@ -28,9 +29,9 @@ class ProductFactory extends Factory
             'barcode' => $this->faker->regexify('[A-Za-z0-9]{20}'),
             'brand_id' => $this->faker->word,
             'temporary' => $this->faker->boolean,
-            'price' => $this->faker->randomFloat(0, 0, 9999999999.),
+            'price' => 20000,
             'status' => $this->faker->boolean,
-            'type' => $this->faker->randomElement(["servicio","producto"]),
+            'type_id' => Type::factory()
         ];
     }
 }

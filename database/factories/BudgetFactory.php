@@ -5,6 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use App\Models\Budget;
+use App\Models\BudgetStatus;
 use App\Models\Client;
 use App\Models\User;
 
@@ -31,6 +32,7 @@ class BudgetFactory extends Factory
             'reference' => $this->faker->paragraph(2),
             'client_id' => Client::factory(),
             'user_id' => User::factory(),
+            'budget_statuses_id' => BudgetStatus::factory()
         ];
     }
 }

@@ -48,3 +48,5 @@ Route::get('reports',[ReportsController::class,'index'])->name('reports.index');
 Route::get('reports/budget',[ReportsController::class,'budgetReport'])->name('reports.budget');
 
 Route::get('reports/client',[ReportsController::class,'clientReport'])->name('reports.client');
+
+Route::get('print-budget/{budget}',[BudgetController::class, 'print'])->name('budgets.print');
