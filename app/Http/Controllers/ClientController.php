@@ -11,7 +11,7 @@ class ClientController extends Controller
 {
     public function __construct()
     {
-       $this->middleware(['role:Vendedor|Administrador'])->except('index');
+    //    $this->middleware(['role:Vendedor|Administrador'])->except('index');
     }
 
     /**

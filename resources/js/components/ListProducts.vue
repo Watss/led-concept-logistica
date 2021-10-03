@@ -169,7 +169,7 @@ export default {
     save(type) {
       this.snack = true;
       this.snackColor = "success";
-      this.snackText = "Datos Guardados";
+      this.snackText = "Datos cambiados";
       this.$emit("change", this.products);
     },
     cancel() {
@@ -179,7 +179,7 @@ export default {
     },
     open() {},
     close() {
-      console.log("Datos guarda");
+      console.log("Cambio cancelado");
     },
     deleteItem(item, index) {
       this.$emit("delete", [item, index]);

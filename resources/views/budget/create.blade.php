@@ -1,6 +1,6 @@
 <x-app-layout >
     <div id="app" data-app >
         
-        <create-budget ></create-budget>
+        <create-budget :id="{{$id}}" ></create-budget>
     </div>
 </x-app-layout>

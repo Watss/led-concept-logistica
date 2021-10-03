@@ -16,6 +16,7 @@
                   Duplicar
                 </button>
                 <button
+                  @click="$emit('save')"
                   type="button"
                   class="btn btn-primary m-1 text-white"
                   style="border-radius: 20px"

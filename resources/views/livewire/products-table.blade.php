@@ -41,7 +41,7 @@
                     <td class="d-none d-xl-table-cell">{{ $product->sku }}</td>
                     <td class="d-none d-xl-table-cell">{{ $product->name }}</td>
 
-                    <td class="d-none d-xl-table-cell">{{ $product->type->name }}</td>
+                    <td class="d-none d-xl-table-cell">{{ $product->type ? $product->type->name : '--'}}</td>
 
                     <td class="text-center">@money( $product->price, 'CLP')</td>
                     <td class="d-none d-md-table-cell text-center">

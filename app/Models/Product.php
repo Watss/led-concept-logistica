@@ -66,7 +66,7 @@ class Product extends Model
         $query->where('status',1);
     }
     
-    public function scopeTemporary($query,Boolean $value){
+    public function scopeTemporary($query, $value){
         if ($value != null)
             return $query->where('temporary','=',$value);
     }

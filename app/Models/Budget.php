@@ -44,10 +44,7 @@ class Budget extends Model
         'user_id' => 'integer',
     ];
 
-    public function getCreatedAtAttribute($value)
-    {
-        return Carbon::createFromFormat('Y-m-d H:i:s', $value)->format('Y-m-d');
-    }
+  
 
     public function getNetoAppendsAttribute()
     {

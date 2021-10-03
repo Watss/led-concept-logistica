@@ -21,8 +21,8 @@ class CreateBudgetsTable extends Migration
             $table->double('iva')->default(0);
             $table->double('total')->default(0);
             $table->string('reference', 255, null)->nullable();
-            $table->foreignId('client_id')->constrained();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('client_id')->nullable()->constrained();
+            $table->foreignId('user_id')->nullable()->constrained();
             $table->timestamps();
         });
 
