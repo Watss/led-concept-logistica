@@ -5,4 +5,8 @@
             <span style="margin-right: 10px;">Nueva Cotización</span> <i class="align-middle"  data-feather="plus"></i>
            </a>
     </div>
+
+
+        <livewire:budgets-report></livewire:budgets-report>
+
 </x-app-layout>
