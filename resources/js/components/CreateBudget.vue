@@ -77,6 +77,7 @@
     <modal-client
       :show="showModalCreateClient"
       v-on:close="showModalCreateClient = false"
+      v-on:saved="handlesCreateClient"
     />
     <v-snackbar v-model="snackbar.visible">
       {{ snackbar.text }}
@@ -167,19 +168,27 @@ export default {
         ...this.productsSelected,
         this.normalizeDatatable(val),
       ];
-      
+
       this.totals = this.setTotals(this.productsSelected);
 
-      this.updateBudget().then((res)=>{
-        console.log('product added');
-      })
+      this.updateBudget().then((res) => {
+        console.log("product added");
+      });
 
-      this.fetchBudget().then((res)=>{
-        console.log('products loaded');
-      })
+      this.fetchBudget().then((res) => {
+        console.log("products loaded");
+      });
     },
   },
   methods: {
+    handlesCreateClient() {
+      this.snackbar.visible = true;
+      this.snackbar.text = "Cliente guardado con éxito";
+      this.fetchClients().then((clients) => {
+        console.log("load clients.");
+        this.clients = clients;
+      });
+    },
     async handleSaveBudget() {
       try {
         const updated = await this.updateBudget();
@@ -222,9 +231,8 @@ export default {
             quantity: el.amount,
             total: el.total,
           })),
-          neto : this.totals.neto,
-          total : this.totals.total
-          
+          neto: this.totals.neto,
+          total: this.totals.total,
         });
         return res;
       } catch (error) {

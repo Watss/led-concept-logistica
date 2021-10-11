@@ -13,7 +13,7 @@
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="shortcut icon" href="img/icons/icon-48x48.png" />
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Led Concept</title>
     @livewireStyles
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
