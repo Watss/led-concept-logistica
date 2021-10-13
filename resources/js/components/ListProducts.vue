@@ -10,7 +10,7 @@
             <img
               width="60"
               height="60"
-              :src="'../' + props.item.img"
+              :src="'/'+props.item.img"
               alt=""
               style="border-radius: 5px"
             />
