@@ -44,9 +44,20 @@ class ProductController extends Controller
     public function update(ProductStoreRequest $request, Product $product){
 
         $this->authorize($product);
-        $product->update($request->validated());
 
-        return redirect()->route('product.index');
+        $target_request = $request->validated();
+
+        $imageName = $request->name.'-'.time().'.'.$request->image->extension();
+
+        $path = $request->image->storeAs('public/images', $imageName);
+
+        $target_request['image'] = 'images/'.$imageName;
+
+        $target_request['type_id'] = null;
+
+        $product->update($target_request);
+
+        return redirect()->route('products.index');
     }
 
     /**
@@ -79,7 +90,10 @@ class ProductController extends Controller
     public function edit(Request $request, Product $product)
     {
         $this->authorize('edit',$product);
-        return view('product.edit', compact('product'));
+
+        $types = Type::all();
+        
+        return view('product.edit', compact('product','types'));
     }
 
     /**
