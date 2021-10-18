@@ -73,7 +73,7 @@
                         </div>
                       </div>
                     </div>
-                    <div  style="margin-left:15px">
+                    <div style="margin-left: 15px">
                       <div>{{ data.item.name }}</div>
                       <div>${{ formatPrice(data.item.price) }}</div>
                     </div>
@@ -154,7 +154,7 @@ export default {
       console.log(clients);
       this.clients = clients;
     });
-
+    
     this.fetchBudget().then((budget) => {
       console.log("load budget.");
       console.log(budget);
@@ -220,20 +220,24 @@ export default {
         console.log(err);
       }
     },
-    async handleDeleteListProducts(payload) {
+    handleDeleteListProducts(payload) {
       if (confirm("¿Esta seguro que desea eliminar este producto?")) {
-        this.productsSelected = this.productsSelected.filter(
-          (element, index) => index !== payload[1]
-        );
-        this.totals = this.setTotals(this.productsSelected);
+        axios
+          .delete("/api/budget/" + payload[0].id)
+          .then((res) => {
+            console.log(res);
+            this.productsSelected = this.productsSelected.filter(
+              (element, index) => index !== payload[1]
+            );
+            this.totals = this.setTotals(this.productsSelected);
 
-        this.snackbar.text = "Producto eliminado con èxito.";
-        this.snackbar.visible = true;
-        console.log("item deleted.");
-
-        const res = await axios.delete("/api/budget/" + this.payload[1]);
-
-        console.log(res);
+            this.snackbar.text = "Producto eliminado con èxito.";
+            this.snackbar.visible = true;
+            console.log("item deleted.");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       }
     },
     handleChangeListProducts(arr, payload) {
@@ -318,7 +322,6 @@ export default {
     },
     formatPrice(value) {
       var formatter = new Intl.NumberFormat("en-CL", {
-
         currency: "CLP",
         minimumFractionDigits: 0,
       });
