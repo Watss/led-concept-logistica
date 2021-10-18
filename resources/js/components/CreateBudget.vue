@@ -10,7 +10,7 @@
                 <div class="text-muted">Actualizado {{ moment.fromNow() }}</div>
               </div>
               <div class="col d-flex justify-content-end">
-                <actions-budget v-on:save="handleSaveBudget"></actions-budget>
+                <actions-budget v-on:save="handleSaveBudget" :saveDisabled="!client"></actions-budget>
               </div>
             </div>
             <div class="row">
@@ -53,6 +53,7 @@
                   item-text="name"
                   label="Buscador de producto"
                   return-object
+                  :disabled="!client"
                 >
                   <template slot="item" slot-scope="data">
                     <div class="m-1 mr-5">
