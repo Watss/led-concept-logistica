@@ -99,10 +99,7 @@
     </v-data-table>
     <div class="container row d-flex justify-content-end">
       <div class="col-5">
-        <div class="d-flex justify-content-between">
-          <div class="mr-5">Parcial</div>
-          <div>{{ this.formatPrice(totals.partial) }}</div>
-        </div>
+       
         <div class="d-flex justify-content-between">
           <div class="mr-5">Descuento</div>
           <div>{{ this.formatPrice(totals.desc) }}</div>
