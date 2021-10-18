@@ -17,7 +17,8 @@ class BudgetController extends Controller
     }
 
     public function create(){
-
+        
+        
         $budget = Budget::create();
 
         $id = $budget->id;
@@ -32,6 +33,8 @@ class BudgetController extends Controller
     }
 
     public function store(BudgetStoreRequest $request){
+
+        
         $budget = Budget::create($request->except('products'));
 
         $this->storeDetails($request->products, $budget);
@@ -66,6 +69,13 @@ class BudgetController extends Controller
         ]);
     }
 
+    public function deleteProduct(HttpRequest $request , $id){
+
+        dd($id);
+
+        // DetailsBudget::where('product_id',)
+    }
+
     private function storeDetails(Budget $budget,$products){
 
 
@@ -85,12 +95,13 @@ class BudgetController extends Controller
     public function getBBudget($id){
 
         $budget =  Budget::find($id) ;
-
+    
         return response()->json([
             "success" => true,
             "budget" => [
                 'detail' => $budget,
-                'products' => $budget->detailsBudgets()->get()->toArray()
+                'products' => $budget->detailsBudgets()->get()->toArray(),
+                'client' => $budget->client
             ]
         ]);
     }

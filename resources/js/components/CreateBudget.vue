@@ -25,7 +25,8 @@
                   return-object
                   item-text="name"
                   item-value="id"
-                ></v-autocomplete>
+                >
+                </v-autocomplete>
                 <a
                   role="button"
                   href="#"
@@ -53,14 +54,30 @@
                   label="Buscador de producto"
                   return-object
                 >
-                  <!-- <template v-slot:item="{ parent, item }">
-                    <v-list-tile-content>
-
-                      <v-list-tile-title
-                        v-html="`${parent.genFilteredText(item.name)}`"
-                      ></v-list-tile-title>
-                    </v-list-tile-content>
-                  </template> -->
+                  <template slot="item" slot-scope="data">
+                    <div class="m-1 mr-5">
+                      <div v-if="data.item.image">
+                        <img
+                          width="50"
+                          height="50"
+                          :src="'/' + data.item.image"
+                          alt=""
+                          style="border-radius: 5px"
+                        />
+                      </div>
+                      <div v-else>
+                        <div class="bg-secondary no-image">
+                          <div class="text-no-imagen">
+                            <div>Sin Imagen</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div  style="margin-left:15px">
+                      <div>{{ data.item.name }}</div>
+                      <div>${{ formatPrice(data.item.price) }}</div>
+                    </div>
+                  </template>
                 </v-autocomplete>
               </div>
               <list-products
@@ -159,6 +176,8 @@ export default {
         total_desc: 0,
       }));
 
+      this.client = budget.client;
+
       this.totals = this.setTotals(this.productsSelected);
     });
   },
@@ -201,12 +220,21 @@ export default {
         console.log(err);
       }
     },
-    handleDeleteListProducts(payload) {
-      this.productsSelected = this.productsSelected.filter(
-        (element, index) => index !== payload[1]
-      );
-      this.totals = this.setTotals(this.productsSelected);
-      console.log("item deleted.");
+    async handleDeleteListProducts(payload) {
+      if (confirm("¿Esta seguro que desea eliminar este producto?")) {
+        this.productsSelected = this.productsSelected.filter(
+          (element, index) => index !== payload[1]
+        );
+        this.totals = this.setTotals(this.productsSelected);
+
+        this.snackbar.text = "Producto eliminado con èxito.";
+        this.snackbar.visible = true;
+        console.log("item deleted.");
+
+        const res = await axios.delete("/api/budget/" + this.payload[1]);
+
+        console.log(res);
+      }
     },
     handleChangeListProducts(arr, payload) {
       this.productsSelected = arr.map((el) => ({
@@ -288,6 +316,14 @@ export default {
         total_desc: 0,
       };
     },
+    formatPrice(value) {
+      var formatter = new Intl.NumberFormat("en-CL", {
+
+        currency: "CLP",
+        minimumFractionDigits: 0,
+      });
+      return formatter.format(value);
+    },
   },
 };
 </script>
@@ -301,6 +337,17 @@ export default {
 }
 .v-text-field.v-text-field--enclosed .v-text-field__details {
   display: none;
+}
+
+.no-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px;
+  background: #1d34486e !important;
 }
 </style>
 
