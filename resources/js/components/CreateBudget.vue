@@ -62,6 +62,14 @@
                     </v-list-tile-content>
                   </template> -->
                 </v-autocomplete>
+                <a
+                  role="button"
+                  href="#"
+                  class="text-primary"
+                  @click="showModalCreateProduct = true"
+                  >Crear producto temporal</a
+                >
+                <br />
               </div>
               <list-products
                 v-bind:products="productsSelected"
@@ -78,6 +86,11 @@
       :show="showModalCreateClient"
       v-on:close="showModalCreateClient = false"
       v-on:saved="handlesCreateClient"
+    />
+    <modal-product
+      :show="showModalCreateProduct"
+      v-on:close="showModalCreateProduct = false"
+      v-on:saved="showModalCreateProduct"
     />
     <v-snackbar v-model="snackbar.visible">
       {{ snackbar.text }}
@@ -101,10 +114,11 @@
 import ActionsBudget from "./ActionsBudget.vue";
 import ListProducts from "./ListProducts.vue";
 import ModalClient from "./modalClient.vue";
+import ModalProduct from "./modalProduct.vue";
 import moment from "moment";
 export default {
   props: ["id"],
-  components: { ActionsBudget, ListProducts, ModalClient },
+  components: { ActionsBudget, ListProducts, ModalClient, ModalProduct },
   data: () => ({
     snackbar: {
       visible: false,
@@ -113,6 +127,7 @@ export default {
     moment: moment(),
     budget: {},
     showModalCreateClient: false,
+    showModalCreateProduct: false,
     products: [],
     clients: [],
     client: {},
@@ -188,6 +203,10 @@ export default {
         console.log("load clients.");
         this.clients = clients;
       });
+      this.fetchProducts().then((products) => {
+      console.log("load products.");
+      this.products = products;
+    });
     },
     async handleSaveBudget() {
       try {

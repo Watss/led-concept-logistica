@@ -108,4 +108,11 @@ class ProductController extends Controller
             "products" => $products
         ]);
     }
+
+    public function saveProductJson(ProductStoreRequest $request){
+        $product = Product::create($request->validated());
+        $product->temporary = true;
+        $product->update();
+        return $product;
+    }
 }

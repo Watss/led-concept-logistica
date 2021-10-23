@@ -8,6 +8,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\UserController;
+use App\Models\Budget;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -50,3 +51,5 @@ Route::get('reports/budget',[ReportsController::class,'budgetReport'])->name('re
 Route::get('reports/client',[ReportsController::class,'clientReport'])->name('reports.client');
 
 Route::get('print-budget/{budget}',[BudgetController::class, 'print'])->name('budgets.print');
+
+Route::post('product-store-json',[ProductController::class, 'saveProductJson'])->name('product-store-json');
