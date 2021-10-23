@@ -66,6 +66,11 @@ class Budget extends Model
         return $this->hasMany(\App\Models\DetailsBudget::class)->with('Product');
     }
 
+    public function products()
+    {
+        return $this->belongsToMany(\App\Models\Product::class,'details_budgets');
+    }
+
     public function client()
     {
         return $this->belongsTo(\App\Models\Client::class);
