@@ -28,10 +28,12 @@ class BudgetController extends Controller
         
         $products = Product::all();
         
-        return view('budget.create',compact('products','id'));
+        return redirect()->route('budget.edit',$id);
     }
 
     public function store(BudgetStoreRequest $request){
+
+        
         $budget = Budget::create($request->except('products'));
 
         $this->storeDetails($request->products, $budget);
@@ -66,6 +68,18 @@ class BudgetController extends Controller
         ]);
     }
 
+    public function deleteProduct(HttpRequest $request , $id){
+
+        
+        $product = DetailsBudget::where('product_id',$id);
+
+        return response()->json([
+            "success" => $product->delete()
+        ]);
+    
+
+    }
+
     private function storeDetails(Budget $budget,$products){
 
 
@@ -85,12 +99,13 @@ class BudgetController extends Controller
     public function getBBudget($id){
 
         $budget =  Budget::find($id) ;
-
+    
         return response()->json([
             "success" => true,
             "budget" => [
                 'detail' => $budget,
-                'products' => $budget->detailsBudgets()->get()->toArray()
+                'products' => $budget->detailsBudgets()->get()->toArray(),
+                'client' => $budget->client
             ]
         ]);
     }

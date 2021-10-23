@@ -20,6 +20,7 @@
                   type="button"
                   class="btn btn-primary m-1 text-white"
                   style="border-radius: 20px"
+                  :disabled="saveDisabled"
                 >
                   Guardar
                 </button>
@@ -28,6 +29,8 @@
 
 <script>
 export default {
+
+  props:['saveDisabled']
 
 }
 </script>
