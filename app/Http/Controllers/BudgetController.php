@@ -51,7 +51,9 @@ class BudgetController extends Controller
 
         $products = Product::all();
         
-        return view('budget.create',compact('products','id'));
+        $budget = Budget::find($id);
+        
+        return view('budget.create',compact('products','id','budget'));
     }
 
     public function update(HttpRequest $request, Budget $budget){
@@ -108,5 +110,35 @@ class BudgetController extends Controller
                 'client' => $budget->client
             ]
         ]);
+    }
+
+    public function destroy($id){
+
+        $budget = Budget::find($id) ;
+        
+        $budget->products()->detach();
+
+        $budget->delete();
+
+        return response()->json([
+            "success" => true
+        ]);
+
+
+    }
+
+    public function copy(Budget $budget){
+
+        $clone = $budget->replicate();
+        $clone->push();
+        $clone->save();
+
+        $budget->detailsBudgets->map( function($product) use ($clone) {
+            $newProduct = $product->replicate();
+            $newProduct->budget_id = $clone->id;
+            $newProduct->save();
+            $newProduct->push();
+            $newProduct->save();
+        });
     }
 }

@@ -84,10 +84,10 @@
                             </td>
                             <td class="d-none d-xl-table-cell">
                                 {{ $budget->budget_statuses_id ? $budget->budget_statuses_id : '--' }}</td>
-                            <td class="d-none d-xl-table-cell">{{ $budget->created_at }}</td>
+                            <td class="d-none d-xl-table-cell">{{ $budget->updated_at->diffForHumans(now(),\Carbon\CarbonInterface::DIFF_ABSOLUTE)}} </td>
                             <td class="d-none d-xl-table-cell text-center">
                                 <a style="border-radius: 20px;" role="button" class="btn text-white btn-primary br-1 "
-                                    href="{{ route('budgets.edit', $budget->id) }}">Ver</a>
+                                    href="{{ route('budget.edit', $budget->id) }}">Ver</a>
                             </td>
                             {{-- <td class="text-center">
                                 <div class="btn-group">

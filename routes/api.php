@@ -21,6 +21,7 @@ Route::resource('budgets', BudgetController::class);
 Route::get('products/search', [ProductController::class,'searchProduct'])->name('products.search');
 Route::get('clients/search', [ClientController::class,'searchClient'])->name('clients.search');
 Route::get('budget_get/{id}', [BudgetController::class,'getBBudget'])->name('budget.get');
-Route::delete('budget/{id}', [BudgetController::class,'deleteProduct'])->name('budget.delete');
+// Route::delete('budget/{id}', [BudgetController::class,'deleteProduct'])->name('budget.delete');
 
 Route::delete('budget/products/{id}', [BudgetController::class,'deleteProduct'])->name('budget.product.delete');
+Route::get('budget/copy/{budget}', [BudgetController::class,'copy'])->name('budget.copy');

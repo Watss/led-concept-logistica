@@ -137,7 +137,6 @@ export default {
     async handleSaveClient() {
       try {
         const response = await axios.post("/clients", this.form);
-        console.log(response);
         console.log("client saved.");
         this.$emit("close");
         this.$emit("saved");

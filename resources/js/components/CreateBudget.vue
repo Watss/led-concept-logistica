@@ -10,7 +10,11 @@
                 <div class="text-muted">Actualizado {{ moment.fromNow() }}</div>
               </div>
               <div class="col d-flex justify-content-end">
-                <actions-budget v-on:save="handleSaveBudget" :saveDisabled="!client"></actions-budget>
+                <actions-budget
+                  v-on:save="handleSaveBudget"
+                  v-on:copy="handleCopyBudget"
+                  :saveDisabled="!client"
+                ></actions-budget>
               </div>
             </div>
             <div class="row">
@@ -98,6 +102,9 @@
             </div>
           </div>
         </div>
+        <button class="btn btn-sm btn-outline-danger" @click="dialog = true">
+          Eliminar cotización
+        </button>
       </div>
     </div>
     <modal-client
@@ -124,6 +131,37 @@
         </v-btn>
       </template>
     </v-snackbar>
+    <v-dialog v-model="dialog" max-width="290">
+      <v-card>
+        <v-card-title class="text-h5"> ¿Estás seguro? </v-card-title>
+
+        <v-card-text>
+          Esta acción no se puede deshacer. Esto eliminará permanentemente la
+          cotización.
+        </v-card-text>
+        <v-card-text>
+          <v-text-field filled dense v-model="confirm_delete"></v-text-field>
+          Escriba {{ id }} para confirmar.
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn color="green darken-1" text @click="dialog = false">
+            Cancelar
+          </v-btn>
+
+          <v-btn
+            color="green darken-1"
+            text
+            @click="deleteBudget"
+            :disabled="confirm_delete == id ? false : true"
+          >
+            Aceptar
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -135,13 +173,14 @@ import ModalClient from "./modalClient.vue";
 import ModalProduct from "./modalProduct.vue";
 import moment from "moment";
 export default {
-  props: ["id"],
+ props: ["id", "budgets_detail"],
   components: { ActionsBudget, ListProducts, ModalClient, ModalProduct },
   data: () => ({
     snackbar: {
       visible: false,
       text: ``,
     },
+    dialog: false,
     moment: moment(),
     budget: {},
     showModalCreateClient: false,
@@ -157,9 +196,11 @@ export default {
       total: 0,
       neto: 0,
     },
+    confirm_delete: null,
   }),
   mounted() {
     this.moment.locale("es");
+    this.moment = moment(this.budgets_detail.updated_at);
     this.fetchProducts().then((products) => {
       console.log("load products.");
       this.products = products;
@@ -167,10 +208,9 @@ export default {
 
     this.fetchClients().then((clients) => {
       console.log("load clients.");
-      console.log(clients);
       this.clients = clients;
     });
-    
+
     this.fetchBudget().then((budget) => {
       console.log("load budget.");
       console.log(budget);
@@ -195,6 +235,8 @@ export default {
       this.client = budget.client;
 
       this.totals = this.setTotals(this.productsSelected);
+
+
     });
   },
   watch: {
@@ -205,6 +247,7 @@ export default {
       ];
 
       this.totals = this.setTotals(this.productsSelected);
+      this.product = null
 
       this.updateBudget().then((res) => {
         console.log("product added");
@@ -213,6 +256,8 @@ export default {
       this.fetchBudget().then((res) => {
         console.log("products loaded");
       });
+
+
     },
   },
   methods: {
@@ -243,7 +288,7 @@ export default {
     handleDeleteListProducts(payload) {
       if (confirm("¿Esta seguro que desea eliminar este producto?")) {
         axios
-          .delete("/api/budget/" + payload[0].id)
+          .delete("/api/budget/products/" + payload[0].id)
           .then((res) => {
             console.log(res);
             this.productsSelected = this.productsSelected.filter(
@@ -256,7 +301,7 @@ export default {
             console.log("item deleted.");
           })
           .catch((err) => {
-            console.log(err);
+            console.log("error item delete", err);
           });
       }
     },
@@ -346,6 +391,35 @@ export default {
         minimumFractionDigits: 0,
       });
       return formatter.format(value);
+    },
+    deleteBudget() {
+      axios
+        .delete("/api/budgets/" + this.id)
+        .then((res) => {
+          window.location.href = "../";
+          console.log("budget deleted.");
+        })
+        .catch((err) => {
+          console.log(err, "error delete budget");
+        });
+    },
+    handleCopyBudget() {
+      if (confirm("¿Desea duplicar esta cotización?")) {
+        axios
+          .get("/api/budget/copy/" + this.id)
+          .then((res) => {
+            console.log(res);
+            console.log("budget copy.");
+            setTimeout(() => {
+              this.snackbar.visible = true;
+              this.snackbar.text = "Cotización duplicada.";
+              window.location.href = "../";
+            }, 2000);
+          })
+          .catch((err) => {
+            console.log(err, "error copy budget");
+          });
+      }
     },
   },
 };
