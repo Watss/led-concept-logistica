@@ -20,7 +20,7 @@
                         <th>#</th>
                         <th class="d-none d-xl-table-cell">Sku</th>
                         <th class="d-none d-xl-table-cell">Nombre</th>
-                        <th class="d-none d-xl-table-cell">Tipo producto</th>
+                        <th class="d-none d-xl-table-cell">Tipo</th>
                         <th class="d-none d-xl-table-cell">Precio</th>
                         <th class="text-center">Acciones</th>
                     </tr>
