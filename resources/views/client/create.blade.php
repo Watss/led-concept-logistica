@@ -80,7 +80,7 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-end">
-                    <button type="submit" class="btn btn-dark float-right">Guardar</button>
+                    <button type="submit" class="btn btn-dark float-right text-white">Guardar</button>
                 </div>
             </form>
         </div>

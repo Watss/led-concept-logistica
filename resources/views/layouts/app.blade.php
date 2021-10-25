@@ -113,7 +113,7 @@
                                 data-bs-toggle="dropdown">
                                 <img src="https://ui-avatars.com/api/?rounded=true&size=32"
                                     class=" img-fluid rounded me-1" alt="Charles Hall" /> <span class="text-dark">
-                                    {{ Auth::user() && Auth::user()->name }}</span>
+                                    {{ Auth::user()->name }}</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
                                 <a class="dropdown-item " href="{{ route('logout') }}" onclick="event.preventDefault();
