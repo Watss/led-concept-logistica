@@ -8,8 +8,8 @@
         <div class="m-1">
           <div v-if="props.item.img">
             <img
-              width="60"
-              height="60"
+              width="50"
+              height="50"
               :src="'/'+props.item.img"
               alt=""
               style="border-radius: 5px"
@@ -209,8 +209,8 @@ export default {
 }
 
 .no-image {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   border-radius: 5px;
   display: flex;
   justify-content: center;
