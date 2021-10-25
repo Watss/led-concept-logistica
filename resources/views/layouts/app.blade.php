@@ -111,7 +111,7 @@
 
                             <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#"
                                 data-bs-toggle="dropdown">
-                                <img src="https://ui-avatars.com/api/?rounded=true&size=32"
+                                <img src="https://ui-avatars.com/api/?rounded=true&size=32&name={{Auth::user()->name }}"
                                     class=" img-fluid rounded me-1" alt="Charles Hall" /> <span class="text-dark">
                                     {{ Auth::user()->name }}</span>
                             </a>
@@ -160,9 +160,9 @@
         <li class="list-inline-item">
          <a class="text-muted" href="https://adminkit.io/" target="_blank">Privacy</a>
         </li> -->
-                                <li class="list-inline-item">
+                                {{-- <li class="list-inline-item">
                                     <a class="text-muted" href="https://adminkit.io/" target="_blank">Ayuda</a>
-                                </li>
+                                </li> --}}
                             </ul>
                         </div>
                     </div>
