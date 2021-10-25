@@ -12,13 +12,11 @@
                     <!-- Session Status -->
                     <x-auth-session-status class="mb-4" :status="session('status')" />
 
-                    <!-- Validation Errors -->
-                    <x-auth-validation-errors class="mb-4" :errors="$errors" />
-
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
                         <div class="mb-4 text-center">
-                            <img src="https://www.ledconcept.cl/new/wp-content/uploads/2018/02/Logo-led-concept.png" alt="">
+                            <img src="https://www.ledconcept.cl/new/wp-content/uploads/2018/02/Logo-led-concept.png"
+                                alt="">
                         </div>
                         <!-- Email Address -->
                         <div>
@@ -32,10 +30,17 @@
                         <div class="mt-4">
                             <x-label class="form-label" for="password" :value="__('Password')" />
 
-                            <x-input id="password" class="form-control block mt-1 w-full" type="password"
-                                name="password" required autocomplete="current-password" />
+                            <x-input id="password" class="form-control block mt-1 w-full" type="password" name="password"
+                                required autocomplete="current-password" />
                         </div>
 
+                        <!-- Validation Errors -->
+                        @if (count($errors) > 0)
+
+                            <div class="alert alert-warning mt-4" role="alert">
+                                {{ $errors->first('email') }}
+                            </div>
+                        @endif
 
 
                         <div class="flex items-center justify-end mt-4 d-grid gap-2">
