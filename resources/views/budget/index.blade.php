@@ -9,4 +9,8 @@
             </a>
         @endcan
     </div>
+
+
+        <livewire:budgets-report></livewire:budgets-report>
+
 </x-app-layout>
