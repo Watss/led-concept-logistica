@@ -51,6 +51,8 @@
                     </div>
                 </div>
             </div>
+
+            @if (count($budgets) >= 1)
             <table class="table table-hover my-0">
                 <thead>
                     <tr>
@@ -115,6 +117,10 @@
 
                 </tbody>
             </table>
+            @else
+                <div class="text-center text-muted">No hay cotizaciones creadas.</div>
+            @endif
+           
             <div class="d-flex justify-content-end mt-4">
                 {{ $budgets->links() }}
             </div>
