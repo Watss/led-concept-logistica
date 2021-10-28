@@ -60,7 +60,7 @@
                             <i class="fas fa-boxes"></i> <span class="align-middle">Productos</span>
                         </a>
                     </li>
-                    <li class="sidebar-item {{ Request::is('budget*') ? 'active' : '' }}">
+                    <li class="sidebar-item {{ Request::is('budget/*') ? 'active' : '' }}">
                         <a class="sidebar-link " href="{{ route('budget.index') }}">
                             <i class="fas fa-briefcase"></i> <span class="align-middle">Cotizaciones</span>
                         </a>

@@ -91,9 +91,11 @@ class BudgetStatusController extends Controller
      */
     public function destroy(BudgetStatus $budgetStatus)
     {
+       if($budgetStatus->id <= 5){
+        Alert::delete('No puedes eliminar este estado');
+       }
         $budgetStatus->delete();
         Alert::success('Eliminado Correctamente');
-
         return redirect()->route('budget-status.index');
     }
 

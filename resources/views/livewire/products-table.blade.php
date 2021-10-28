@@ -28,7 +28,6 @@
                 <tbody>
                     @foreach ($products as $product)
                         <tr>
-
                             <td style="width: 90px;padding: 5px;"">
 
                             @if (empty($product->image))

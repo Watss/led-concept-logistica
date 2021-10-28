@@ -48,11 +48,13 @@
                                         @else
                                         <a class="dropdown-item" href="{{route('budget-status.edit',$status)}}">Editar</a>
 
-                                        <form method="POST" action="{{route('budget-status.destroy',$status)}}">
-                                            @method('DELETE')
-                                            @csrf
-                                            <button type="submit" class="dropdown-item">Eliminar</button>
-                                        </form>
+                                            @if ($status->id > 5)
+                                                <form method="POST" action="{{route('budget-status.destroy',$status)}}">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <button type="submit" class="dropdown-item">Eliminar</button>
+                                                </form>
+                                            @endif
                                         @endif
 
 
