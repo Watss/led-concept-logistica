@@ -18,10 +18,11 @@
               </div>
             </div>
             <div class="row">
-              <v-col cols="12" class="pb-0">
+              <v-col cols="6" class="pb-0">
                 <v-autocomplete
                   v-model="client"
                   :items="clients"
+                  
                   solo
                   dense
                   label="Selección de Cliente"
@@ -40,6 +41,15 @@
                 >
                 <br />
               </v-col>
+              <v-col cols="6" class="pb-0">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Comentario"
+                  v-model="reference"
+                  style="padding: 10px"
+                />
+              </v-col>
             </div>
             <!-- <div class="row">
               <div class="col text-center p-4">
@@ -52,6 +62,8 @@
                   v-model="product"
                   :items="products"
                   class="form-control"
+                  :search-input.sync="searchValueProduct"
+                  @change="searchValueProduct=''"
                   solo
                   dense
                   item-text="name"
@@ -166,9 +178,11 @@ export default {
       visible: false,
       text: ``,
     },
+    searchValueProduct: null,
     dialog: false,
     moment: moment(),
     budget: {},
+    reference: null,
     showModalCreateClient: false,
     products: [],
     clients: [],
@@ -198,8 +212,6 @@ export default {
 
     this.fetchBudget().then((budget) => {
       console.log("load budget.");
-      console.log(budget);
-
       this.moment = moment(budget.updated_at);
       this.moment.locale("es");
       this.budget = budget;
@@ -210,18 +222,16 @@ export default {
         amount: el.quantity ? el.quantity : 1,
         description: el.product.name,
         price: el.product_price,
-        desc: 0,
-        total: el.product_price * 1,
-        actions: "1%",
-        name: el.product.name,
-        total_desc: 0,
+        desc: el.discount,
+        total: el.total,
+        actions: "--",
+        total_desc : el.discount_price,
+        name: el.product.name
       }));
 
       this.client = budget.client;
 
       this.totals = this.setTotals(this.productsSelected);
-
-
     });
   },
   watch: {
@@ -231,18 +241,9 @@ export default {
         this.normalizeDatatable(val),
       ];
 
+      console.log(this.productsSelected);
+
       this.totals = this.setTotals(this.productsSelected);
-      this.product = null
-
-      this.updateBudget().then((res) => {
-        console.log("product added");
-      });
-
-      this.fetchBudget().then((res) => {
-        console.log("products loaded");
-      });
-      
-      
     },
   },
   methods: {
@@ -271,7 +272,7 @@ export default {
         axios
           .delete("/api/budget/products/" + payload[0].id)
           .then((res) => {
-            console.log(res);
+
             this.productsSelected = this.productsSelected.filter(
               (element, index) => index !== payload[1]
             );
@@ -287,11 +288,16 @@ export default {
       }
     },
     handleChangeListProducts(arr, payload) {
-      this.productsSelected = arr.map((el) => ({
-        ...el,
-        total: el.price * el.amount - el.total * (el.desc / 100),
-        total_desc: el.total * (el.desc / 100),
-      }));
+      this.productsSelected = arr.map((el) => {
+        const total = el.price * el.amount;
+        const discount = total * (el.desc / 100);
+
+        return {
+          ...el,
+          total: total - discount,
+          total_desc: discount,
+        };
+      });
 
       this.totals = this.setTotals(this.productsSelected);
       console.log("list amount or desc changend");
@@ -300,13 +306,15 @@ export default {
       try {
         const res = await axios.put(`/api/budgets/${this.id}`, {
           client_id: this.client.id,
-          reference: "fd",
+          reference: this.reference,
           user_id: 2,
           products: this.productsSelected.map((el) => ({
             product_id: el.id,
             product_price: el.price,
             product_sku: el.sku,
             quantity: el.amount,
+            discount: el.desc,
+            discount_price: el.total_desc,
             total: el.total,
           })),
           neto: this.totals.neto,
@@ -329,7 +337,6 @@ export default {
     async fetchProducts() {
       try {
         const res = await axios.get("/api/products/search");
-        console.log(res);
         return res.data.products;
       } catch (error) {
         console.log("failed load products.");
@@ -351,19 +358,20 @@ export default {
         total: arr.reduce((sum, value) => sum + value.total, 0),
       };
     },
-    normalizeDatatable(val) {
+    normalizeDatatable(product) {
+      console.log(product,'log noramlize');
       return {
-        id: val.id,
-        img: val.image,
-        sku: val.sku,
-        amount: val.amount ? val.amount : 1,
-        description: val.description,
-        price: val.price,
-        desc: 0,
-        total: val.price * 1,
-        actions: "1%",
-        name: val.name,
-        total_desc: 0,
+        id: product.id,
+        img: product.image,
+        sku: product.sku,
+        amount: product.amount ? product.amount : 1,
+        description: product.description,
+        price: product.price,
+        desc: product.discount,
+        total: product.price * 1,
+        actions: "--",
+        name: product.name,
+        total_desc : 0 
       };
     },
     formatPrice(value) {

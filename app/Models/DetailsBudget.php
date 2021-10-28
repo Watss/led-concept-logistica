@@ -21,6 +21,8 @@ class DetailsBudget extends Model
         'product_price',
         'product_sku',
         'total',
+        'discount',
+        'discount_price'
     ];
 
     /**
@@ -34,6 +36,8 @@ class DetailsBudget extends Model
         'budget_id' => 'integer',
         'product_price' => 'double',
         'total' => 'double',
+        'discount' => 'integer',
+        'discount_price' => 'integer'
     ];
 
 
