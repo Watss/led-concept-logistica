@@ -21,6 +21,8 @@ class CreateDetailsBudgetsTable extends Migration
             $table->foreignId('budget_id')->constrained();
             $table->integer('quantity');
             $table->double('product_price');
+            $table->integer('discount')->default(0);
+            $table->integer('discount_price')->default(0);
             $table->string('product_sku', 255);
             $table->double('total');
             $table->timestamps();
