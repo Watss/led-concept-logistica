@@ -127,7 +127,7 @@
     <modal-product
       :show="showModalCreateProduct"
       v-on:close="showModalCreateProduct = false"
-      v-on:saved="showModalCreateProduct"
+      v-on:saved="showModalCreateProduct = false"
     />
     <v-snackbar v-model="snackbar.visible">
       {{ snackbar.text }}
