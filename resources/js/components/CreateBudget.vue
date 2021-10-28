@@ -185,7 +185,7 @@ import ModalClient from "./modalClient.vue";
 import ModalProduct from "./modalProduct.vue";
 import moment from "moment";
 export default {
- props: ["id", "budgets_detail"],
+ props: ["id", "budgets_detail","user"],
   components: { ActionsBudget, ListProducts, ModalClient, ModalProduct },
   data: () => ({
     snackbar: {
@@ -219,6 +219,8 @@ export default {
       console.log("load products.");
       this.products = products;
     });
+
+    this.reference = this.budgets_detail.reference 
 
     this.fetchClients().then((clients) => {
       console.log("load clients.");
@@ -326,7 +328,7 @@ export default {
         const res = await axios.put(`/api/budgets/${this.id}`, {
           client_id: this.client.id,
           reference: this.reference,
-          user_id: 2,
+          user_id: this.user,
           products: this.productsSelected.map((el) => ({
             product_id: el.id,
             product_price: el.price,
