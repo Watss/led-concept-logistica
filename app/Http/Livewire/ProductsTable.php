@@ -14,9 +14,9 @@ class ProductsTable extends Component
     public function render()
     {
         return view('livewire.products-table', [
-            'products' => Product::orderBy('created_at', 'desc')->search($this->search)->paginate(10),
+            'products' => Product::temporary(1)->orderBy('created_at', 'desc')->search($this->search)->paginate(10),
             'search' => $this->search
         ]);
     }
-   
+
 }

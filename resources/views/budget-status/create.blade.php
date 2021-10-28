@@ -14,7 +14,7 @@
                             <div class="row">
                                 <div class="mb-3 col-md-12">
                                     <label class="form-label">Nombre</label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                    <input type="text"  disabled="@if($budgetStatus->id <= 5) true @else false  @endif" class="form-control @error('name') is-invalid @enderror"
                                         name="name" value="{{ old('name') ?? ($budgetStatus->name ?? '') }}">
                                     @error('name')
                                         <div class="invalid-feedback">
@@ -39,7 +39,7 @@
                             <br>
 
                             <div class="d-grid gap-2 col-12 mx-auto">
-                                <button type="submit" class="btn btn-dark  float-right">Guardar</button>
+                                <button type="submit" class="btn btn-dark  text-white float-right">Guardar</button>
                             </div>
                         </form>
 
