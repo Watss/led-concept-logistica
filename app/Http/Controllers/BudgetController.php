@@ -25,15 +25,15 @@ class BudgetController extends Controller
         $this->storeDetails( $budget,[]);
 
         $budget->detailsBudgets;
-        
+
         $products = Product::all();
-        
+
         return redirect()->route('budget.edit',$id);
     }
 
     public function store(BudgetStoreRequest $request){
 
-        
+        $request->input('');
         $budget = Budget::create($request->except('products'));
 
         $this->storeDetails($request->products, $budget);
@@ -47,19 +47,19 @@ class BudgetController extends Controller
     }
 
     public function edit(Budget $b,$id){
-        
+
 
         $products = Product::all();
-        
+
         $budget = Budget::find($id);
-        
+
         return view('budget.create',compact('products','id','budget'));
     }
 
     public function update(HttpRequest $request, Budget $budget){
 
 
-        
+
         $budget->update($request->except('products'));
 
         $this->storeDetails($budget,$request->products);
@@ -72,13 +72,13 @@ class BudgetController extends Controller
 
     public function deleteProduct(HttpRequest $request , $id){
 
-        
+
         $product = DetailsBudget::where('product_id',$id);
 
         return response()->json([
             "success" => $product->delete()
         ]);
-    
+
 
     }
 
@@ -101,7 +101,7 @@ class BudgetController extends Controller
     public function getBBudget($id){
 
         $budget =  Budget::find($id) ;
-    
+
         return response()->json([
             "success" => true,
             "budget" => [
@@ -115,7 +115,7 @@ class BudgetController extends Controller
     public function destroy($id){
 
         $budget = Budget::find($id) ;
-        
+
         $budget->products()->detach();
 
         $budget->delete();
@@ -140,5 +140,6 @@ class BudgetController extends Controller
             $newProduct->push();
             $newProduct->save();
         });
+        return $clone->id;
     }
 }
