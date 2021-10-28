@@ -39,7 +39,7 @@
                             <br>
 
                             <div class="d-grid gap-2 col-12 mx-auto">
-                                <button type="submit" class="btn btn-dark  float-right">Guardar</button>
+                                <button type="submit" class="btn btn-dark text-white float-right">Guardar</button>
                             </div>
                         </form>
 
