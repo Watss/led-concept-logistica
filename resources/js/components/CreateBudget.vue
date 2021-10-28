@@ -45,7 +45,7 @@
                 <input
                   type="text"
                   class="form-control"
-                  placeholder="Comentario"
+                  placeholder="Otros"
                   v-model="reference"
                   style="padding: 10px"
                 />
@@ -220,7 +220,7 @@ export default {
       this.products = products;
     });
 
-    this.reference = this.budgets_detail.reference 
+    this.reference = this.budgets_detail.reference
 
     this.fetchClients().then((clients) => {
       console.log("load clients.");
