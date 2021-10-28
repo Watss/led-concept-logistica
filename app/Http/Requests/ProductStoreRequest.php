@@ -26,10 +26,10 @@ class ProductStoreRequest extends FormRequest
         return [
             'name' => ['required', 'string'],
             'sku' => ['required', 'string'],
-            'barcode' => ['required', 'string'],
+            'barcode' => ['string'],
             'price' => ['required', 'numeric'],
-            'type' => [ 'string'],
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+            'type' => ['string'],
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg',
         ];
     }
 }

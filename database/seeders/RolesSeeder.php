@@ -45,7 +45,7 @@ class RolesSeeder extends Seeder
         $Vendedor=Role::find(2);
 
         //usuarios
-        $userAdmin=User::find(1);
+        $userAdmin=User::factory()->create(['email'=>'admin@gmail.com']);
         $userVendedor=User::factory()->create(['email'=>'vendedor@gmail.com']);
         //asignacion de roles
         $userAdmin->assignRole($Admin);
