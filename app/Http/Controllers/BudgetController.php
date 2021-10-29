@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\BudgetStoreRequest;
 use App\Models\Budget;
+use App\Models\BudgetStatus;
 use App\Models\DetailsBudget;
 use App\Models\Product;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -26,7 +27,7 @@ class BudgetController extends Controller
 
         $budget->detailsBudgets;
 
-        $products = Product::all();
+
 
         return redirect()->route('budget.edit',$id);
     }
@@ -53,7 +54,9 @@ class BudgetController extends Controller
 
         $budget = Budget::find($id);
 
-        return view('budget.create',compact('products','id','budget'));
+        $statuses = BudgetStatus::all();
+
+        return view('budget.create',compact('products','id','budget', 'statuses'));
     }
 
     public function update(HttpRequest $request, Budget $budget){
@@ -105,6 +108,7 @@ class BudgetController extends Controller
         return response()->json([
             "success" => true,
             "budget" => [
+                'status' => $budget->status->id,
                 'detail' => $budget,
                 'products' => $budget->detailsBudgets()->get()->toArray(),
                 'client' => $budget->client

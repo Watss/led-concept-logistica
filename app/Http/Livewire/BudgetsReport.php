@@ -28,7 +28,11 @@ class BudgetsReport extends Component
     public function render()
     {
         return view('livewire.budgets-report', [
-            'budgets' => Budget::with('client', 'user','statusTrashed')->search($this->search)->dates([$this->start_date, $this->end_date])->status($this->status)->orderBy('created_at', 'desc')->paginate(10),
+            'budgets' => Budget::with('client', 'user','statusTrashed')
+            ->search($this->search)
+            ->dates([$this->start_date, $this->end_date])
+            ->status($this->status)
+            ->orderBy('created_at', 'desc')->paginate(10),
             'statuses' => BudgetStatus::withTrashed()->get(),
             'search' => $this->search
         ]);

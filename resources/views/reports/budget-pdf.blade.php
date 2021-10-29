@@ -75,7 +75,7 @@
                         <tr>
                             <th>id</th>
                             <th class="">Cliente</th>
-                            <th class="">Encargado</th>
+                            <th class="">Ejecutivo</th>
                             <th class="      ">Neto</th>
                             <th class="">Iva</th>
                             <th class="">Total</th>

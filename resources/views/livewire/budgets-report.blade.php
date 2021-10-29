@@ -58,7 +58,7 @@
                         <tr>
                             <th>#</th>
                             <th class="">Cliente</th>
-                            <th class="">Encargado</th>
+                            <th class="">Ejecutivo</th>
 
                             <th class=" d-none d-xl-table-cell">Productos
                             <th class="">Total</th>
@@ -71,32 +71,88 @@
                     </thead>
                     <tbody>
                         @foreach ($budgets as $budget)
-                            <tr>
-                                <td class="">{{ $budget->id }}</td>
-                                <td class="">{{ $budget->client ? $budget->client->name : '--' }}</td>
-                                <td class="  
-                                ">
-                                    {{ $budget->client ? $budget->user->name : '--' }}</td>
-                                <td class="d-none d-xl-table-cell text-right">{{ $budget->detailsBudgets->count() }}
-                                </td>
-                                <td class="d-none
-                                d-xl-table-cell text-right">
-                                    {{ $budget->netoAppends }}</td>
+                            @if (auth()->user()->hasRole('Vendedor'))
+                                @if ($budget->user->hasRole('Vendedor'))
+                                    <tr>
+                                        <td class="">{{ $budget->id }}</td>
+                                        <td class="">
+                                            {{ $budget->client ? $budget->client->name : '--' }}</td>
+                                        <td class="
+                                    ">
+                                            {{ $budget->client ? $budget->user->name : '--' }}</td>
+                                        <td class="d-none d-xl-table-cell text-right">
+                                            {{ $budget->detailsBudgets->count() }}
+                                        </td>
+                                        <td
+                                            class="d-none
+                                    d-xl-table-cell text-right">
+                                            {{ $budget->netoAppends }}</td>
 
-                                {{-- <td class="text-right">  <span class="badge" style="background-color:{{ $budget->statusTrashed->color }} ">{{ $budget->statusTrashed->name }} </span> --}}
-                                </td>
-                                <td class="d-none d-xl-table-cell">
-                                    <span class="badge badge-secondary" style="background:{{$budget->statusTrashed->color}}">{{strtoupper($budget->statusTrashed->name) }}</span>            
-                                </td>
-                                <td class="d-none d-xl-table-cell">
-                                    {{ $budget->updated_at->diffForHumans(now(), \Carbon\CarbonInterface::DIFF_ABSOLUTE) }}
-                                </td>
-                                <td class="d-none d-xl-table-cell text-center">
-                                    <a style="border-radius: 20px;" role="button"
-                                        class="btn text-white btn-primary br-1 "
-                                        href="{{ route('budget.edit', $budget->id) }}">Ver</a>
-                                </td>
-                                {{-- <td class="text-center">
+                                        {{-- <td class="text-right">  <span class="badge" style="background-color:{{ $budget->statusTrashed->color }} ">{{ $budget->statusTrashed->name }} </span> --}}
+                                        </td>
+                                        <td class="d-none d-xl-table-cell">
+                                            <span class="badge badge-secondary"
+                                                style="background:{{ $budget->statusTrashed->color }}">{{ strtoupper($budget->statusTrashed->name) }}</span>
+                                        </td>
+                                        <td class="d-none d-xl-table-cell">
+                                            {{ $budget->updated_at->diffForHumans(now(), \Carbon\CarbonInterface::DIFF_ABSOLUTE) }}
+                                        </td>
+                                        <td class="d-none d-xl-table-cell text-center">
+                                            <a style="border-radius: 20px;" role="button"
+                                                class="btn text-white btn-primary br-1 "
+                                                href="{{ route('budget.edit', $budget->id) }}">Ver</a>
+                                        </td>
+                                        {{-- <td class="text-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-light" style="border-radius: 20px;
+                                        padding: 5px;
+                                        display: flex;" data-bs-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                            <i class="fa fa-ellipsis-v"></i>
+                                        </button>
+                                        <div class="dropdown-menu"
+                                            style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(-95px, 35px, 0px);"
+                                            data-popper-placement="bottom-end">
+                                            <a class="dropdown-item"
+                                                href="#">Editar</a>
+
+                                            <a class="dropdown-item" href="#">Eliminar</a>
+
+                                        </div>
+                                    </div>
+                                </td> --}}
+                                    </tr>
+                                @endif
+                            @else
+                                <tr>
+                                    <td class="">{{ $budget->id }}</td>
+                                    <td class="">{{ $budget->client ? $budget->client->name : '--' }}
+                                    </td>
+                                    <td class="
+                                ">
+                                        {{ $budget->client ? $budget->user->name : '--' }}</td>
+                                    <td class="d-none d-xl-table-cell text-right">
+                                        {{ $budget->detailsBudgets->count() }}
+                                    </td>
+                                    <td class="d-none
+                                d-xl-table-cell text-right">
+                                        {{ $budget->netoAppends }}</td>
+
+                                    {{-- <td class="text-right">  <span class="badge" style="background-color:{{ $budget->statusTrashed->color }} ">{{ $budget->statusTrashed->name }} </span> --}}
+                                    </td>
+                                    <td class="d-none d-xl-table-cell">
+                                        <span class="badge badge-secondary"
+                                            style="background:{{ $budget->statusTrashed->color }}">{{ strtoupper($budget->statusTrashed->name) }}</span>
+                                    </td>
+                                    <td class="d-none d-xl-table-cell">
+                                        {{ $budget->updated_at->diffForHumans(now(), \Carbon\CarbonInterface::DIFF_ABSOLUTE) }}
+                                    </td>
+                                    <td class="d-none d-xl-table-cell text-center">
+                                        <a style="border-radius: 20px;" role="button"
+                                            class="btn text-white btn-primary br-1 "
+                                            href="{{ route('budget.edit', $budget->id) }}">Ver</a>
+                                    </td>
+                                    {{-- <td class="text-center">
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-light" style="border-radius: 20px;
                                     padding: 5px;
@@ -115,7 +171,8 @@
                                     </div>
                                 </div>
                             </td> --}}
-                            </tr>
+                                </tr>
+                            @endif
                         @endforeach
 
 

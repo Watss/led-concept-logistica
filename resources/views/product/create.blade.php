@@ -42,16 +42,6 @@
                                         </div>
                                     @enderror
                                 </div>
-                                <div class="pt-1 pb-1 col-md-12">
-                                    <label class="form-label">Codigo de barras</label>
-                                    <input type="text" class="form-control @error('barcode') is-invalid @enderror"
-                                        name="barcode" value="{{ old('barcode') ?? ($product->barcode ?? '') }}">
-                                    @error('bardode')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
                             </div>
                             <div class="row">
                                 <div class="pt-1 pb-1 col-md-12">

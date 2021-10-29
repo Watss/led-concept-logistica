@@ -95,7 +95,7 @@
                 <tr>
                     <th>#</th>
                     <th class="___class_+?14___">Cliente</th>
-                    <th class="___class_+?15___">Encargado</th>
+                    <th class="___class_+?15___">Ejecutivo</th>
                     <th class="d-none d-xl-table-cell">Neto</th>
                     <th class="d-none d-xl-table-cell">Iva</th>
                     <th class="___class_+?18___">Total</th>
@@ -109,6 +109,37 @@
 
 
                 @forelse ($budgets as $budget)
+                    @if (auth()->user()->hasRole('Vendedor'))
+                        @if ($budget->user->hasRole('Vendedor'))
+                        <tr>
+                            <td class="___class_+?22___">{{ $budget->id }}</td>
+                            <td class="___class_+?23___">{{ $budget->client->name }}</td>
+                            <td class="___class_+?24___">{{ $budget->user->name }}</td>
+                            <td class="d-none d-xl-table-cell text-right">{{ $budget->netoAppends }}</td>
+                            <td class="d-none d-xl-table-cell text-right">{{ $budget->ivaAppends }}</td>
+                            <td class="text-right">{{ $budget->totalAppends }}</td>
+                            <td class="text-right text-uppercase"> <span class="badge uppercase" style="background-color:{{ $budget->statusTrashed->color }} ">{{ $budget->statusTrashed->name }} </span></td>
+                            <td class="d-none d-xl-table-cell">{{ $budget->created_at }}</td>
+                            <td class="text-center">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-light" style="border-radius: 20px;
+                                        padding: 5px;
+                                        display: flex;" data-bs-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">
+                                        <i class="fa fa-ellipsis-v"></i>
+                                    </button>
+                                    <div class="dropdown-menu"
+                                        style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(-95px, 35px, 0px);"
+                                        data-popper-placement="bottom-end">
+                                        <a class="dropdown-item" href="#">Ver</a>
+
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        @endif
+                    @else
                     <tr>
                         <td class="___class_+?22___">{{ $budget->id }}</td>
                         <td class="___class_+?23___">{{ $budget->client->name }}</td>
@@ -116,7 +147,7 @@
                         <td class="d-none d-xl-table-cell text-right">{{ $budget->netoAppends }}</td>
                         <td class="d-none d-xl-table-cell text-right">{{ $budget->ivaAppends }}</td>
                         <td class="text-right">{{ $budget->totalAppends }}</td>
-                        <td class="text-right"> <span class="badge" style="background-color:{{ $budget->statusTrashed->color }} ">{{ $budget->statusTrashed->name }} </span></td>
+                        <td class="text-right text-uppercase"> <span class="badge uppercase" style="background-color:{{ $budget->statusTrashed->color }} ">{{ $budget->statusTrashed->name }} </span></td>
                         <td class="d-none d-xl-table-cell">{{ $budget->created_at }}</td>
                         <td class="text-center">
                             <div class="btn-group">
@@ -136,6 +167,7 @@
                             </div>
                         </td>
                     </tr>
+                    @endif
 
                 @empty
                     <tr>
