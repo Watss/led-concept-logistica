@@ -364,8 +364,8 @@ export default {
         const res = await axios.put(`/api/budgets/${this.id}`, {
           client_id: this.client.id,
           reference: this.reference,
-          budget_statuses_id: this.budget.detail.budget_statuses_id,
           user_id: this.user,
+          budget_statuses_id: this.budget.detail.budget_statuses_id,
           products: this.productsSelected.map((el) => ({
             product_id: el.id,
             product_price: el.price,
@@ -497,7 +497,7 @@ export default {
       }
     },
     handleChangeStatus(status){
-        this.budget.detail.budget_statuses_id=status;
+        this.budget.detail.budget_statuses_id=parseInt(status);
     }
   },
 };
