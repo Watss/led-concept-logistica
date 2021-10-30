@@ -14,9 +14,12 @@
                   :statusId="budget.status"
                   :statuses="statuses"
                   :enablePrint="budget.status !== 2"
+                  :enableCopy="budget.status !== 2"
                   v-on:save="handleSaveBudget"
                   v-on:copy="handleCopyBudget"
                   :saveDisabled="!client || productsSelected.length <= 0"
+                  :is_admin="is_admin"
+                  @handleChangeStatus="handleChangeStatus"
                 ></actions-budget>
               </div>
             </div>
@@ -264,7 +267,7 @@ export default {
       this.clients = clients;
     });
 
-  
+
   },
   watch: {
     product: function name(val) {
@@ -361,6 +364,7 @@ export default {
         const res = await axios.put(`/api/budgets/${this.id}`, {
           client_id: this.client.id,
           reference: this.reference,
+          budget_statuses_id: this.budget.detail.budget_statuses_id,
           user_id: this.user,
           products: this.productsSelected.map((el) => ({
             product_id: el.id,
@@ -492,6 +496,9 @@ export default {
           });
       }
     },
+    handleChangeStatus(status){
+        this.budget.detail.budget_statuses_id=status;
+    }
   },
 };
 </script>

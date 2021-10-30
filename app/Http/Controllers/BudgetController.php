@@ -44,14 +44,12 @@ class BudgetController extends Controller
 
         $budget = Budget::find($id);
 
-        $statuses = BudgetStatus::all();
+        $statuses = BudgetStatus::status($budget->budget_statuses_id)->get();
 
         return view('budget.edit',compact('products','id','budget', 'statuses'));
     }
 
     public function update(HttpRequest $request, Budget $budget){
-
-
 
         $budget->update($request->except('products'));
 
@@ -76,9 +74,14 @@ class BudgetController extends Controller
     }
 
     private function storeDetails(Budget $budget,$products){
-     
+
         if($products)
             foreach ($products as $product) {
+
+                if ($product['discount'] >15) {
+                    $budget->update(['budget_statuses_id'=>2]);
+                }
+
                 $product['budget_id'] = $budget->id;
                 DetailsBudget::updateOrCreate(['budget_id' => $budget->id,'product_id' => $product['product_id']],$product);
             }
