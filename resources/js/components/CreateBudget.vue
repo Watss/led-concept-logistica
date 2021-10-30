@@ -264,7 +264,7 @@ export default {
       this.clients = clients;
     });
 
-  
+
   },
   watch: {
     product: function name(val) {
@@ -367,13 +367,13 @@ export default {
             product_price: el.price,
             product_sku: el.sku,
             quantity: el.amount,
-            discount: el.desc,
-            discount_price: el.total_desc,
-            total: el.total,
+            discount: Math.round(el.desc),
+            discount_price: Math.round(el.total_desc),
+            total: Math.round(el.total),
           })),
-          neto: this.totals.neto,
-          total: this.totals.total,
-          iva: this.totals.iva
+          neto: Math.round(this.totals.neto),
+          total: Math.round(this.totals.total),
+          iva: Math.round(this.totals.iva)
         });
         return res;
       } catch (error) {
@@ -392,12 +392,13 @@ export default {
             product_price: el.price,
             product_sku: el.sku,
             quantity: el.amount,
-            discount: el.desc,
-            discount_price: el.total_desc,
-            total: el.total,
+             discount: Math.round(el.desc),
+            discount_price: Math.round(el.total_desc),
+            total: Math.round(el.total),
           })),
-          neto: this.totals.neto,
-          total: this.totals.total,
+          neto: Math.round(this.totals.neto),
+          total: Math.round(this.totals.total),
+          iva: Math.round(this.totals.iva)
         });
         const { budget } = res.data;
         window.location.href = "/budget/" + budget.id + "/edit";
@@ -435,10 +436,10 @@ export default {
       const total = arr.reduce((sum, value) => sum + value.total, 0);
       const iva = total * 0.19;
       return {
-        desc: arr.reduce((sum, value) => sum + value.total_desc, 0),
-        neto: total - iva,
-        iva: iva,
-        total: total,
+        desc: Math.round(arr.reduce((sum, value) => sum + value.total_desc, 0)),
+        neto: Math.round(total - iva),
+        iva: Math.round(iva),
+        total: Math.round(total),
       };
     },
     normalizeDatatable(product) {
