@@ -28,7 +28,7 @@
       Guardar
     </button>
   </div>
-  <div class="col  justify-content-end p-3 bg-light">
+  <div v-if="statusId" class="col  justify-content-end p-3 bg-light">
     <label for="" class="pb-2 text-bold">Cambiar Estado</label>
     <select name="" id="" class="form-control">
         <option :value="status.id" v-for=" status in statuses " v-bind:key="status.id" :selected="statusId === status.id">{{status.name}}</option>
