@@ -114,7 +114,26 @@
                     </tr>
                 @endforeach
 
-
+                    <tr style="border-top: 1px solid black; padding: 0px;" class="tr-primaty-style">
+                        <td colspan="5" style="border:2px solid white; border-right: 1px solid black; padding: 2px; border-top: 1px solid black;"></td>
+                        <td class="color-primary capitalize" style="font-weight: bold; padding: 2px">Total</td>
+                        <td style="padding: 2px">$2.000</td>
+                    </tr>
+                    <tr style="border:none; padding: 0px;" class="tr-primaty-style">
+                        <td colspan="5" style="border:2px solid white; border-right: 1px solid black; padding: 2px"></td>
+                        <td class="color-primary capitalize" style="font-weight: bold; padding: 2px">Total</td>
+                        <td style="padding: 2px">$2.000</td>
+                    </tr>
+                    <tr style="border:none; padding: 0px;" class="tr-primaty-style">
+                        <td colspan="5" style="border:2px solid white; border-right: 1px solid black; padding: 2px"></td>
+                        <td class="color-primary capitalize" style="font-weight: bold; padding: 2px">Total</td>
+                        <td style="padding: 2px">$2.000</td>
+                    </tr>
+                    <tr style="border:none; padding: 0px;" class="tr-primaty-style">
+                        <td colspan="5" style="border:2px solid white; border-right: 1px solid black; padding: 2px"></td>
+                        <td class="color-primary capitalize" style="font-weight: bold; padding: 2px">Total</td>
+                        <td style="padding: 2px">$2.000</td>
+                    </tr>
 
             </tbody>
         </table>
