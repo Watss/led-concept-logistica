@@ -373,7 +373,7 @@ export default {
           })),
           neto: this.totals.neto,
           total: this.totals.total,
-          iva: this.totals.iva,
+          iva: this.totals.iva
         });
         return res;
       } catch (error) {
