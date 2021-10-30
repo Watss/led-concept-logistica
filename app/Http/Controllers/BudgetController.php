@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\BudgetStoreRequest;
 use App\Models\Budget;
+use App\Models\BudgetStatus;
 use App\Models\DetailsBudget;
 use App\Models\Product;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -17,16 +18,15 @@ class BudgetController extends Controller
     }
 
     public function create(){
-
-        return view('budget.create');
+        $products = Product::all();
+        $statuses = BudgetStatus::all();
+        return view('budget.create',compact('products', 'statuses'));
     }
 
     public function store(BudgetStoreRequest $request){
 
-
         $budget = Budget::create($request->except('products'));
 
-    
         $this->storeDetails( $budget,$request->products);
 
         $budget->detailsBudgets;
@@ -38,19 +38,21 @@ class BudgetController extends Controller
     }
 
     public function edit(Budget $b,$id){
-        
+
 
         $products = Product::all();
-        
+
         $budget = Budget::find($id);
-        
-        return view('budget.edit',compact('products','id','budget'));
+
+        $statuses = BudgetStatus::all();
+
+        return view('budget.edit',compact('products','id','budget', 'statuses'));
     }
 
     public function update(HttpRequest $request, Budget $budget){
 
 
-        
+
         $budget->update($request->except('products'));
 
         $this->storeDetails($budget,$request->products);
@@ -63,13 +65,13 @@ class BudgetController extends Controller
 
     public function deleteProduct(HttpRequest $request , $id){
 
-        
+
         $product = DetailsBudget::where('product_id',$id);
 
         return response()->json([
             "success" => $product->delete()
         ]);
-    
+
 
     }
 
@@ -91,10 +93,11 @@ class BudgetController extends Controller
     public function getBBudget($id){
 
         $budget =  Budget::find($id) ;
-    
+
         return response()->json([
             "success" => true,
             "budget" => [
+                'status' => $budget->status->id,
                 'detail' => $budget,
                 'products' => $budget->detailsBudgets()->get()->toArray(),
                 'client' => $budget->client
@@ -105,7 +108,7 @@ class BudgetController extends Controller
     public function destroy($id){
 
         $budget = Budget::find($id) ;
-        
+
         $budget->products()->detach();
 
         $budget->delete();
@@ -130,5 +133,6 @@ class BudgetController extends Controller
             $newProduct->push();
             $newProduct->save();
         });
+        return $clone->id;
     }
 }

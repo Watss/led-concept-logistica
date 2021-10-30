@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Doctrine\DBAL\Query\QueryBuilder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -44,7 +45,7 @@ class Budget extends Model
         'user_id' => 'integer',
     ];
 
-  
+
 
     public function getNetoAppendsAttribute()
     {
@@ -111,6 +112,7 @@ class Budget extends Model
 
 
     }
+
     public function scopeStatus($query, $value)
     {
         if ($value) {

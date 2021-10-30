@@ -1,10 +1,11 @@
 <template>
-  <div class="col d-flex justify-content-end">
+<div>
+<div class="col d-flex justify-content-end">
     <button
       type="button"
       class="btn btn-light m-1"
       style="border-radius: 20px"
-      :disabled="saveDisabled"
+      :disabled="saveDisabled || !(enablePrint)"
     >
       Imprimir
     </button>
@@ -27,10 +28,18 @@
       Guardar
     </button>
   </div>
+  <div class="col  justify-content-end p-3 bg-light">
+    <label for="" class="pb-2 text-bold">Cambiar Estado</label>
+    <select name="" id="" class="form-control">
+        <option :value="status.id" v-for=" status in statuses " v-bind:key="status.id" :selected="statusId === status.id">{{status.name}}</option>
+    </select>
+  </div>
+</div>
+
 </template>
 
 <script>
 export default {
-  props: ["saveDisabled"],
+  props: ["saveDisabled", "enablePrint", "statuses", "statusId"],
 };
 </script>

@@ -99,14 +99,19 @@
     </v-data-table>
     <div class="container row d-flex justify-content-end">
       <div class="col-5">
-       
-        <div class="d-flex justify-content-between">
-          <div class="mr-5">Descuento</div>
-          <div>{{ this.formatPrice(totals.desc) }}</div>
-        </div>
+
+
         <div class="d-flex justify-content-between">
           <div class="mr-5">Neto</div>
           <div>{{ this.formatPrice(totals.neto) }}</div>
+        </div>
+        <div class="d-flex justify-content-between">
+          <div class="mr-5">IVA</div>
+          <div>{{ this.formatPrice(totals.iva) }}</div>
+        </div>
+         <div class="d-flex justify-content-between">
+          <div class="mr-5">Descuento</div>
+          <div>{{ this.formatPrice(totals.desc) }}</div>
         </div>
         <br class="" />
         <div class="d-flex justify-content-between">
@@ -157,9 +162,9 @@ export default {
     },
     formatPrice(value) {
       var formatter = new Intl.NumberFormat("en-CL", {
-        style: "currency",
-        currency: "CLP",
-        minimumFractionDigits: 0,
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 0
       });
       return formatter.format(value);
     },

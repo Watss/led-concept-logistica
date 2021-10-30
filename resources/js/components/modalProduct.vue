@@ -8,6 +8,10 @@
         <v-card-text>
           <form method="POST">
             <div class="row">
+            <div class="col-md-12">
+                <label for="form-label">Foto</label>
+                <input type="file" class="form-control" name="image" @change="getImage" accept="image/*">
+            </div>
               <div class="col-md-6">
                 <label class="form-label">Nombre</label>
                 <input
@@ -52,6 +56,9 @@
                   errors.price && errors.price[0]
                 }}</span>
               </div>
+              <div class="col-md-6 justify-content-center">
+                <img :src="imageView" alt="" class="rounded img-thumbnail text-center" width="200px" heigth="200px" v-if="imageView">
+              </div>
             </div>
 
           </form>
@@ -74,7 +81,9 @@ export default {
   props: ["show"],
   data() {
     return {
+        imageView: null,
       form: {
+        image: null,
         name: null,
         sku: null,
         price: null,
@@ -85,9 +94,24 @@ export default {
     };
   },
   methods: {
+      getImage(e){
+        let image = e.target.files[0];
+        let reader = new FileReader();
+        reader.readAsDataURL(image);
+        reader.onload = e => {
+            this.imageView = e.target.result;
+            this.form.image = image;
+        }
+    },
     async handleSaveClient() {
       try {
-        const response = await axios.post("/product-store-json", this.form);
+        const formData = new FormData();
+        Object.entries(this.form).forEach( ([key, value]) => {
+            if(value){
+                formData.append(key,value);
+            }
+        });
+        const response = await axios.post("/product-store-json", formData);
         console.log(response);
         console.log("product saved.");
         this.$emit("close");

@@ -92,7 +92,7 @@ class ProductController extends Controller
         $this->authorize('edit',$product);
 
         $types = Type::all();
-        
+
         return view('product.edit', compact('product','types'));
     }
 
@@ -124,9 +124,16 @@ class ProductController extends Controller
     }
 
     public function saveProductJson(ProductStoreRequest $request){
-        $product = Product::create($request->validated());
-        $product->temporary = true;
-        $product->update();
+        $target_request = $request->validated();
+
+        $imageName = $request->name.'-'.time().'.'.$request->image->extension();
+
+        $path = $request->image->storeAs('public/images', $imageName);
+
+        $target_request['image'] = 'images/'.$imageName;
+
+        $target_request['type_id'] = null;
+        $product = Product::create($target_request);
         return $product;
     }
 }
