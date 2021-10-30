@@ -18,25 +18,16 @@ class BudgetController extends Controller
 
     public function create(){
 
-        $budget = Budget::create();
-
-        $id = $budget->id;
-
-        $this->storeDetails( $budget,[]);
-
-        $budget->detailsBudgets;
-        
-        $products = Product::all();
-        
-        return redirect()->route('budget.edit',$id);
+        return view('budget.create');
     }
 
     public function store(BudgetStoreRequest $request){
 
-        
+
         $budget = Budget::create($request->except('products'));
 
-        $this->storeDetails($request->products, $budget);
+    
+        $this->storeDetails( $budget,$request->products);
 
         $budget->detailsBudgets;
 
@@ -53,7 +44,7 @@ class BudgetController extends Controller
         
         $budget = Budget::find($id);
         
-        return view('budget.create',compact('products','id','budget'));
+        return view('budget.edit',compact('products','id','budget'));
     }
 
     public function update(HttpRequest $request, Budget $budget){
@@ -83,8 +74,7 @@ class BudgetController extends Controller
     }
 
     private function storeDetails(Budget $budget,$products){
-
-
+     
         if($products)
             foreach ($products as $product) {
                 $product['budget_id'] = $budget->id;

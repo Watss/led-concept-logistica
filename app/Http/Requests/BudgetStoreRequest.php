@@ -27,7 +27,7 @@ class BudgetStoreRequest extends FormRequest
             'neto' => ['numeric'],
             'iva' => ['numeric'],
             'total' => ['numeric'],
-            'reference' => ['string'],
+            'reference' => [''],
             'client_id' => ['required','numeric','exists:clients,id'],
             'user_id' => ['required','numeric','exists:users,id'],
             'products' => ['array','min:1'],
