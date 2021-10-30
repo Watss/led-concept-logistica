@@ -78,7 +78,7 @@ class BudgetController extends Controller
         if($products)
             foreach ($products as $product) {
 
-                if ($product['discount'] >15) {
+                if (isset($product['discount']) && $product['discount'] >15) {
                     $budget->update(['budget_statuses_id'=>2]);
                 }
 
