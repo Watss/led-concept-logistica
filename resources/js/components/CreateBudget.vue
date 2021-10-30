@@ -6,17 +6,17 @@
           <div class="card-body container">
             <div class="row">
               <div class="col">
-                <h2>Cotización #{{ id }}</h2>
+                <h2>Cotización #{{ id ? id : "(Nueva)" }}</h2>
                 <div class="text-muted">Actualizado {{ moment.fromNow() }}</div>
               </div>
               <div class="col d-flex justify-content-end">
                 <actions-budget
-                   :statusId="budget.status"
+                  :statusId="budget.status"
                   :statuses="statuses"
                   :enablePrint="budget.status !== 2"
                   v-on:save="handleSaveBudget"
                   v-on:copy="handleCopyBudget"
-                  :saveDisabled="!client"
+                  :saveDisabled="!client || productsSelected.length <= 0"
                 ></actions-budget>
               </div>
             </div>
@@ -25,7 +25,6 @@
                 <v-autocomplete
                   v-model="client"
                   :items="clients"
-
                   solo
                   dense
                   label="Selección de Cliente"
@@ -67,7 +66,7 @@
                   class="form-control"
                   no-data-text="No hay productos para agregar"
                   :search-input.sync="searchValueProduct"
-                  @change="searchValueProduct=''"
+                  @change="searchValueProduct = ''"
                   solo
                   dense
                   item-text="name"
@@ -190,9 +189,12 @@ import ModalClient from "./modalClient.vue";
 import ModalProduct from "./modalProduct.vue";
 import moment from "moment";
 export default {
- props: ["id", "budgets_detail","user", "is_admin", "statuses"],
+  props: ["id", "budgets_detail", "user", "is_admin", "statuses"],
   components: { ActionsBudget, ListProducts, ModalClient, ModalProduct },
   data: () => ({
+    newId: "",
+    created: false,
+    updadeAt: "",
     snackbar: {
       visible: false,
       text: ``,
@@ -201,12 +203,12 @@ export default {
     dialog: false,
     moment: moment(),
     budget: {},
-    reference: null,
+    reference: "",
     showModalCreateClient: false,
     showModalCreateProduct: false,
     products: [],
     clients: [],
-    client: {},
+    client: null,
     product: null,
     productsSelected: [],
     totals: {
@@ -218,40 +220,51 @@ export default {
     confirm_delete: null,
   }),
   mounted() {
-    this.moment.locale("es");
-    this.moment = moment(this.budgets_detail.updated_at);
+    if (this.id) {
+      this.moment.locale("es");
+      this.moment = moment(
+        this.budgets_detail && this.budgets_detail.updated_at
+      );
+
+      this.reference = this.budgets_detail ? this.budgets_detail.reference : "";
+
+      this.fetchBudget().then((budget) => {
+        console.log("load budget.");
+        this.moment = moment(budget.updated_at);
+        this.moment.locale("es");
+        this.budget = budget;
+        this.newId = budget.id;
+        this.productsSelected = budget.products.map((el) => ({
+          id: el.product.id,
+          img: el.product.image,
+          sku: el.product.sku,
+          amount: el.quantity ? el.quantity : 1,
+          description: el.product.name,
+          price: el.product_price,
+          desc: el.discount,
+          total: el.total,
+          actions: "--",
+          total_desc: el.discount_price,
+          name: el.product.name,
+        }));
+
+        this.client = budget.client;
+
+        this.totals = this.setTotals(this.productsSelected);
+      });
+    }
+
     this.fetchProducts().then((products) => {
       this.products = products;
     });
 
-    this.reference = this.budgets_detail.reference
+    this.reference = this.budgets_detail && this.budgets_detail.reference;
 
     this.fetchClients().then((clients) => {
       this.clients = clients;
     });
 
-    this.fetchBudget().then((budget) => {
-      this.moment = moment(budget.updated_at);
-      this.moment.locale("es");
-      this.budget = budget;
-      this.productsSelected = budget.products.map((el) => ({
-        id: el.product.id,
-        img: el.product.image,
-        sku: el.product.sku,
-        amount: el.quantity ? el.quantity : 1,
-        description: el.product.name,
-        price: el.product_price,
-        desc: el.discount,
-        total: el.total,
-        actions: "--",
-        total_desc : el.discount_price,
-        name: el.product.name
-      }));
-
-      this.client = budget.client;
-
-      this.totals = this.setTotals(this.productsSelected);
-    });
+  
   },
   watch: {
     product: function name(val) {
@@ -260,44 +273,46 @@ export default {
         this.normalizeDatatable(val),
       ];
 
-
-
       this.totals = this.setTotals(this.productsSelected);
     },
   },
   computed: {
-      productsCleanList(){
-        const clean = this.products.filter( product => {
-            const productMatch = this.productsSelected.find( p => p.id === product.id );
-            return productMatch ? false : true;
-        });
+    productsCleanList() {
+      const clean = this.products.filter((product) => {
+        const productMatch = this.productsSelected.find(
+          (p) => p.id === product.id
+        );
+        return productMatch ? false : true;
+      });
 
-        return clean;
-      }
+      return clean;
+    },
   },
   methods: {
-      handleSaveProduct(){
-           this.fetchProducts().then((products) => {
-                this.products = products;
-                this.snackbar.visible = true;
-                this.snackbar.text = "Producto guardado !";
-            });
-      },
+    handleSaveProduct() {
+      this.fetchProducts().then((products) => {
+        this.products = products;
+        this.snackbar.visible = true;
+        this.snackbar.text = "Producto guardado !";
+      });
+    },
     handlesCreateClient() {
       this.snackbar.visible = true;
       this.snackbar.text = "Cliente guardado con éxito";
       this.fetchClients().then((clients) => {
-
         this.clients = clients;
       });
       this.fetchProducts().then((products) => {
-
-      this.products = products;
-    });
+        this.products = products;
+      });
     },
     async handleSaveBudget() {
       try {
-        const updated = await this.updateBudget();
+        if (this.id) {
+          const updated = await this.updateBudget();
+        } else {
+          const store = await this.storeBudget();
+        }
 
         await this.fetchBudget();
 
@@ -312,7 +327,6 @@ export default {
         axios
           .delete("/api/budget/products/" + payload[0].id)
           .then((res) => {
-
             this.productsSelected = this.productsSelected.filter(
               (element, index) => index !== payload[1]
             );
@@ -367,6 +381,32 @@ export default {
         console.log("failed update budget.");
       }
     },
+    async storeBudget() {
+      try {
+        const res = await axios.post(`/api/budgets`, {
+          client_id: this.client.id,
+          reference: this.reference ? this.reference : "",
+          user_id: this.user,
+          products: this.productsSelected.map((el) => ({
+            product_id: el.id,
+            product_price: el.price,
+            product_sku: el.sku,
+            quantity: el.amount,
+            discount: el.desc,
+            discount_price: el.total_desc,
+            total: el.total,
+          })),
+          neto: this.totals.neto,
+          total: this.totals.total,
+        });
+        const { budget } = res.data;
+        window.location.href = "/budget/" + budget.id + "/edit";
+        return res;
+      } catch (error) {
+        console.log(error);
+        console.log("failed create budget.");
+      }
+    },
     async fetchClients() {
       try {
         const res = await axios.get("/api/clients/search");
@@ -392,8 +432,8 @@ export default {
       }
     },
     setTotals(arr) {
-        const total = arr.reduce((sum, value) => sum + value.total, 0);
-        const iva = total * 0.19;
+      const total = arr.reduce((sum, value) => sum + value.total, 0);
+      const iva = total * 0.19;
       return {
         desc: arr.reduce((sum, value) => sum + value.total_desc, 0),
         neto: total - iva,
@@ -402,7 +442,6 @@ export default {
       };
     },
     normalizeDatatable(product) {
-      console.log(product,'log noramlize');
       return {
         id: product.id,
         img: product.image,
@@ -414,7 +453,7 @@ export default {
         total: product.price * 1,
         actions: "--",
         name: product.name,
-        total_desc : 0
+        total_desc: 0,
       };
     },
     formatPrice(value) {
