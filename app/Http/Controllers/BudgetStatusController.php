@@ -16,6 +16,8 @@ class BudgetStatusController extends Controller
      */
     public function index()
     {
+        $this->authorize('index',new BudgetStatus());
+
         return view('budget-status.index');
     }
 
@@ -27,6 +29,7 @@ class BudgetStatusController extends Controller
     public function create()
     {
         $budgetStatus= new BudgetStatus();
+        $this->authorize('create',$budgetStatus);
         return view('budget-status.create')->with(["budgetStatus"=>$budgetStatus]);
     }
 
@@ -38,6 +41,7 @@ class BudgetStatusController extends Controller
      */
     public function store(BudgetStatusStoreRequest $request)
     {
+        $this->authorize('create',new BudgetStatus());
        BudgetStatus::create($request->validated());
 
        return redirect()->route('budget-status.index');
@@ -62,6 +66,9 @@ class BudgetStatusController extends Controller
      */
     public function edit(BudgetStatus $budgetStatus)
     {
+
+        $this->authorize('edit',$budgetStatus);
+
         return view('budget-status.create',[
             'budgetStatus'=>$budgetStatus
         ]);
@@ -76,6 +83,7 @@ class BudgetStatusController extends Controller
      */
     public function update(BudgetStatusStoreRequest $request, BudgetStatus $budgetStatus)
     {
+        $this->authorize('update',$budgetStatus);
         $budgetStatus->update($request->validated());
         Alert::success('Actualizado Correctamente');
 
@@ -91,6 +99,7 @@ class BudgetStatusController extends Controller
      */
     public function destroy(BudgetStatus $budgetStatus)
     {
+        $this->authorize('delete',$budgetStatus);
        if($budgetStatus->id <= 5){
         Alert::delete('No puedes eliminar este estado');
        }
@@ -101,6 +110,7 @@ class BudgetStatusController extends Controller
 
     public function restore($id)
     {
+        $this->authorize('delete',new BudgetStatus());
         $status=BudgetStatus::onlyTrashed()->find($id);
         if ($status) {
             $status->restore();

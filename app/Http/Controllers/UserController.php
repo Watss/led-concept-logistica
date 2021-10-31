@@ -18,6 +18,8 @@ class UserController extends Controller
 
     public function index()
     {
+        $this->authorize('index',new User());
+
         return view('user.index');
     }
     public function create()

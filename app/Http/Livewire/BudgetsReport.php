@@ -29,6 +29,7 @@ class BudgetsReport extends Component
     {
         return view('livewire.budgets-report', [
             'budgets' => Budget::with('client', 'user','statusTrashed')
+            ->findByRol()
             ->search($this->search)
             ->dates([$this->start_date, $this->end_date])
             ->status($this->status)
@@ -40,7 +41,7 @@ class BudgetsReport extends Component
 
     public function makePdf()
     {
-        $budgets=Budget::with('client', 'user','statusTrashed')->search($this->search)->dates([$this->start_date, $this->end_date])->status($this->status)->orderBy('created_at', 'desc')->get();
+        $budgets=Budget::with('client', 'user','statusTrashed')->findByRol()->search($this->search)->dates([$this->start_date, $this->end_date])->status($this->status)->orderBy('created_at', 'desc')->get();
         $pdf=resolve('dompdf.wrapper');
         $pdf->loadView('reports.budget-pdf',['budgets'=>$budgets,'neto'=>$budgets->sum('neto'),'iva'=>$budgets->sum('iva'),'total'=>$budgets->sum('total')]);
 

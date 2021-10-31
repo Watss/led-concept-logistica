@@ -41,6 +41,12 @@ class RolesSeeder extends Seeder
             }
         }
 
+        Permission::firstOrCreate([
+            'name' =>"reports:clients",
+            'guard_name'=>'web'
+        ]);
+
+
         $Admin=Role::find(1);
         $Vendedor=Role::find(2);
 
@@ -57,6 +63,7 @@ class RolesSeeder extends Seeder
         $Admin->givePermissionTo(['client:index','client:view','client:create','client:edit','client:update','client:delete']);
         $Admin->givePermissionTo(['brand:index','brand:view','brand:create','brand:edit','brand:update','brand:delete']);
         $Admin->givePermissionTo(['budget-status:index','budget-status:view','budget-status:create','budget-status:edit','budget-status:update','budget-status:delete']);
+        $Admin->givePermissionTo(['reports:clients']);
 
 
         $Vendedor->givePermissionTo(['product:index','product:view']);

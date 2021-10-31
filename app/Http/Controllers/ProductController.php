@@ -36,6 +36,8 @@ class ProductController extends Controller
     public function create(Request $request)
     {
         $product = new Product();
+        $this->authorize('create',$product);
+
         $types = Type::all();
 
         return view('product.create',compact('product','types'));
