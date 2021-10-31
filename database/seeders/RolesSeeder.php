@@ -61,7 +61,7 @@ class RolesSeeder extends Seeder
 
         $Vendedor->givePermissionTo(['product:index','product:view']);
         $Vendedor->givePermissionTo(['client:index','client:view','client:edit','client:update','client:create']);
-        $Vendedor->givePermissionTo(['budget:index','budget:view','budget:edit','client:update','client:create']);
+        $Vendedor->givePermissionTo(['budget:index','budget:view','budget:edit','budget:update','budget:create']);
         //$Vendedor->givePermissionTo(['user:index','user:view','user:create','user:edit','user:update']);
 
     }

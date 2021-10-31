@@ -14,9 +14,12 @@
                   :statusId="budget.status"
                   :statuses="statuses"
                   :enablePrint="budget.status !== 2"
+                  :enableCopy="budget.status !== 2"
                   v-on:save="handleSaveBudget"
                   v-on:copy="handleCopyBudget"
                   :saveDisabled="!client || productsSelected.length <= 0"
+                  :is_admin="is_admin"
+                  @handleChangeStatus="handleChangeStatus"
                 ></actions-budget>
               </div>
             </div>
@@ -362,6 +365,7 @@ export default {
           client_id: this.client.id,
           reference: this.reference,
           user_id: this.user,
+          budget_statuses_id: this.budget.detail.budget_statuses_id,
           products: this.productsSelected.map((el) => ({
             product_id: el.id,
             product_price: el.price,
@@ -493,6 +497,9 @@ export default {
           });
       }
     },
+    handleChangeStatus(status){
+        this.budget.detail.budget_statuses_id=parseInt(status);
+    }
   },
 };
 </script>

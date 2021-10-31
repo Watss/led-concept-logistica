@@ -13,7 +13,7 @@
       type="button"
       class="btn btn-light m-1"
       style="border-radius: 20px"
-      :disabled="saveDisabled"
+      :disabled="saveDisabled || !(enableCopy)"
       @click="$emit('copy')"
     >
       Duplicar
@@ -30,8 +30,8 @@
   </div>
   <div v-if="statusId" class="col  justify-content-end p-3 bg-light">
     <label for="" class="pb-2 text-bold">Cambiar Estado</label>
-    <select name="" id="" class="form-control">
-        <option :value="status.id" v-for=" status in statuses " v-bind:key="status.id" :selected="statusId === status.id">{{status.name}}</option>
+    <select name="" id="" class="form-control" :disabled="!is_admin && statusId===2" @change="changeStatus($event)" >
+        <option :value="status.id" v-for=" status in statuses " v-bind:key="status.id" :selected="statusId === status.id" >{{status.name}}</option>
     </select>
   </div>
 </div>
@@ -40,6 +40,16 @@
 
 <script>
 export default {
-  props: ["saveDisabled", "enablePrint", "statuses", "statusId"],
+  props: ["saveDisabled", "enablePrint", "statuses", "statusId",'is_admin','enableCopy'],
+  methods:{
+
+      changeStatus(event){
+
+          this.$emit('handleChangeStatus',event.target.value)
+      }
+
+  }
 };
+
+
 </script>
