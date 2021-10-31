@@ -15,6 +15,11 @@ class UserPolicy
             return true;
         }
     }
+
+    public function index(User $user)
+    {
+        return $user->can('user:index');
+    }
     /**
      * Determine whether the user can view any models.
      *
@@ -23,7 +28,7 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->can('user:index');
     }
 
     /**
@@ -35,7 +40,7 @@ class UserPolicy
      */
     public function view(User $user, User $model)
     {
-        //
+        return $user->can('user:view');
     }
 
     /**
@@ -46,12 +51,12 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->can('user:create');
     }
 
     public function edit(User $user, User $userEdit)
     {
-
+        return $user->can('user:edit');
     }
 
     /**
@@ -63,7 +68,7 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        //
+        return $user->can('user:update');
     }
 
     /**
@@ -75,7 +80,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        //
+        return $user->can('user:delete');
     }
 
     /**
@@ -87,7 +92,7 @@ class UserPolicy
      */
     public function restore(User $user, User $model)
     {
-        //
+        return $user->can('user:delete');
     }
 
     /**

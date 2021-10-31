@@ -84,13 +84,12 @@
                                             {{ $budget->detailsBudgets->count() }}
                                         </td>
                                         <td
-                                            class="d-none
-                                    d-xl-table-cell text-right">
+                                            class="text-right">
                                             {{ $budget->netoAppends }}</td>
 
                                         {{-- <td class="text-right">  <span class="badge" style="background-color:{{ $budget->statusTrashed->color }} ">{{ $budget->statusTrashed->name }} </span> --}}
                                         </td>
-                                        <td class="d-none d-xl-table-cell">
+                                        <td class="">
                                             <span class="badge badge-secondary"
                                                 style="background:{{ $budget->statusTrashed->color }}">{{ strtoupper($budget->statusTrashed->name) }}</span>
                                         </td>
@@ -134,13 +133,12 @@
                                     <td class="d-none d-xl-table-cell text-right">
                                         {{ $budget->detailsBudgets->count() }}
                                     </td>
-                                    <td class="d-none
-                                d-xl-table-cell text-right">
+                                    <td class=" text-right">
                                         {{ $budget->netoAppends }}</td>
 
                                     {{-- <td class="text-right">  <span class="badge" style="background-color:{{ $budget->statusTrashed->color }} ">{{ $budget->statusTrashed->name }} </span> --}}
                                     </td>
-                                    <td class="d-none d-xl-table-cell">
+                                    <td class="">
                                         <span class="badge badge-secondary"
                                             style="background:{{ $budget->statusTrashed->color }}">{{ strtoupper($budget->statusTrashed->name) }}</span>
                                     </td>

@@ -49,11 +49,14 @@
                         </a>
                     </li>
 
+                    @can('user:index')
                     <li class="sidebar-item {{ Request::is('users*') ? 'active' : '' }}">
                         <a class="sidebar-link" href="{{ route('users.index') }}">
                             <i class="fas fa-users-cog"></i> <span class="align-middle">Usuarios</span>
                         </a>
                     </li>
+                    @endcan
+
 
                     <li class="sidebar-item {{ Request::is('products*') ? 'active' : '' }}">
                         <a class="sidebar-link " href="{{ route('products.index') }}">
@@ -72,22 +75,26 @@
                         Configuración
                     </li>
 
-
-
-
-
+                    @can('reports:clients')
                     <li class="sidebar-item {{ Request::is('reports/client*') ? 'active' : '' }}">
                         <a class="sidebar-link" href="{{ route('reports.client') }}">
                             <i class="align-middle" data-feather="check-square"></i> <span
                                 class="align-middle">Reporte Clientes</span>
                         </a>
                     </li>
+                    @endcan
+
+
+
+                    @can('budget-status:index')
                     <li class="sidebar-item {{ Request::is('budget-status*') ? 'active' : '' }}">
                         <a class="sidebar-link" href="{{ route('budget-status.index') }}">
                             <i class="align-middle" data-feather="check-square"></i> <span
                                 class="align-middle">Estados de cotizaciones</span>
                         </a>
                     </li>
+                    @endcan
+
                 </ul>
 
 

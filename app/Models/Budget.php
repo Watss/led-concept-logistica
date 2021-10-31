@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Facades\Auth;
 class Budget extends Model
 {
     use HasFactory;
@@ -131,5 +131,13 @@ class Budget extends Model
                 })->orWhereHas('client', function ($q) use ($value) {
                     $q->where('name', 'LIKE', "%$value%");
                 });
+    }
+
+    public function scopeFindByRol($query){
+
+        if (auth()->user()->hasRole(2)) {
+            $query->where('user_id',auth()->user()->id);
+        }
+
     }
 }
