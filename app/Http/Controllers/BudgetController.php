@@ -9,6 +9,7 @@ use App\Models\DetailsBudget;
 use App\Models\Product;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request as HttpRequest;
+use Illuminate\Support\Facades\Auth;
 
 class BudgetController extends Controller
 {
@@ -52,7 +53,6 @@ class BudgetController extends Controller
     public function update(HttpRequest $request, Budget $budget){
 
         $budget->update($request->except('products'));
-
         $this->storeDetails($budget,$request->products);
 
         return response()->json([
@@ -78,7 +78,7 @@ class BudgetController extends Controller
         if($products)
             foreach ($products as $product) {
 
-                if (isset($product['discount']) && $product['discount'] >15) {
+                if (isset($product['discount']) && $product['discount'] >15 ) {
                     $budget->update(['budget_statuses_id'=>2]);
                 }
 
