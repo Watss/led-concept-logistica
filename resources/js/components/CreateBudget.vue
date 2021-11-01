@@ -11,6 +11,7 @@
               </div>
               <div class="col d-flex justify-content-end">
                 <actions-budget
+                  :budget_id="budget.id"
                   :statusId="budget.status"
                   :statuses="statuses"
                   :enablePrint="budget.status !== 2"
@@ -346,8 +347,9 @@ export default {
     },
     handleChangeListProducts(arr, payload) {
       this.productsSelected = arr.map((el) => {
+          console.log(el);
         const total = el.price * el.amount;
-        const discount = total * (el.desc / 100);
+        const discount = el.desc > 0 ? total * (el.desc / 100) : 0;
 
         return {
           ...el,

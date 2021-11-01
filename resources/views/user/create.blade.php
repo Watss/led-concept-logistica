@@ -58,7 +58,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="mb-3 col-md-6">
+                    <div class="mb-3 col-md-4">
 
                         <label class="form-label">Rol</label>
 
@@ -76,11 +76,22 @@
                             </div>
                         @enderror
                     </div>
-                    <div class="mb-3 col-md-6">
+                    <div class="mb-3 col-md-4">
                         <label class="form-label">Área</label>
                         <input type="text" class="form-control @error('area') is-invalid @enderror" name="area"
                             value="{{ old('area') ?? ($user->area ?? '') }}">
                         @error('area')
+                            <div class="invalid-feedback">
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            </div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3 col-md-4">
+                        <label class="form-label">Teléfono</label>
+                        <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone"
+                            value="{{ old('phone') ?? ($user->phone ?? '') }}">
+                        @error('phone')
                             <div class="invalid-feedback">
                                 <div class="alert alert-danger">{{ $message }}</div>
                             </div>

@@ -82,14 +82,19 @@ class BudgetController extends Controller
                     $budget->update(['budget_statuses_id'=>2]);
                 }
 
+                if(!isset($product['discount'])){
+                    $product['discount'] = 0;
+                }
+
                 $product['budget_id'] = $budget->id;
                 DetailsBudget::updateOrCreate(['budget_id' => $budget->id,'product_id' => $product['product_id']],$product);
             }
     }
 
     public function print(Budget $budget){
+        $discount = $budget->detailsBudgets()->sum('discount_price');
         /* return view('budget.pdf_format'); */
-        $pdf = PDF::loadView('budget.pdf_format',['budget' => $budget])->setPaper('a4');
+        $pdf = PDF::loadView('budget.pdf_format',['budget' => $budget, 'discount' => $discount])->setPaper('letter');
         return $pdf->stream();
     }
 
@@ -100,6 +105,7 @@ class BudgetController extends Controller
         return response()->json([
             "success" => true,
             "budget" => [
+                'id' => $budget->id,
                 'status' => $budget->status->id,
                 'detail' => $budget,
                 'products' => $budget->detailsBudgets()->get()->toArray(),

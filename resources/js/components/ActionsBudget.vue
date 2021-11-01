@@ -5,7 +5,8 @@
       type="button"
       class="btn btn-light m-1"
       style="border-radius: 20px"
-      :disabled="saveDisabled || !(enablePrint)"
+      @click="openPrint()"
+      :disabled="saveDisabled || !(enablePrint) || budget_id === undefined"
     >
       Imprimir
     </button>
@@ -40,12 +41,15 @@
 
 <script>
 export default {
-  props: ["saveDisabled", "enablePrint", "statuses", "statusId",'is_admin','enableCopy'],
+  props: ["saveDisabled", "enablePrint", "statuses","budget_id", "statusId",'is_admin','enableCopy'],
   methods:{
 
       changeStatus(event){
 
           this.$emit('handleChangeStatus',event.target.value)
+      },
+      openPrint(){
+          window.open(`/print-budget/${this.budget_id}`,'_blank');
       }
 
   }

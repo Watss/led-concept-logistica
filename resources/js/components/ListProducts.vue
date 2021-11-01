@@ -111,7 +111,7 @@
         </div>
          <div class="d-flex justify-content-between">
           <div class="mr-5">Descuento</div>
-          <div>{{ this.formatPrice(totals.desc) }}</div>
+          <div>-{{ this.formatPrice(totals.desc) }}</div>
         </div>
         <br class="" />
         <div class="d-flex justify-content-between">

@@ -39,6 +39,40 @@
             width:80px;
             height: 80px;
         }
+        footer {
+                position: fixed;
+                left: 0px;
+                bottom: 60px
+                right: 0px;
+                height: 200px;
+
+                /** Extra personal styles **/
+                background-color: transparent;
+                color: white;
+                text-align: center;
+                line-height: 35px;
+            }
+
+            .v-text-field.v-text-field--solo:not(.v-text-field--solo-flat)
+  > .v-input__control
+  > .v-input__slot {
+  box-shadow: none;
+  font-size: 14px;
+}
+.v-text-field.v-text-field--enclosed .v-text-field__details {
+  display: none;
+}
+
+.no-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px;
+  background: #1d34486e !important;
+}
     </style>
 </head>
 
@@ -70,7 +104,7 @@
                 </tr>
                 <tr class="tr-primaty-style">
                     <td scope="col" class="color-primary p-1 capitalize" style="font-weight: bold;">RUT</td>
-                    <td scope="col" class="text-center p-1 capitalize">{{$budget->client->rut}}}</td>
+                    <td scope="col" class="text-center p-1 capitalize">{{$budget->client->rut}}</td>
                     <td scope="col" class="color-primary p-1 capitalize" style="font-weight: bold;">MAIL</td>
                     <td scope="col" class="text-center p-1 capitalize">{{$budget->user->email}}</td>
                 </tr>
@@ -78,17 +112,17 @@
                     <td scope="col" class="color-primary p-1 capitalize" style="font-weight: bold;">DIRECCIÓN</td>
                     <td scope="col" class="text-center p-1 capitalize">{{substr($budget->client->address,0,30)}}</td>
                     <td scope="col" class="color-primary p-1 capitalize" style="font-weight: bold;">TELÉFONO</td>
-                    <td scope="col" class="text-center p-1 capitalize">{{$budget->user->phone ?? 'asdsad'}}</td>
+                    <td scope="col" class="text-center p-1 capitalize">{{$budget->user->phone ?? '---'}}</td>
                 </tr>
                 <tr class="tr-primaty-style">
                     <td scope="col" class="color-primary p-1 capitalize" style="font-weight: bold;">TELÉFONO</td>
-                    <td scope="col" class="text-center p-1 capitalize">CONSTRUCTORA INTERHAUS</td>
+                    <td scope="col" class="text-center p-1 capitalize">{{$budget->client->phone}}</td>
                     <td scope="col" class="color-primary p-1 capitalize" style="font-weight: bold;">OTROS</td>
-                    <td scope="col" class="text-center p-1 capitalize">MOISÉS RIQUELME</td>
+                    <td scope="col" class="text-center p-1 capitalize">{{$budget->reference}}</td>
                 </tr>
             </thead>
         </table>
-        <table class="table mb-5 border-color-black">
+        <table class="table border-color-black">
             <thead>
                 <tr class="tr-primaty-style color-primary">
                     <th scope="col">ITEM</th>
@@ -106,37 +140,47 @@
                     <tr>
                         <th scope="row" class="color-primary" style="text-align: center; font-weight: 400;">{{$key + 1}}</th>
                         <td style="width: 200px; text-align:center;" class="capitalize">{{$detailBudget->product->name}}</td>
-                        <td ><img src="https://www.ledconcept.cl/new/wp-content/uploads/2020/11/C380070.jpg" class="image-container"></td>
+                        <td >@if (!$detailBudget->product->image)
+                            <div class="bg-secondary no-image">
+                                <div class="text-no-imagen">
+                                  <div>Sin Imagen</div>
+                                </div>
+                              </div>
+                             @else
+                             <img src="{{asset($detailBudget->product->image)}}" class="image-container"></td>
+                        @endif
                         <td class="text-center" style="width: 50px; max-width: 60px">{{$detailBudget->product->sku}}</td>
                         <td class="text-center" style="width: 60px; max-width: 70px">{{$detailBudget->quantity}}</td>
-                        <td class="text-center">{{$detailBudget->product_price}}</td>
-                        <td class="text-center">{{$detailBudget->total}}</td>
+                        <td class="text-center">@money($detailBudget->product_price)</td>
+                        <td class="text-center">@money($detailBudget->product_price * $detailBudget->quantity)</td>
                     </tr>
                 @endforeach
 
                     <tr style="border-top: 1px solid black; padding: 0px;" class="tr-primaty-style">
                         <td colspan="5" style="border:2px solid white; border-right: 1px solid black; padding: 2px; border-top: 1px solid black;"></td>
-                        <td class="color-primary capitalize" style="font-weight: bold; padding: 2px">Total</td>
-                        <td style="padding: 2px">$2.000</td>
+                        <td class="color-primary capitalize" style="font-weight: bold; padding: 2px">NETO</td>
+                        <td style="padding: 2px">@money($budget->neto)</td>
                     </tr>
                     <tr style="border:none; padding: 0px;" class="tr-primaty-style">
                         <td colspan="5" style="border:2px solid white; border-right: 1px solid black; padding: 2px"></td>
-                        <td class="color-primary capitalize" style="font-weight: bold; padding: 2px">Total</td>
-                        <td style="padding: 2px">$2.000</td>
+                        <td class="color-primary capitalize" style="font-weight: bold; padding: 2px">IVA</td>
+                        <td style="padding: 2px">@money($budget->iva)</td>
                     </tr>
                     <tr style="border:none; padding: 0px;" class="tr-primaty-style">
                         <td colspan="5" style="border:2px solid white; border-right: 1px solid black; padding: 2px"></td>
-                        <td class="color-primary capitalize" style="font-weight: bold; padding: 2px">Total</td>
-                        <td style="padding: 2px">$2.000</td>
+                        <td class="color-primary capitalize" style="font-weight: bold; padding: 2px">DESCUENTO</td>
+                        <td style="padding: 2px">- @money($discount)</td>
                     </tr>
                     <tr style="border:none; padding: 0px;" class="tr-primaty-style">
                         <td colspan="5" style="border:2px solid white; border-right: 1px solid black; padding: 2px"></td>
-                        <td class="color-primary capitalize" style="font-weight: bold; padding: 2px">Total</td>
-                        <td style="padding: 2px">$2.000</td>
+                        <td class="color-primary capitalize" style="font-weight: bold; padding: 2px">TOTAL</td>
+                        <td style="padding: 2px">@money($budget->total)</td>
                     </tr>
 
             </tbody>
+            <img src="{{asset('footer_pdf.png')}}" alt="" width="100%" height="180px" style="margin-top: auto; ">
         </table>
+
 </body>
 
 </html>
