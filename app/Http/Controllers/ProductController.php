@@ -49,13 +49,16 @@ class ProductController extends Controller
 
         $target_request = $request->validated();
 
-        $imageName = $request->name.'-'.time().'.'.$request->image->extension();
+        if ($request->image) {
 
-        $path = $request->image->storeAs('public/images', $imageName);
+            $imageName =  $request->image && $request->name.'-'.time().'.'.$request->image->extension();
 
-        $target_request['image'] = 'images/'.$imageName;
+            $path = $imageName ? $request->image->storeAs('public/images', $imageName) :  "" ;
 
-        $target_request['type_id'] = null;
+            $target_request['image'] = 'images/'.$imageName;
+        }
+        
+        $target_request['type_id'] = $request->type_id;
 
         $product->update($target_request);
 
@@ -70,13 +73,17 @@ class ProductController extends Controller
     {
         $target_request = $request->validated();
 
-        $imageName = $request->name.'-'.time().'.'.$request->image->extension();
+        if ($request->image) {
 
-        $path = $request->image->storeAs('public/images', $imageName);
+            $imageName =$request->name.'-'.time().'.'.$request->image->extension();
 
-        $target_request['image'] = 'images/'.$imageName;
-
-        $target_request['type_id'] = null;
+            $path = $request->image->storeAs('public/images', $imageName);
+    
+            $target_request['image'] = 'images/'.$imageName;
+    
+        }
+       
+        $target_request['type_id'] =  $request->type_id;
 
 
         Product::create($target_request);
@@ -128,14 +135,19 @@ class ProductController extends Controller
     public function saveProductJson(ProductStoreRequest $request){
         $target_request = $request->validated();
 
-        $imageName = $request->name.'-'.time().'.'.$request->image->extension();
+        if ($request->image) {
+            $imageName = $request->name.'-'.time().'.'.$request->image->extension();
 
-        $path = $request->image->storeAs('public/images', $imageName);
+            $path = $request->image->storeAs('public/images', $imageName);
 
-        $target_request['image'] = 'images/'.$imageName;
+            $target_request['image'] = 'images/'.$imageName;
+        }
+       
 
-        $target_request['type_id'] = null;
+        $target_request['type_id'] =  $request->type_id;
+
         $product = Product::create($target_request);
+
         return $product;
     }
 }

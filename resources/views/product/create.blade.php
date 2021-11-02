@@ -61,6 +61,7 @@
                                 <div class="col-md-12">
 
                                     <select class="form-select"
+                                    name="type_id"
                                         class="form-control @error('price') is-invalid @enderror">
                                         <option selected value="">--Sin Tipo--</option>
                                         @foreach ($types as $type)
