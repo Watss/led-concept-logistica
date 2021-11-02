@@ -55,7 +55,7 @@ class ProductController extends Controller
 
             $path = $imageName ? $request->image->storeAs('public/images', $imageName) :  "" ;
 
-            $target_request['image'] = 'images/'.$imageName;
+            $target_request['image'] = 'storage/images/'.$imageName;
         }
 
         $target_request['type_id'] = $request->type_id;
@@ -79,7 +79,7 @@ class ProductController extends Controller
 
             $path = $request->image->storeAs('public/images', $imageName);
 
-            $target_request['image'] = 'images/'.$imageName;
+            $target_request['image'] = 'storage/images/'.$imageName;
 
         }
 
