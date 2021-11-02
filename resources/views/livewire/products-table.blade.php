@@ -1,6 +1,5 @@
 <div class="row">
     <div class="col-12 col-lg-12 col-xxl-12 d-flex">
-
         <div class="card flex-fill p-4">
             <div class="row justify-content-end mb-3">
                 <div class="col-3">
@@ -42,7 +41,7 @@
 
                     <td class="d-none d-xl-table-cell">{{ $product->type ? $product->type->name : '--'}}</td>
 
-                    <td class="text-center">@money( $product->price, 'CLP')</td>
+                    <td class="text-center">@money( $product->price)</td>
                     <td class="d-none d-md-table-cell text-center">
                         <div class="btn-group">
                             <button type="button" class="btn btn-light" style="border-radius: 20px;
