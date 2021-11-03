@@ -57,7 +57,7 @@
                                 <a class="dropdown-item" href="{{ route('products.edit', $product) }}">Editar</a>
                                 @endcan
                                 @can('product:delete')
-                                <a class="dropdown-item" href="#">Eliminar</a>
+                                {{-- <a class="dropdown-item" href="#">Eliminar</a> --}}
                                 @endcan
                             </div>
                         </div>
