@@ -31,6 +31,31 @@
       <template v-slot:item.total="props">
         {{ formatPrice(props.item.total) }}
       </template>
+      <template v-slot:item.price="props">
+        <v-edit-dialog
+          :return-value.sync="props.item.price"
+          large
+          persistent
+          cancel-text="Cerrar"
+          save-text="Guardar"
+          @save="save('amount')"
+          @cancel="cancel"
+          @open="open"
+          @close="close"
+        >
+          <div>{{ formatPrice( props.item.price )}}</div>
+          <template v-slot:input>
+            <div class="mt-4 text-h6">Modificar precio</div>
+            <v-text-field
+              v-model="props.item.price"
+              label="Edit"
+              single-line
+              counter
+              autofocus
+            ></v-text-field>
+          </template>
+        </v-edit-dialog>
+      </template>
       <template v-slot:item.amount="props">
         <v-edit-dialog
           :return-value.sync="props.item.amount"
