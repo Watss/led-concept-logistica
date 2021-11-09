@@ -26,10 +26,10 @@
       </template>
 
       <template v-slot:item.price="props">
-        {{ formatPrice(props.item.price) }}
+        ${{ formatPrice(props.item.price) }}
       </template>
       <template v-slot:item.total="props">
-        {{ formatPrice(props.item.total) }}
+        ${{ formatPrice(props.item.total) }}
       </template>
       <template v-slot:item.price="props">
         <v-edit-dialog
@@ -43,7 +43,7 @@
           @open="open"
           @close="close"
         >
-          <div>{{ formatPrice( props.item.price )}}</div>
+          <div>${{ formatPrice( props.item.price )}}</div>
           <template v-slot:input>
             <div class="mt-4 text-h6">Modificar precio</div>
             <v-text-field
@@ -128,20 +128,20 @@
 
         <div class="d-flex justify-content-between">
           <div class="mr-5">Neto</div>
-          <div>{{ this.formatPrice(totals.neto) }}</div>
+          <div>${{ formatPrice(totals.neto) }}</div>
         </div>
         <div class="d-flex justify-content-between">
           <div class="mr-5">IVA</div>
-          <div>{{ this.formatPrice(totals.iva) }}</div>
+          <div>${{ formatPrice(totals.iva) }}</div>
         </div>
          <div class="d-flex justify-content-between">
           <div class="mr-5">Descuento</div>
-          <div>-{{ this.formatPrice(totals.desc) }}</div>
+          <div>-${{ formatPrice(totals.desc) }}</div>
         </div>
         <br class="" />
         <div class="d-flex justify-content-between">
           <div class="mr-5 font-weight-bold h4">Total</div>
-          <div class="h4 fw-bold">{{ this.formatPrice(totals.total) }}</div>
+          <div class="h4 fw-bold">${{ formatPrice(totals.total) }}</div>
         </div>
       </div>
     </div>
@@ -186,11 +186,7 @@ export default {
       return v > 90 ? "Excede el máximo" : true;
     },
     formatPrice(value) {
-      var formatter = new Intl.NumberFormat("en-CL", {
-        style: 'currency',
-        currency: 'USD',
-        minimumFractionDigits: 0
-      });
+      var formatter = new Intl.NumberFormat("en-CL");
       return formatter.format(value);
     },
     save(type) {
