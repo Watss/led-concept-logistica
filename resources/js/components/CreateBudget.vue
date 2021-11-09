@@ -381,7 +381,9 @@ export default {
           total: Math.round(this.totals.total),
           iva: Math.round(this.totals.iva)
         });
+         window.location.href = "/budget/" + this.budget.id + "/edit";
         return res;
+
       } catch (error) {
         console.log(error);
         console.log("failed update budget.");
@@ -407,6 +409,7 @@ export default {
           iva: Math.round(this.totals.iva)
         });
         const { budget } = res.data;
+
         window.location.href = "/budget/" + budget.id + "/edit";
         return res;
       } catch (error) {

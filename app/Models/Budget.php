@@ -125,6 +125,7 @@ class Budget extends Model
         if ($value)
             return $query->where('neto', 'LIKE', "%$value%")
                 ->orWhere('iva', 'LIKE', "%$value%")
+                ->orWhere('id', 'LIKE', "%$value%")
                 ->orWhere('total', 'LIKE', "%$value%")
                 ->orWhereHas('user', function ($q) use ($value) {
                     $q->where('name', 'LIKE', "%$value%");

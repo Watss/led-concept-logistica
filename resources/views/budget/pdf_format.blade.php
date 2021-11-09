@@ -83,7 +83,7 @@
                     src="https://www.ledconcept.cl/new/wp-content/uploads/2018/02/Logo-led-concept.png" width="80"
                     alt="">
                     </td>
-                <td width="30%" style="border: 0px solid transparent; vertical-align: bottom;"><h5 style="font-size: 10px; font-weight: bold;" class="text-right align-bottom">lunes, 28 de diciembre de 2020</h5></td>
+                <td width="30%" style="border: 0px solid transparent; vertical-align: bottom;"><h5 style="font-size: 10px; font-weight: bold;" class="text-right align-bottom">{{$date}}</h5></td>
             </tr>
         </table>
         <table class="table border-color-black color-primary mb-5" style="border: 0px solid transparent;">
@@ -93,7 +93,7 @@
             </tr>
 
         </table>
-        <h5 class="text-center pb-2">COTIZACIÓN Nº H6710</h5>
+        <h5 class="text-center pb-2">COTIZACIÓN Nº {{$budget->id}}</h5>
         <table class="table mb-5 border-color-black mt-2">
             <thead>
                 <tr class="tr-primaty-style">
@@ -178,7 +178,12 @@
                     </tr>
 
             </tbody>
-            <img src="{{asset('footer_pdf.png')}}" alt="" width="100%" height="180px" style="margin-top: auto; ">
+
+        </table>
+        <table align="center" class="table-borderless pb-4 mb-4" style="border: 0px solid white;">
+           <tr align="center">
+               <td align="center"><img src="{{asset('footer_pdf.png')}}" alt="" height="100px" style="margin-top: auto; margin-left:auto; margin-right: auto;"></td>
+           </tr>
         </table>
 
 </body>

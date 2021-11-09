@@ -8,6 +8,7 @@ use App\Models\BudgetStatus;
 use App\Models\DetailsBudget;
 use App\Models\Product;
 use Barryvdh\DomPDF\Facade as PDF;
+use Carbon\Carbon;
 use Illuminate\Http\Request as HttpRequest;
 use Illuminate\Support\Facades\Auth;
 
@@ -52,7 +53,7 @@ class BudgetController extends Controller
 
     public function update(HttpRequest $request, Budget $budget){
 
-        $budget->update($request->except('products'));
+        $budget->update($request->except('products','user_id'));
         $this->storeDetails($budget,$request->products);
 
         return response()->json([
@@ -92,9 +93,10 @@ class BudgetController extends Controller
     }
 
     public function print(Budget $budget){
+        $date = Carbon::createFromDate($budget->date)->format('d-m-Y');
         $discount = $budget->detailsBudgets()->sum('discount_price');
         /* return view('budget.pdf_format'); */
-        $pdf = PDF::loadView('budget.pdf_format',['budget' => $budget, 'discount' => $discount])->setPaper('letter');
+        $pdf = PDF::loadView('budget.pdf_format',['budget' => $budget, 'discount' => $discount, 'date' => $date])->setPaper('letter');
         return $pdf->stream();
     }
 
