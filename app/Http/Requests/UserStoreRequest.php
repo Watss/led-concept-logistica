@@ -44,10 +44,9 @@ class UserStoreRequest extends FormRequest
 
 
             case 'PATCH':
-
                 return [
                     'name' => ['required', 'string', 'max:255'],
-                    'email' => ['required', 'string', 'email', 'unique:users,id,'.$this->user->id],
+                    'email' => ['required', 'string', 'email', "unique:users,id,{$this->user->id}"],
                     'area' => ['required', 'string'],
                     'password' => [
                         'nullable',

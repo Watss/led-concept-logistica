@@ -75,12 +75,13 @@ class BudgetController extends Controller
     }
 
     private function storeDetails(Budget $budget,$products){
-
         if($products)
             foreach ($products as $product) {
 
                 if (isset($product['discount']) && $product['discount'] >15 ) {
-                    $budget->update(['budget_statuses_id'=>2]);
+                    if(!auth()->user()->hasRole('Administrador')){
+                        $budget->update(['budget_statuses_id'=>2]);
+                    }
                 }
 
                 if(!isset($product['discount'])){

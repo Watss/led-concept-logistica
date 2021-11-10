@@ -46,6 +46,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('budget-status', BudgetStatusController::class);
     Route::DELETE('budget-status/restore/{id}', [BudgetStatusController::class, 'restore'])->name('budget-status.restore');
 
+    Route::resource('budgets', BudgetController::class);
 
     Route::get('reports', [ReportsController::class, 'index'])->name('reports.index');
 

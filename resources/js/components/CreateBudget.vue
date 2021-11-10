@@ -363,7 +363,7 @@ export default {
     },
     async updateBudget() {
       try {
-        const res = await axios.put(`/api/budgets/${this.id}`, {
+        const res = await axios.put(`/budgets/${this.id}`, {
           client_id: this.client.id,
           reference: this.reference,
           user_id: this.user,
@@ -391,7 +391,7 @@ export default {
     },
     async storeBudget() {
       try {
-        const res = await axios.post(`/api/budgets`, {
+        const res = await axios.post(`/budgets`, {
           client_id: this.client.id,
           reference: this.reference ? this.reference : "",
           user_id: this.user,
