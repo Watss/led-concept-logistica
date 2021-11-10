@@ -11,12 +11,19 @@ class ProductsTable extends Component
     protected $paginationTheme = 'bootstrap';
     public $search = '';
 
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
     public function render()
     {
         return view('livewire.products-table', [
-            'products' => Product::temporary(0)->orderBy('created_at', 'desc')->search($this->search)->paginate(10),
+            'products' => Product::temporary(0)->orderBy('created_at', 'desc')->search($this->search)->paginate(5),
             'search' => $this->search
         ]);
+
     }
 
 }

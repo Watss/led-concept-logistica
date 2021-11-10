@@ -25,6 +25,11 @@ class BudgetsReport extends Component
         $this->end_date = now()->lastOfMonth()->toDateString();
     }
 
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
     public function render()
     {
         return view('livewire.budgets-report', [

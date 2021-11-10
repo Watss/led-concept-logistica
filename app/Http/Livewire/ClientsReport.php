@@ -30,7 +30,10 @@ class ClientsReport extends Component
         $this->end_date = now()->lastOfYear()->toDateString();
     }
 
-
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
 
     public function render()
     {

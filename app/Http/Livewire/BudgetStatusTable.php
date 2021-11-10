@@ -13,6 +13,12 @@ class BudgetStatusTable extends Component
     protected $paginationTheme = 'bootstrap';
     public $search = '';
 
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
     public function render()
     {
         return view('livewire.budget-status-table', [

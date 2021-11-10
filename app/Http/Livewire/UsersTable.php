@@ -12,6 +12,12 @@ class UsersTable extends Component
     protected $paginationTheme = 'bootstrap';
     public $search = '';
 
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
+
     public function render()
     {
         return view('user.users-table', [
