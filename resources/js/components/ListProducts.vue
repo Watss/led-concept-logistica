@@ -125,18 +125,21 @@
     <div class="container row d-flex justify-content-end">
       <div class="col-5">
 
-
+        <div class="d-flex justify-content-between">
+          <div class="mr-5">Bruto</div>
+          <div>${{ formatPrice(totals.bruto ? totals.bruto : 0) }}</div>
+        </div>
+         <div class="d-flex justify-content-between">
+          <div class="mr-5">Descuento</div>
+          <div>-${{ formatPrice(totals.desc) }}</div>
+        </div>
         <div class="d-flex justify-content-between">
           <div class="mr-5">Neto</div>
           <div>${{ formatPrice(totals.neto) }}</div>
         </div>
         <div class="d-flex justify-content-between">
           <div class="mr-5">IVA</div>
-          <div>${{ formatPrice(totals.iva) }}</div>
-        </div>
-         <div class="d-flex justify-content-between">
-          <div class="mr-5">Descuento</div>
-          <div>-${{ formatPrice(totals.desc) }}</div>
+          <div>${{ formatPrice(totals.iva ? totals.iva : 0) }}</div>
         </div>
         <br class="" />
         <div class="d-flex justify-content-between">
@@ -249,4 +252,6 @@ export default {
   font-size: 9px;
   color: white;
 }
+
+
 </style>

@@ -62,7 +62,6 @@
 .v-text-field.v-text-field--enclosed .v-text-field__details {
   display: none;
 }
-
 .no-image {
   width: 50px;
   height: 50px;
@@ -180,10 +179,28 @@
             </tbody>
 
         </table>
-        <table align="center" class="table-borderless pb-4 mb-4" style="border: 0px solid white;">
-           <tr align="center">
-               <td align="center"><img src="{{asset('footer_pdf.png')}}" alt="" height="100px" style="margin-top: auto; margin-left:auto; margin-right: auto;"></td>
-           </tr>
+        <table class="table CUSTOM-TABLE-DATA">
+            <tr>
+                <td>
+                    <b style="text-decoration: underline;">OBSERVACIONES</b>
+                    <div style="font-size: 12px;"><b>VALIDEZ COTIZACIÓN:</b> 15 DÍAS HÁBILES</div>
+                    <div style="font-size: 12px;">La presente cotización <b>NO</b> garantiza reserva de stock</div>
+                    <div style="font-size: 12px;"><b>* Imágenes referenciales</b></div>
+                </td>
+                <td>
+                    <b style="text-decoration: underline;">DATOS CUENTA LED CONCEPT</b>
+                    <div style="font-size: 12px;"><b>BANCO:</b> SANTANDER</div>
+                    <div style="font-size: 12px;"><b>CUENTA:</b> 70580110</div>
+                    <div style="font-size: 12px;"><b>RAZÓN SOCIAL:</b> LED CONCEPT SPA</div>
+                    <div style="font-size: 12px;"><b>RUT:</b> 76.628.935-5</div>
+
+                </td>
+            </tr>
+        </table>
+        <table class="table border-color-black color-primary mb-5" style="border: 0px solid transparent; margin-top:auto;">
+            <tr style="border: 0px solid transparent;" align="center">
+                <th class="p-0 pt-2 text-right mr-1" align="center" style="font-size: 10px; border: 0px solid transparent; border-bottom: 5px solid #000000; text-align:center;"><span>Led Concept</span></th>
+            </tr>
         </table>
 
 </body>

@@ -47,13 +47,13 @@ class BudgetController extends Controller
         $budget = Budget::find($id);
 
         $statuses = BudgetStatus::status($budget->budget_statuses_id)->get();
-
         return view('budget.edit',compact('products','id','budget', 'statuses'));
     }
 
     public function update(HttpRequest $request, Budget $budget){
 
         $budget->update($request->except('products','user_id'));
+
         $this->storeDetails($budget,$request->products);
 
         return response()->json([
@@ -80,7 +80,11 @@ class BudgetController extends Controller
 
                 if (isset($product['discount']) && $product['discount'] >15 ) {
                     if(!auth()->user()->hasRole('Administrador')){
-                        $budget->update(['budget_statuses_id'=>2]);
+                        if($budget->budget_statuses_id !== 2){
+
+                        }else{
+                            $budget->update(['budget_statuses_id'=>2]);
+                        }
                     }
                 }
 
@@ -95,9 +99,10 @@ class BudgetController extends Controller
 
     public function print(Budget $budget){
         $date = Carbon::createFromDate($budget->date)->format('d-m-Y');
+
         $discount = $budget->detailsBudgets()->sum('discount_price');
         /* return view('budget.pdf_format'); */
-        $pdf = PDF::loadView('budget.pdf_format',['budget' => $budget, 'discount' => $discount, 'date' => $date])->setPaper('letter');
+        $pdf = PDF::loadView('budget.pdf_format',['budget' => $budget, 'discount' => $discount, 'date' => $date])->setPaper([0,0,595.27559055,841.88976378]);
         return $pdf->stream();
     }
 

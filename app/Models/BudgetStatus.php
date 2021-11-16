@@ -57,11 +57,11 @@ class BudgetStatus extends Model
             break;
 
             case 4:
-                $query->whereIn('id',[4]);
+                $query->whereIn('id',[4,5]);
             break;
 
             case 5:
-                $query->whereIn('id',[5]);
+                $query->whereIn('id',[4,5]);
             break;
 
             default:

@@ -65,6 +65,7 @@
             <div class="row">
               <div class="col">
                 <v-autocomplete
+
                   v-model="product"
                   :items="productsCleanList"
                   class="form-control"
@@ -76,7 +77,7 @@
                   item-text="name"
                   label="Buscador de producto"
                   return-object
-                  :disabled="!client"
+                  :disabled="!client || budget.status > 2"
                 >
                   <template slot="item" slot-scope="data">
                     <div class="m-1 mr-5">
@@ -114,6 +115,7 @@
                 <br />
               </div>
               <list-products
+                :class="{'disabled-budget-style' : budget.status > 2}"
                 v-bind:products="productsSelected"
                 :totals="totals"
                 v-on:change="handleChangeListProducts"
@@ -348,13 +350,13 @@ export default {
     handleChangeListProducts(arr, payload) {
       this.productsSelected = arr.map((el) => {
           console.log(el);
-        const total = el.price * el.amount;
-        const discount = el.desc > 0 ? total * (el.desc / 100) : 0;
+        const total = Math.round(el.price * el.amount);
+        const discount = Math.round(el.desc > 0 ? total * (el.desc / 100) : 0);
 
         return {
           ...el,
-          total: total - discount,
-          total_desc: discount,
+          total: Math.round(total - discount),
+          total_desc: Math.round(discount),
         };
       });
 
@@ -373,9 +375,9 @@ export default {
             product_price: el.price,
             product_sku: el.sku,
             quantity: el.amount,
-            discount: Math.round(el.desc),
-            discount_price: Math.round(el.total_desc),
-            total: Math.round(el.total),
+            discount: el.desc,
+            discount_price: el.total_desc,
+            total: el.total,
           })),
           neto: Math.round(this.totals.neto),
           total: Math.round(this.totals.total),
@@ -400,9 +402,9 @@ export default {
             product_price: el.price,
             product_sku: el.sku,
             quantity: el.amount,
-             discount: Math.round(el.desc),
-            discount_price: Math.round(el.total_desc),
-            total: Math.round(el.total),
+             discount: el.desc,
+            discount_price: el.total_desc,
+            total: el.total,
           })),
           neto: Math.round(this.totals.neto),
           total: Math.round(this.totals.total),
@@ -442,25 +444,29 @@ export default {
       }
     },
     setTotals(arr) {
-      const total = arr.reduce((sum, value) => sum + value.total, 0);
-      const iva = total * 0.19;
+      const neto = Math.round(arr.reduce((sum, value) => sum + value.total, 0));
+      const bruto = Math.round(arr.reduce((sum, value) => sum + value.total_desc, 0)) + neto;
+      const iva = Math.floor(neto * 0.19);
+      const total = neto + iva;
       return {
         desc: Math.round(arr.reduce((sum, value) => sum + value.total_desc, 0)),
-        neto: Math.round(total - iva),
+        neto: Math.round(neto),
         iva: Math.round(iva),
-        total: Math.round(total),
+        bruto,
+        total: total,
       };
     },
     normalizeDatatable(product) {
+      const transformPrice = Math.round((product.price) / (1 + 0.19));
       return {
         id: product.id,
         img: product.image,
         sku: product.sku,
         amount: product.amount ? product.amount : 1,
         description: product.description,
-        price: product.price,
+        price: transformPrice,
         desc: product.discount,
-        total: product.price * 1,
+        total: transformPrice * 1,
         actions: "--",
         name: product.name,
         total_desc: 0,
@@ -529,6 +535,11 @@ export default {
   align-items: center;
   padding: 4px;
   background: #1d34486e !important;
+}
+.disabled-budget-style{
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.6;
 }
 </style>
 
