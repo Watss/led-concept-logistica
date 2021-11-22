@@ -81,7 +81,9 @@ class BudgetController extends Controller
                 if (isset($product['discount']) && $product['discount'] >15 ) {
                     if(!auth()->user()->hasRole('Administrador')){
                         if($budget->budget_statuses_id !== 2){
-
+                            if($budget->budget_statuses_id === 1){
+                                $budget->update(['budget_statuses_id'=>2]);
+                            }
                         }else{
                             $budget->update(['budget_statuses_id'=>2]);
                         }
