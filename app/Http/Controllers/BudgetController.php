@@ -28,7 +28,7 @@ class BudgetController extends Controller
     public function store(BudgetStoreRequest $request){
 
         $budget = Budget::create($request->except('products'));
-
+        $budget->budget_statuses_id = 2;
         $this->storeDetails( $budget,$request->products);
 
         $budget->detailsBudgets;
