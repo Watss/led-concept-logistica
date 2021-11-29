@@ -57,7 +57,11 @@
                                 <a class="dropdown-item" href="{{ route('products.edit', $product) }}">Editar</a>
                                 @endcan
                                 @can('product:delete')
-                                {{-- <a class="dropdown-item" href="#">Eliminar</a> --}}
+                                <form method="POST" action="{{ url("products/{$product->id}") }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="dropdown-item" type="submit">Eliminar</button>
+                                  </form>
                                 @endcan
                             </div>
                         </div>

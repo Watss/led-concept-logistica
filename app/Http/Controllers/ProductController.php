@@ -113,9 +113,15 @@ class ProductController extends Controller
     public function destroy(Request $request, Product $product)
     {
         $this->authorize($product);
+        
+        if($product->detailsBudgets()->count() > 0){
+
+            return redirect()->route('products.index')->with('warning','No es posible eliminar. El producto ya esta siendo utilizado en una cotización');
+        };
+
         $product->delete();
 
-        return redirect()->route('product.index');
+        return redirect()->route('products.index');
     }
 
     public function saveImage()

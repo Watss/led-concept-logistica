@@ -20,6 +20,13 @@
         </div>
     @endif
 
+    @if (Session::has('warning'))
+        <div class="alert alert-warning alert-dismissible" role="alert">
+            <strong> {{session('warning')}}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
 
     <livewire:products-table></livewire:products-table>
 </x-app-layout>
