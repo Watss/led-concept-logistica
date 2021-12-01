@@ -200,10 +200,7 @@
         </table>
         <table class="table border-color-black color-primary mb-5" style="border: 0px solid transparent; margin-top:auto;">
             <tr style="border: 0px solid transparent;" align="middle">
-                <th class="p-0 pt-2 pb-2 mr-1 text-center" align="start" style="font-size: 10px; border: 0px solid transparent; text-align:center;"><span class="text-center">Ejecutivo: {{$budget->user->name}}</span></th>
-            </tr>
-            <tr style="border: 0px solid transparent;" align="middle">
-                <th class="p-0 pt-2 pb-2 mr-1 text-center" align="start" style="font-size: 10px; border: 0px solid transparent; border-bottom: 5px solid #000000; text-align:center;"><span class="text-center">Teléfono: {{$budget->user->phone}}</span></th>
+                <th class="p-0 pt-2 pb-2 mr-1 text-center" align="start" style="font-size: 10px; border: 0px solid transparent; text-align:center; border-bottom: 5px solid #000000;"><span class="text-center">Ejecutivo: {{$budget->user->name}}</span> <br> <span class="text-center">Teléfono: {{$budget->user->phone}}</span></th>
             </tr>
         </table>
 
