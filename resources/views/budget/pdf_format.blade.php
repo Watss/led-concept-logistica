@@ -39,19 +39,7 @@
             width:80px;
             height: 80px;
         }
-        footer {
-                position: fixed;
-                left: 0px;
-                bottom: 60px
-                right: 0px;
-                height: 200px;
 
-                /** Extra personal styles **/
-                background-color: transparent;
-                color: white;
-                text-align: center;
-                line-height: 35px;
-            }
 
             .v-text-field.v-text-field--solo:not(.v-text-field--solo-flat)
   > .v-input__control
