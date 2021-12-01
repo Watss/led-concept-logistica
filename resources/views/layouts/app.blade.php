@@ -25,7 +25,7 @@
     <div class="wrapper">
         <nav id="sidebar" class="sidebar js-sidebar">
             <div class="sidebar-content js-simplebar">
-                <a class="sidebar-brand" href="index.html">
+                <a class="sidebar-brand" href="{{route('dashboard')}}">
                     <span class="align-middle" style="color: rgba(0,0,0,0.5); !default;"> <img
                             src="https://www.ledconcept.cl/new/wp-content/uploads/2018/02/Logo-led-concept.png"
                             width="40" alt=""> Led Concept</span>
@@ -152,8 +152,7 @@
                     <div class="row text-muted">
                         <div class="col-6 text-start">
                             <p class="mb-0">
-                                <a class="text-muted" href="https://adminkit.io/" target="_blank"><strong>Adx
-                                        Technology</strong></a> &copy;
+                                <a class="text-muted" href="#" target="_blank"><strong>Led Concept</strong></a> &copy;
                             </p>
                         </div>
                         <div class="col-6 text-end">

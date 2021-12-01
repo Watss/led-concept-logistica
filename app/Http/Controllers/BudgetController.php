@@ -78,7 +78,7 @@ class BudgetController extends Controller
         if($products)
             foreach ($products as $product) {
 
-                if (isset($product['discount']) && $product['discount'] >15 ) {
+                if (isset($product['discount']) && $product['discount'] > 15 ) {
                     if(!auth()->user()->hasRole('Administrador')){
                         if($budget->budget_statuses_id !== 2){
                             if($budget->budget_statuses_id === 1){

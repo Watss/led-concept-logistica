@@ -7,6 +7,7 @@ use App\Models\Type;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Livewire\WithFileUploads;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ProductController extends Controller
 {
@@ -113,15 +114,15 @@ class ProductController extends Controller
     public function destroy(Request $request, Product $product)
     {
         $this->authorize($product);
-        
+
         if($product->detailsBudgets()->count() > 0){
 
-            return redirect()->route('products.index')->with('warning','No es posible eliminar. El producto ya esta siendo utilizado en una cotización');
+            return redirect()->route('products.index')->with('warning','No es posible eliminar. El producto ya está siendo utilizado en una cotización');
         };
 
         $product->delete();
-
-        return redirect()->route('products.index');
+        Alert::success('Producto eliminado correctamente');
+        return redirect()->route('products.index')->with('message','Producto eliminado correctamente');
     }
 
     public function saveImage()

@@ -38,6 +38,7 @@ class UserStoreRequest extends FormRequest
                             ->mixedCase(1)
                             ->numbers(1)
                     ],
+                    'phone' => ['required','string'],
                     'role' => ['required', 'exists:roles,id'],
                 ];
 
@@ -48,6 +49,7 @@ class UserStoreRequest extends FormRequest
                     'name' => ['required', 'string', 'max:255'],
                     'email' => ['required', 'string', 'email', "unique:users,id,{$this->user->id}"],
                     'area' => ['required', 'string'],
+                    'phone' => ['required','string'],
                     'password' => [
                         'nullable',
                         'confirmed',

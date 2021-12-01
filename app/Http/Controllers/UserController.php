@@ -38,6 +38,7 @@ class UserController extends Controller
             'name' => $validated['name'],
             'email' => $validated['email'],
             'area' => $validated['area'],
+            'phone' => $validated['phone'],
             'password' => Hash::make($validated['password'])
         ]);
 
@@ -57,24 +58,24 @@ class UserController extends Controller
     {
         $this->authorize($user);
         $validated = $request->validated();
-
         if (isset($validated['password'])) {
 
             $user->update([
                 'name' => $validated['name'],
                 'email' => $validated['email'],
                 'area' => $validated['area'],
+                'phone' => $validated['phone'],
                 'password' => Hash::make($validated['password'])
             ]);
         } else {
             $user->update([
                 'name' => $validated['name'],
                 'email' => $validated['email'],
-                'area' => $validated['area']
+                'area' => $validated['area'],
+                'phone' => $validated['phone'],
             ]);
         }
         $user->syncRoles($validated['role']);
-
         Alert::success('Actualizado Correctamente');
         return redirect()->route('users.index');
 

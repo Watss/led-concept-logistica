@@ -93,32 +93,33 @@
 
         </table>
         <h5 class="text-center pb-2">COTIZACIÓN Nº {{$budget->id}}</h5>
-        <table class="table mb-5 border-color-black mt-2">
+        <table class="table mb-5 border-color-black mt-2" cellspacing="10">
             <thead>
-                <tr class="tr-primaty-style">
+                <tr class="tr-primaty-style" style="border-spacing:10px;  border-collapse: separate;
+                border-spacing:  5px;">
                     <td scope="col" class="color-primary p-1 capitalize" style="font-weight: bold;">EMPRESA</td>
                     <td scope="col" class="text-center p-1 capitalize">{{$budget->client->name}}</td>
-                    <td scope="col" class="color-primary p-1 capitalize"style="font-weight: bold;">ATENCIÓN</td>
-                    <td scope="col" class="text-center p-1 capitalize">{{$budget->user->name}}</td>
+
                 </tr>
                 <tr class="tr-primaty-style">
                     <td scope="col" class="color-primary p-1 capitalize" style="font-weight: bold;">RUT</td>
                     <td scope="col" class="text-center p-1 capitalize">{{$budget->client->rut}}</td>
-                    <td scope="col" class="color-primary p-1 capitalize" style="font-weight: bold;">MAIL</td>
-                    <td scope="col" class="text-center p-1 capitalize">{{$budget->user->email}}</td>
+
                 </tr>
                 <tr class="tr-primaty-style">
                     <td scope="col" class="color-primary p-1 capitalize" style="font-weight: bold;">DIRECCIÓN</td>
                     <td scope="col" class="text-center p-1 capitalize">{{substr($budget->client->address,0,30)}}</td>
-                    <td scope="col" class="color-primary p-1 capitalize" style="font-weight: bold;">TELÉFONO</td>
-                    <td scope="col" class="text-center p-1 capitalize">{{$budget->user->phone ?? '---'}}</td>
+
                 </tr>
                 <tr class="tr-primaty-style">
                     <td scope="col" class="color-primary p-1 capitalize" style="font-weight: bold;">TELÉFONO</td>
                     <td scope="col" class="text-center p-1 capitalize">{{$budget->client->phone}}</td>
+                </tr>
+                <tr class="tr-primaty-style">
                     <td scope="col" class="color-primary p-1 capitalize" style="font-weight: bold;">OTROS</td>
                     <td scope="col" class="text-center p-1 capitalize">{{$budget->reference}}</td>
                 </tr>
+
             </thead>
         </table>
         <table class="table border-color-black">
@@ -198,8 +199,11 @@
             </tr>
         </table>
         <table class="table border-color-black color-primary mb-5" style="border: 0px solid transparent; margin-top:auto;">
-            <tr style="border: 0px solid transparent;" align="center">
-                <th class="p-0 pt-2 text-right mr-1" align="center" style="font-size: 10px; border: 0px solid transparent; border-bottom: 5px solid #000000; text-align:center;"><span>Led Concept</span></th>
+            <tr style="border: 0px solid transparent;" align="middle">
+                <th class="p-0 pt-2 pb-2 mr-1 text-center" align="start" style="font-size: 10px; border: 0px solid transparent; text-align:center;"><span class="text-center">Ejecutivo: {{$budget->user->name}}</span></th>
+            </tr>
+            <tr style="border: 0px solid transparent;" align="middle">
+                <th class="p-0 pt-2 pb-2 mr-1 text-center" align="start" style="font-size: 10px; border: 0px solid transparent; border-bottom: 5px solid #000000; text-align:center;"><span class="text-center">Teléfono: {{$budget->user->phone}}</span></th>
             </tr>
         </table>
 

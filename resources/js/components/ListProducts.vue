@@ -52,6 +52,7 @@
               single-line
               counter
               autofocus
+              :disabled="!isAdmin"
             ></v-text-field>
           </template>
         </v-edit-dialog>
@@ -160,7 +161,7 @@
 </template>
 <script>
 export default {
-  props: ["products", "totals"],
+  props: ["products", "totals","isAdmin"],
   data: () => ({
     clients: [],
     value: null,

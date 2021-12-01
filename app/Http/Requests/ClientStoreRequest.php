@@ -27,11 +27,11 @@ class ClientStoreRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'rut' => ['required', 'string', 'max:20',$uniqueRule,'cl_rut'],
-            'address' => ['string'],
-            'phone' => ['string'],
-            'email' => ['email'],
+            'address' => ['string','nullable'],
+            'phone' => ['string','nullable'],
+            'email' => ['email','nullable'],
             'type' => ['in:persona,empresa'],
-            'draft' => ['string']
+            'draft' => ['string','nullable']
         ];
     }
 }
