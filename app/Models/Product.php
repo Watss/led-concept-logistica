@@ -39,6 +39,13 @@ class Product extends Model
         'status' => 'boolean',
     ];
 
+    /**
+     * The roles that belong to the user.
+     */
+    public function budgets()
+    {
+        return $this->belongsToMany(Budget::class,'details_budgets','product_id', 'budget_id');
+    }
 
     public function brand()
     {

@@ -115,12 +115,27 @@ class ProductController extends Controller
     {
         $this->authorize($product);
 
-        if($product->detailsBudgets()->count() > 0){
+        $id = $product->id;
+    
+        $budgets = $product->detailsBudgets()->get();
 
-            return redirect()->route('products.index')->with('warning','No es posible eliminar. El producto ya está siendo utilizado en una cotización');
+        if($request->input('confirm') != "1"){
+
+            return redirect()->route('products.index')
+                             ->with('warning','Advertencia. El producto ya está siendo utilizado en la(s) cotización(es).')
+                             ->with('budgets',$budgets)
+                             ->with('idProducto',$id);
         };
+        
+
+        $product->detailsBudgets()->delete();
 
         $product->delete();
+
+        $budgets->each(function($el){
+            $el->budget()->delete();    
+        });
+
         Alert::success('Producto eliminado correctamente');
         return redirect()->route('products.index')->with('message','Producto eliminado correctamente');
     }

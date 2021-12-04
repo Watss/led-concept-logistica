@@ -60,6 +60,7 @@
                                 <form method="POST" action="{{ url("products/{$product->id}") }}">
                                     @csrf
                                     @method('DELETE')
+                                    <input type="text" name="confirm" value="0" hidden>
                                     <button class="dropdown-item" type="submit">Eliminar</button>
                                   </form>
                                 @endcan
