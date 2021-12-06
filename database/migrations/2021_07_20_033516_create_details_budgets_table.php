@@ -26,6 +26,7 @@ class CreateDetailsBudgetsTable extends Migration
             $table->string('product_sku', 255);
             $table->double('total');
             $table->timestamps();
+            
         });
 
         Schema::enableForeignKeyConstraints();

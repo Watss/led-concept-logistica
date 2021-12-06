@@ -112,29 +112,40 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request, Product $product)
-    {
+    {   
+
         $this->authorize($product);
 
-        $id = $product->id;
-    
-        $budgets = $product->detailsBudgets()->get();
+        $budgets = $product->budgets();
 
-        if($request->input('confirm') != "1"){
+        $budgets_detail = $product->detailsBudgets()->get();
 
+
+        if($request->input('confirm') == "1"){
+            
             return redirect()->route('products.index')
-                             ->with('warning','Advertencia. El producto ya está siendo utilizado en la(s) cotización(es).')
-                             ->with('budgets',$budgets)
-                             ->with('idProducto',$id);
+            ->with('warning','Advertencia. El producto ya está siendo utilizado en la(s) cotización(es).')
+            ->with('budgets',$budgets_detail)
+            ->with('idProducto',$product->id)
+            ->with('product',$product);
+            
         };
+
+
+        if ($request->input('products') >=  "1") {
+            
+            $budgets->delete();
+            
+            $product->delete();  
+            
+            
+        }
         
+        if($request->input('products') ==  "0"){
 
-        $product->detailsBudgets()->delete();
+            $product->delete();
 
-        $product->delete();
-
-        $budgets->each(function($el){
-            $el->budget()->delete();    
-        });
+        }
 
         Alert::success('Producto eliminado correctamente');
         return redirect()->route('products.index')->with('message','Producto eliminado correctamente');
