@@ -13,7 +13,22 @@ class AddDeleteOnCascadeProductMigration extends Migration
      */
     public function up()
     {
-        //
+        Schema::table('details_budgets', function (Blueprint $table) {
+
+            $table->dropForeign(['product_id']);
+
+            $table->foreign('product_id')
+                ->references('id')->on('products')
+                ->onDelete('cascade')
+                ->change();
+                
+            $table->dropForeign(['budget_id']);
+
+            $table->foreign('budget_id')
+                ->references('id')->on('budgets')
+                ->onDelete('cascade')
+                ->change();
+        });
     }
 
     /**
@@ -23,17 +38,6 @@ class AddDeleteOnCascadeProductMigration extends Migration
      */
     public function down()
     {
-        Schema::table('details_budgets', function (Blueprint $table) {
-
-            $table->foreign('product_id')
-                ->references('id')->on('products')
-                ->onDelete('cascade')
-                ->change();
-
-            $table->foreign('budget_id')
-                ->references('id')->on('budgets')
-                ->onDelete('cascade')
-                ->change();
-        });
+        
     }
 }
