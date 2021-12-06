@@ -90,7 +90,7 @@ class ClientController extends Controller
         $this->authorize($client);
         $client->delete();
 
-        return redirect()->route('client.index');
+        return redirect()->route('clients.index');
     }
 
     public function searchClient(Request $request){
