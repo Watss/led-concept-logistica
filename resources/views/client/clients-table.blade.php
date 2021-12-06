@@ -51,7 +51,11 @@
                                             <a class="dropdown-item" href="{{route('clients.edit',$client)}}">Editar</a>
                                             @endcan
                                             @can('client:delete')
-                                            <a class="dropdown-item" href="#">Eliminar</a>
+                                           <form action="{{route('clients.destroy',$client)}}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                             <button type="submit" class="dropdown-item" value="eliminar">Eliminar</button>
+                                            </form>
                                             @endcan
                                         </div>
                                     </div>
