@@ -482,7 +482,7 @@ export default {
     },
     deleteBudget() {
       axios
-        .delete("/api/budgets/" + this.id)
+        .delete("/budgets/" + this.id)
         .then((res) => {
           window.location.href = "../";
           console.log("budget deleted.");

@@ -52,7 +52,7 @@ class ProductController extends Controller
 
         if ($request->image) {
 
-            $imageName =  $request->name.'-'.time().'.'.$request->image->extension();
+            $imageName =  $request->sku.'-'.time().'.'.$request->image->extension();
 
             $path = $imageName ? $request->image->storeAs('public/images', $imageName) :  "" ;
 
@@ -76,7 +76,7 @@ class ProductController extends Controller
 
         if ($request->image) {
 
-            $imageName =$request->name.'-'.time().'.'.$request->image->extension();
+            $imageName =$request->sku.'-'.time().'.'.$request->image->extension();
 
             $path = $request->image->storeAs('public/images', $imageName);
 
