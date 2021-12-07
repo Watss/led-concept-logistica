@@ -77,7 +77,7 @@
                   item-text="name"
                   label="Buscador de producto"
                   return-object
-                  :disabled="!client || budget.status > 2"
+                  :disabled="!client || (budget.status > 2 && !is_admin)"
                 >
                   <template slot="item" slot-scope="data">
                     <div class="m-1 mr-5">

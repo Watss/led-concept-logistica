@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-data-table :headers="headers" :items="products" hide-default-footer>
+    <v-data-table :headers="headers" :items="products" hide-default-footer :items-per-page="-1">
       <template v-slot:no-data>
         <p>No hay productos seleccionados.</p>
       </template>
