@@ -116,7 +116,7 @@
               </div>
               <list-products
                 :isAdmin="is_admin"
-                :class="{'disabled-budget-style' : budget.status > 2}"
+                :class="{'disabled-budget-style' : budget.status > 2 && !is_admin}"
                 v-bind:products="productsSelected"
                 :totals="totals"
                 v-on:change="handleChangeListProducts"
