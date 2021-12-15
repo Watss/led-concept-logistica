@@ -96,7 +96,15 @@ class BudgetController extends Controller
 
                 $product['budget_id'] = $budget->id;
                 if(isset($product['id_reference'])){
-                    DetailsBudget::updated($product);
+                    $updateInstance = DetailsBudget::find($product['id_reference']);
+                    $updateInstance->quantity = $product['quantity'];
+                    $updateInstance->product_sku = $product['product_sku'];
+                    $updateInstance->product_price = $product['product_price'];
+                    $updateInstance->discount = $product['discount'];
+                    $updateInstance->discount_price = $product['discount_price'];
+                    $updateInstance->total = $product['total'];
+                    $updateInstance->product_id = $product['product_id'];
+                    $updateInstance->save();
                 }else{
                     DetailsBudget::create($product);
                 }
