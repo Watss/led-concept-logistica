@@ -95,7 +95,11 @@ class BudgetController extends Controller
                 }
 
                 $product['budget_id'] = $budget->id;
-                DetailsBudget::updateOrCreate(['budget_id' => $budget->id,'product_id' => $product['product_id']],$product);
+                if(isset($product['id_reference'])){
+                    DetailsBudget::updated($product);
+                }else{
+                    DetailsBudget::create($product);
+                }
             }
     }
 

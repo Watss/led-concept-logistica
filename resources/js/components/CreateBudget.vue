@@ -65,13 +65,12 @@
             <div class="row">
               <div class="col">
                 <v-autocomplete
-
+                    ref="p_autocomplete"
                   v-model="product"
                   :items="productsCleanList"
                   class="form-control"
                   no-data-text="No hay productos para agregar"
-                  :search-input.sync="searchValueProduct"
-                  @change="searchValueProduct = ''"
+                  @change="reset()"
                   solo
                   dense
                   item-text="name"
@@ -242,6 +241,7 @@ export default {
         this.budget = budget;
         this.newId = budget.id;
         this.productsSelected = budget.products.map((el) => ({
+        id_reference: el.id,
           id: el.product.id,
           img: el.product.image,
           sku: el.product.sku,
@@ -275,27 +275,28 @@ export default {
   },
   watch: {
     product: function name(val) {
-      this.productsSelected = [
+      if(val){
+          this.productsSelected = [
         ...this.productsSelected,
         this.normalizeDatatable(val),
       ];
 
       this.totals = this.setTotals(this.productsSelected);
+      }
     },
   },
   computed: {
     productsCleanList() {
-      const clean = this.products.filter((product) => {
-        const productMatch = this.productsSelected.find(
-          (p) => p.id === product.id
-        );
-        return productMatch ? false : true;
-      });
-
+      const clean = this.products;
       return clean;
     },
   },
   methods: {
+    reset() {
+      this.$nextTick(() => {
+          this.product = null;
+      });
+    },
     handleSaveProduct() {
       this.fetchProducts().then((products) => {
         this.products = products;
@@ -372,6 +373,7 @@ export default {
           user_id: this.user,
           budget_statuses_id: this.budget.detail.budget_statuses_id,
           products: this.productsSelected.map((el) => ({
+              id_reference: el.id_reference,
             product_id: el.id,
             product_price: el.price,
             product_sku: el.sku,
