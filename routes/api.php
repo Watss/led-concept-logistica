@@ -22,4 +22,4 @@ Route::get('budget_get/{id}', [BudgetController::class,'getBBudget'])->name('bud
 // Route::delete('budget/{id}', [BudgetController::class,'deleteProduct'])->name('budget.delete');
 
 Route::delete('budget/products/{id}', [BudgetController::class,'deleteProduct'])->name('budget.product.delete');
-Route::get('budget/copy/{budget}', [BudgetController::class,'copy'])->name('budget.copy');
+

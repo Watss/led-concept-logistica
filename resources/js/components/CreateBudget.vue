@@ -496,13 +496,13 @@ export default {
     handleCopyBudget() {
       if (confirm("¿Desea duplicar esta cotización?")) {
         axios
-          .get("/api/budget/copy/" + this.id)
+          .get("/budget/copy/" + this.id)
           .then((res) => {
             console.log(res);
             console.log("budget copy.");
+            this.snackbar.visible = true;
+            this.snackbar.text = "Cotización duplicada.";
             setTimeout(() => {
-              this.snackbar.visible = true;
-              this.snackbar.text = "Cotización duplicada.";
               window.location.href = "../";
             }, 2000);
           })

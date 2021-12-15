@@ -11,6 +11,7 @@ use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request as HttpRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class BudgetController extends Controller
 {
@@ -152,12 +153,19 @@ class BudgetController extends Controller
     }
 
     public function copy(Budget $budget){
-
+        Log::alert(auth()->user());
         $clone = $budget->replicate();
         $clone->push();
         $clone->save();
 
         $budget->detailsBudgets->map( function($product) use ($clone) {
+            if($product->discount > 15 ){
+                if(auth()->user()->hasRole('Administrador')){
+                    $clone->update(['budget_statuses_id'=>1]);
+                }else{
+                    $clone->update(['budget_statuses_id'=>2]);
+                }
+            }
             $newProduct = $product->replicate();
             $newProduct->budget_id = $clone->id;
             $newProduct->save();

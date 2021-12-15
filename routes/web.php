@@ -55,6 +55,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('reports/client', [ReportsController::class, 'clientReport'])->name('reports.client');
 
     Route::get('print-budget/{budget}', [BudgetController::class, 'print'])->name('budgets.print');
-
+    Route::get('budget/copy/{budget}', [BudgetController::class,'copy'])->name('budget.copy');
     Route::post('product-store-json', [ProductController::class, 'saveProductJson'])->name('product-store-json');
 });
