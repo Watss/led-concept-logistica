@@ -77,7 +77,7 @@
                         @enderror
                     </div>
                     <div class="mb-3 col-md-4">
-                        <label class="form-label">Área</label>
+                        <label class="form-label">Cargo</label>
                         <input type="text" class="form-control @error('area') is-invalid @enderror" name="area"
                             value="{{ old('area') ?? ($user->area ?? '') }}">
                         @error('area')

@@ -26,7 +26,7 @@ class ClientStoreRequest extends FormRequest
         $uniqueRule = $this->method() === 'PUT' ? '' : 'unique:clients';
         return [
             'name' => ['required', 'string', 'max:255'],
-            'rut' => ['required', 'string', 'max:20',$uniqueRule,'cl_rut'],
+            'rut' => ['nullable', 'string', 'max:20',$uniqueRule,'cl_rut'],
             'address' => ['string','nullable'],
             'phone' => ['string','nullable'],
             'email' => ['email','nullable'],

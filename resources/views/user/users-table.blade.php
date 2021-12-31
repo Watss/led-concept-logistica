@@ -18,7 +18,7 @@
                         <tr>
                             <th colspan="2" class="text-left">Nombre</th>
                             <th>Email</th>
-                            <th>Área</th>
+                            <th>Cargo</th>
                             <th>Rol</th>
                             <th class="text-center">Acciones</th>
                         </tr>

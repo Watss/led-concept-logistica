@@ -51,7 +51,7 @@
                 <input
                   type="text"
                   class="form-control"
-                  placeholder="Otros"
+                  placeholder="contacto"
                   v-model="reference"
                   style="padding: 10px"
                 />

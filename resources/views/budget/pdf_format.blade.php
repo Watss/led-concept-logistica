@@ -104,7 +104,7 @@
                     <td scope="col" class="text-center p-1 capitalize">{{$budget->client->phone}}</td>
                 </tr>
                 <tr class="tr-primaty-style">
-                    <td scope="col" class="color-primary p-1 capitalize" style="font-weight: bold;">OTROS</td>
+                    <td scope="col" class="color-primary p-1 capitalize" style="font-weight: bold;">CONTACTO</td>
                     <td scope="col" class="text-center p-1 capitalize">{{$budget->reference}}</td>
                 </tr>
 
@@ -188,7 +188,11 @@
         </table>
         <table class="table border-color-black color-primary mb-5" style="border: 0px solid transparent; margin-top:auto;">
             <tr style="border: 0px solid transparent;" align="middle">
-                <th class="p-0 pt-2 pb-2 mr-1 text-center" align="start" style="font-size: 10px; border: 0px solid transparent; text-align:center; border-bottom: 5px solid #000000;"><span class="text-center">Ejecutivo: {{$budget->user->name}}</span> <br> <span class="text-center">Teléfono: {{$budget->user->phone}}</span></th>
+                <th class="p-0 pt-2 pb-2 mr-1 text-center" align="start" style="font-size: 10px; border: 0px solid transparent; text-align:center; border-bottom: 5px solid #000000;"><span class="text-center">Saluda Muy Atentamente </span> <br> <span class="text-center"> {{$budget->user->name}}</span>
+                    <br> <span class="text-center">{{$budget->user->area}}</span>
+                    <br> <span class="text-center">{{$budget->user->phone}}</span>
+                    <br> <span class="text-center">{{$budget->user->email}}</span>
+                </th>
             </tr>
         </table>
 
