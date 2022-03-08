@@ -65,8 +65,7 @@ class BudgetController extends Controller
 
     public function deleteProduct(HttpRequest $request , $id){
 
-
-        $product = DetailsBudget::where('product_id',$id);
+        $product = DetailsBudget::where('product_id',$id)->where('budget_id',$request['id_budget']);
 
         return response()->json([
             "success" => $product->delete()

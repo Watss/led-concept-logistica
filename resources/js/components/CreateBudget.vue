@@ -333,7 +333,7 @@ export default {
     handleDeleteListProducts(payload) {
       if (confirm("¿Esta seguro que desea eliminar este producto?")) {
         axios
-          .delete("/api/budget/products/" + payload[0].id)
+          .delete("/api/budget/products/" + payload[0].id, {params: {'id_budget': this.budget.id}})
           .then((res) => {
             this.productsSelected = this.productsSelected.filter(
               (element, index) => index !== payload[1]
