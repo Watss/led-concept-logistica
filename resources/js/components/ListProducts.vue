@@ -1,123 +1,137 @@
 <template>
   <div>
-    <v-data-table :headers="headers" :items="products" hide-default-footer :items-per-page="-1" item-key="index">
+    <v-data-table
+      :headers="headers"
+      :items="products"
+      hide-default-footer
+      :items-per-page="-1"
+      item-key="index"
+    >
+      <template v-slot:body>
+        <draggable @change="logDraggable" v-model="productOrder"  tag="tbody">
+          <tr v-for="(item, index) in productOrder" :key="index">
+            <td>
+              <v-icon small class="page__grab-icon"> mdi-arrow-all </v-icon>
+            </td>
+            <td>
+              <div class="m-1">
+                <div v-if="item.img">
+                  <img
+                    width="50"
+                    height="50"
+                    :src="'/' + item.img"
+                    alt=""
+                    style="border-radius: 5px"
+                  />
+                </div>
+                <div v-else>
+                  <div class="bg-secondary no-image">
+                    <div class="text-no-imagen">
+                      <div>Sin Imagen</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td>{{ item.name }}</td>
+            <td>
+              <v-edit-dialog
+                :return-value.sync="item.amount"
+                large
+                persistent
+                cancel-text="Cerrar"
+                save-text="Guardar"
+                @save="save('amount')"
+                @cancel="cancel"
+                @open="open"
+                @close="close"
+              >
+                <div>{{ item.amount }}</div>
+                <template v-slot:input>
+                  <div class="mt-4 text-h6">Modificar cantidad</div>
+                  <v-text-field
+                    v-model="item.amount"
+                    label="Edit"
+                    single-line
+                    counter
+                    autofocus
+                  ></v-text-field>
+                </template>
+              </v-edit-dialog>
+            </td>
+            <td>
+              <v-edit-dialog
+                :return-value.sync="item.price"
+                large
+                persistent
+                cancel-text="Cerrar"
+                save-text="Guardar"
+                @save="save('amount')"
+                @cancel="cancel"
+                @open="open"
+                @close="close"
+              >
+                <div>${{ formatPrice(item.price) }}</div>
+                <template v-slot:input>
+                  <div class="mt-4 text-h6">Modificar precio</div>
+                  <v-text-field
+                    v-model="item.price"
+                    label="Edit"
+                    single-line
+                    counter
+                    autofocus
+                    :disabled="!isAdmin"
+                  ></v-text-field>
+                </template>
+              </v-edit-dialog>
+            </td>
+            <td>
+              <v-edit-dialog
+                cancel-text="Cerrar"
+                save-text="Guardar"
+                :return-value.sync="item.desc"
+                large
+                persistent
+                @save="save('desc')"
+                @cancel="cancel"
+                @open="open"
+                @close="close"
+              >
+                <div>{{ item.desc }}</div>
+                <template v-slot:input>
+                  <div class="mt-4 text-h6">Modificar Descuento</div>
+                  <v-text-field
+                    :rules="[max90chars]"
+                    type="number"
+                    v-model="item.desc"
+                    label="Editar"
+                    single-line
+                    counter
+                    autofocus
+                  ></v-text-field>
+                </template>
+              </v-edit-dialog>
+            </td>
+            <!--  <td>{{ user.total }}</td>
+            <td>{{ user.total }}</td>
+            <td>{{ user.total }}</td>
+            <td>{{ user.total }}</td> -->
+            <td>${{ formatPrice(item.total) }}</td>
+            <td>
+              <button
+                type="button"
+                class="btn btn-light btn-sm"
+                style="border-radius: 20px"
+                @click="deleteItem(item, index)"
+              >
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        </draggable>
+      </template>
       <template v-slot:no-data>
         <p>No hay productos seleccionados.</p>
-      </template>
-      <template v-slot:item.img="props">
-        <div class="m-1">
-          <div v-if="props.item.img">
-            <img
-              width="50"
-              height="50"
-              :src="'/'+props.item.img"
-              alt=""
-              style="border-radius: 5px"
-            />
-          </div>
-          <div v-else>
-            <div class="bg-secondary no-image">
-              <div class="text-no-imagen">
-                <div>Sin Imagen</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </template>
-
-      <template v-slot:item.price="props">
-        ${{ formatPrice(props.item.price) }}
-      </template>
-      <template v-slot:item.total="props">
-        ${{ formatPrice(props.item.total) }}
-      </template>
-      <template v-slot:item.price="props">
-        <v-edit-dialog
-          :return-value.sync="props.item.price"
-          large
-          persistent
-          cancel-text="Cerrar"
-          save-text="Guardar"
-          @save="save('amount')"
-          @cancel="cancel"
-          @open="open"
-          @close="close"
-        >
-          <div>${{ formatPrice( props.item.price )}}</div>
-          <template v-slot:input>
-            <div class="mt-4 text-h6">Modificar precio</div>
-            <v-text-field
-              v-model="props.item.price"
-              label="Edit"
-              single-line
-              counter
-              autofocus
-              :disabled="!isAdmin"
-            ></v-text-field>
-          </template>
-        </v-edit-dialog>
-      </template>
-      <template v-slot:item.amount="props">
-        <v-edit-dialog
-          :return-value.sync="props.item.amount"
-          large
-          persistent
-          cancel-text="Cerrar"
-          save-text="Guardar"
-          @save="save('amount')"
-          @cancel="cancel"
-          @open="open"
-          @close="close"
-        >
-          <div>{{ props.item.amount }}</div>
-          <template v-slot:input>
-            <div class="mt-4 text-h6">Modificar cantidad</div>
-            <v-text-field
-              v-model="props.item.amount"
-              label="Edit"
-              single-line
-              counter
-              autofocus
-            ></v-text-field>
-          </template>
-        </v-edit-dialog>
-      </template>
-      <template v-slot:item.desc="props">
-        <v-edit-dialog
-          cancel-text="Cerrar"
-          save-text="Guardar"
-          :return-value.sync="props.item.desc"
-          large
-          persistent
-          @save="save('desc')"
-          @cancel="cancel"
-          @open="open"
-          @close="close"
-        >
-          <div>{{ props.item.desc }}</div>
-          <template v-slot:input>
-            <div class="mt-4 text-h6">Modificar Descuento</div>
-            <v-text-field
-              :rules="[max90chars]"
-              type="number"
-              v-model="props.item.desc"
-              label="Editar"
-              single-line
-              counter
-              autofocus
-            ></v-text-field>
-          </template>
-        </v-edit-dialog>
-      </template>
-      <template v-slot:item.actions="{ item, index }">
-        <button
-          type="button"
-          class="btn btn-light btn-sm"
-          style="border-radius: 20px"
-          @click="deleteItem(item, index)"
-        >
-          Eliminar
-        </button>
       </template>
       <template slot="body.append">
         <div class="container"></div>
@@ -125,12 +139,11 @@
     </v-data-table>
     <div class="container row d-flex justify-content-end">
       <div class="col-5">
-
         <div class="d-flex justify-content-between">
           <div class="mr-5">Bruto</div>
           <div>${{ formatPrice(totals.bruto ? totals.bruto : 0) }}</div>
         </div>
-         <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between">
           <div class="mr-5">Descuento</div>
           <div>-${{ formatPrice(totals.desc) }}</div>
         </div>
@@ -160,16 +173,25 @@
   </div>
 </template>
 <script>
+import Draggable from "vuedraggable";
+
 export default {
-  props: ["products", "totals","isAdmin"],
+  props: ["products", "totals", "isAdmin"],
+  components: { Draggable },
   data: () => ({
     clients: [],
     value: null,
     snack: false,
     snackColor: "",
+    productOrder: [],
     snackText: "",
     pagination: {},
     headers: [
+      {
+        text: "Mover",
+        align: "start",
+        sortable: false,
+      },
       {
         text: "Imagen",
         align: "start",
@@ -184,8 +206,19 @@ export default {
       { text: "..", value: "actions" },
     ],
   }),
-
+  watch:{
+      products(value){
+          console.log("cambio");
+          this.productOrder = value;
+      }
+  },
+  mounted(){
+    this.productOrder = this.products;
+  },
   methods: {
+      logDraggable(){
+          this.$emit('update-position',this.productOrder);
+      },
     max90chars: (v) => {
       return v > 90 ? "Excede el máximo" : true;
     },
@@ -197,7 +230,7 @@ export default {
       this.snack = true;
       this.snackColor = "success";
       this.snackText = "Datos cambiados";
-      this.$emit("change", this.products);
+      this.$emit("change", this.productOrder);
     },
     cancel() {
       this.snack = true;
@@ -210,7 +243,7 @@ export default {
     },
     deleteItem(item, index) {
       this.$emit("delete", [item, index]);
-      this.editedIndex = this.products.indexOf(item);
+      this.editedIndex = this.productOrder.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialogDelete = true;
     },
@@ -253,6 +286,4 @@ export default {
   font-size: 9px;
   color: white;
 }
-
-
 </style>

@@ -76,6 +76,7 @@ class BudgetController extends Controller
 
     private function storeDetails(Budget $budget,$products){
         if($products)
+            Log::critical(count($products));
             foreach ($products as $product) {
 
                 if (isset($product['discount']) && $product['discount'] > 15 ) {
@@ -95,17 +96,26 @@ class BudgetController extends Controller
                 }
 
                 $product['budget_id'] = $budget->id;
+                Log::info(json_encode($product));
+
                 if(isset($product['id_reference'])){
-                    $updateInstance = DetailsBudget::find($product['id_reference']);
-                    $updateInstance->quantity = $product['quantity'];
-                    $updateInstance->product_sku = $product['product_sku'];
-                    $updateInstance->product_price = $product['product_price'];
-                    $updateInstance->discount = $product['discount'];
-                    $updateInstance->discount_price = $product['discount_price'];
-                    $updateInstance->total = $product['total'];
-                    $updateInstance->product_id = $product['product_id'];
-                    $updateInstance->save();
+
+                   try {
+                        $updateInstance = DetailsBudget::find($product['id_reference']);
+                        $updateInstance->order = $product['order'];
+                        $updateInstance->quantity = $product['quantity'];
+                        $updateInstance->product_sku = $product['product_sku'];
+                        $updateInstance->product_price = $product['product_price'];
+                        $updateInstance->discount = $product['discount'];
+                        $updateInstance->discount_price = $product['discount_price'];
+                        $updateInstance->total = $product['total'];
+                        $updateInstance->product_id = $product['product_id'];
+                        $updateInstance->save();
+                   } catch (\Throwable $th) {
+                       Log::critical($product);
+                   }
                 }else{
+
                     DetailsBudget::create($product);
                 }
             }
@@ -130,7 +140,7 @@ class BudgetController extends Controller
                 'id' => $budget->id,
                 'status' => $budget->status->id,
                 'detail' => $budget,
-                'products' => $budget->detailsBudgets()->get()->toArray(),
+                'products' => $budget->detailsBudgets()->orderBy('order','ASC')->orderBy('id','ASC')->get()->toArray(),
                 'client' => $budget->client
             ]
         ]);

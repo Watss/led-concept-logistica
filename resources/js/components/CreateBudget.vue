@@ -115,6 +115,7 @@
               </div>
               <list-products
                 :isAdmin="is_admin"
+                v-on:update-position="handleUpdateOrder"
                 :class="{'disabled-budget-style' : budget.status > 2 && !is_admin}"
                 v-bind:products="productsSelected"
                 :totals="totals"
@@ -217,6 +218,7 @@ export default {
     client: null,
     product: null,
     productsSelected: [],
+    finishOrderProducts:[],
     totals: {
       partial: 0,
       desc: 0,
@@ -258,6 +260,7 @@ export default {
         this.client = budget.client;
 
         this.totals = this.setTotals(this.productsSelected);
+        this.finishOrderProducts = this.productsSelected;
       });
     }
 
@@ -282,6 +285,12 @@ export default {
       ];
 
       this.totals = this.setTotals(this.productsSelected);
+
+         this.finishOrderProducts = [
+        ...this.finishOrderProducts,
+        this.normalizeDatatable(val),
+      ];
+
       }
     },
   },
@@ -292,6 +301,9 @@ export default {
     },
   },
   methods: {
+      handleUpdateOrder(products){
+          this.finishOrderProducts = products
+      },
     reset() {
       this.$nextTick(() => {
           this.product = null;
@@ -335,9 +347,13 @@ export default {
         axios
           .delete("/api/budget/products/" + payload[0].id, {params: {'id_budget': this.budget.id}})
           .then((res) => {
-            this.productsSelected = this.productsSelected.filter(
+
+            this.finishOrderProducts = this.finishOrderProducts.filter(
               (element, index) => index !== payload[1]
             );
+
+            this.productsSelected = this.finishOrderProducts;
+
             this.totals = this.setTotals(this.productsSelected);
 
             this.snackbar.text = "Producto eliminado con èxito.";
@@ -362,6 +378,18 @@ export default {
         };
       });
 
+      this.finishOrderProducts = arr.map((el) => {
+          console.log(el);
+        const total = Math.round(el.price * el.amount);
+        const discount = Math.round(el.desc > 0 ? total * (el.desc / 100) : 0);
+
+        return {
+          ...el,
+          total: Math.round(total - discount),
+          total_desc: Math.round(discount),
+        };
+      });
+
       this.totals = this.setTotals(this.productsSelected);
       console.log("list amount or desc changend");
     },
@@ -372,7 +400,8 @@ export default {
           reference: this.reference,
           user_id: this.user,
           budget_statuses_id: this.budget.detail.budget_statuses_id,
-          products: this.productsSelected.map((el) => ({
+          products: this.finishOrderProducts.map((el,index) => ({
+              order: index,
               id_reference: el.id_reference,
             product_id: el.id,
             product_price: el.price,
@@ -386,7 +415,7 @@ export default {
           total: Math.round(this.totals.total),
           iva: Math.round(this.totals.iva)
         });
-         window.location.href = "/budget/" + this.budget.id + "/edit";
+        window.location.href = "/budget/" + this.budget.id + "/edit";
         return res;
 
       } catch (error) {
@@ -400,7 +429,8 @@ export default {
           client_id: this.client.id,
           reference: this.reference ? this.reference : "",
           user_id: this.user,
-          products: this.productsSelected.map((el) => ({
+          products: this.finishOrderProducts.map((el,index) => ({
+            order:index,
             product_id: el.id,
             product_price: el.price,
             product_sku: el.sku,

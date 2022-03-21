@@ -156,6 +156,11 @@
                     </tr>
                     <tr style="border:none; padding: 0px;" class="tr-primaty-style">
                         <td colspan="5" style="border:2px solid white; border-right: 1px solid black; padding: 2px"></td>
+                        <td class="color-primary capitalize" style="font-weight: bold; padding: 2px">SUB TOTAL</td>
+                        <td style="padding: 2px">@money($budget->neto + $budget->iva)</td>
+                    </tr>
+                    <tr style="border:none; padding: 0px;" class="tr-primaty-style">
+                        <td colspan="5" style="border:2px solid white; border-right: 1px solid black; padding: 2px"></td>
                         <td class="color-primary capitalize" style="font-weight: bold; padding: 2px">DESCUENTO</td>
                         <td style="padding: 2px">- @money($discount)</td>
                     </tr>

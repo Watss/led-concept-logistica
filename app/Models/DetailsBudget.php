@@ -15,6 +15,7 @@ class DetailsBudget extends Model
      * @var array
      */
     protected $fillable = [
+        'order',
         'product_id',
         'budget_id',
         'quantity',
