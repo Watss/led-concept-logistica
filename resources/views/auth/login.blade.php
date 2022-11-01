@@ -15,7 +15,7 @@
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
                         <div class="mb-4 text-center">
-                            <img src="https://www.ledconcept.cl/new/wp-content/uploads/2018/02/Logo-led-concept.png"
+                            <img src="{{asset('logo.png')}}" width="80"
                                 alt="">
                         </div>
                         <!-- Email Address -->

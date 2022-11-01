@@ -62,7 +62,7 @@
         <div class="row">
             <div class="col-12">
                 <img class="img"
-                src="https://www.ledconcept.cl/new/wp-content/uploads/2018/02/Logo-led-concept.png" width="40"
+                src="{{asset('logo.png')}}" width="40"
                 alt="">
                 <h1 class="titulo"> Reportes de Cotizaciones </h1>
                 <br>

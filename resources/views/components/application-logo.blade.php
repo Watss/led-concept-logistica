@@ -1,1 +1,1 @@
-<img src="https://www.ledconcept.cl/new/wp-content/uploads/2018/02/Logo-led-concept.png" alt="">
+<img src="{{asset('logo.png')}}" width="80" alt="">

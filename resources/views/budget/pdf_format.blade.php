@@ -67,7 +67,7 @@
         <table style="width: 100%; border: 0px solid transparent;">
             <tr style="border: 0px solid transparent;">
                 <td width="70%" style="border: 0px solid transparent;"><img class="img"
-                    src="https://cdn.ledconcept.cl/wp-content/uploads/2022/08/logo-led-concept-png.png" width="80"
+                    src="{{ asset('logo.png') }}" width="80"
                     alt="">
                     </td>
                 <td width="30%" style="border: 0px solid transparent; vertical-align: bottom;"><h5 style="font-size: 10px; font-weight: bold;" class="text-right align-bottom">{{$date}}</h5></td>

@@ -27,7 +27,7 @@
             <div class="sidebar-content js-simplebar">
                 <a class="sidebar-brand" href="{{route('dashboard')}}">
                     <span class="align-middle" style="color: rgba(0,0,0,0.5); !default;"> <img
-                            src="https://cdn.ledconcept.cl/wp-content/uploads/2022/08/logo-led-concept-png.png"
+                            src="{{ asset('logo.png') }}"
                             width="40" alt=""> Led Concept</span>
                 </a>
 

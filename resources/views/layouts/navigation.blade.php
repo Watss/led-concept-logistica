@@ -3,7 +3,7 @@
 
     <!-- logo -->
     <div class="flex-none w-56 flex flex-row items-center">
-      <img src="https://cdn.ledconcept.cl/wp-content/uploads/2022/08/logo-led-concept-png.png" class="w-11 flex-none">
+      <img src="{{ asset('logo.png') }}" with="80" class="w-11 flex-none">
       <strong class="capitalize ml-1 flex-1">Led Concept Cotizador</strong>
 
       <button id="sliderBtn" class="flex-none text-right text-gray-900 hidden md:block">
