@@ -83,7 +83,7 @@
                                             {{ $budget->client ? $budget->client->name : '--' }}</td>
                                         <td class="
                                     ">
-                                            {{ $budget->client ? $budget->user->name : '--' }}</td>
+                                            {{ $budget->user ? $budget->user->name : '--' }}</td>
                                         <td class="d-none d-xl-table-cell text-right">
                                             {{ $budget->detailsBudgets->count() }}
                                         </td>
@@ -132,7 +132,7 @@
                                     </td>
                                     <td class="
                                 ">
-                                        {{ $budget->client ? $budget->user->name : '--' }}</td>
+                                        {{ $budget->user ? $budget->user->name : '--' }}</td>
                                     <td class="d-none d-xl-table-cell text-right">
                                         {{ $budget->detailsBudgets->count() }}
                                     </td>
