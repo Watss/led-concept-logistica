@@ -224,11 +224,13 @@
         <tr style="border: 0px solid transparent;" align="middle">
             <th class="p-0 pt-2 pb-2 mr-1 text-center" align="start"
                 style="font-size: 10px; border: 0px solid transparent; text-align:center; border-bottom: 5px solid #000000;">
-                <span class="text-center">Saluda Muy Atentamente </span> <br> <span class="text-center">
-                    {{ $budget->user->name }}</span>
-                <br> <span class="text-center">{{ $budget->user->area }}</span>
-                <br> <span class="text-center">{{ $budget->user->phone }}</span>
-                <br> <span class="text-center">{{ $budget->user->email }}</span>
+                @if ($budget->user)
+                    <span class="text-center">Saluda Muy Atentamente </span> <br> <span class="text-center">
+                        {{ $budget->user->name }}</span>
+                    <br> <span class="text-center">{{ $budget->user->area }}</span>
+                    <br> <span class="text-center">{{ $budget->user->phone }}</span>
+                    <br> <span class="text-center">{{ $budget->user->email }}</span>
+                @endif
             </th>
         </tr>
     </table>

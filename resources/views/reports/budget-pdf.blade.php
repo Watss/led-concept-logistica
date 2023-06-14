@@ -53,7 +53,6 @@
             position: initial;
 
         }
-
     </style>
 </head>
 
@@ -61,9 +60,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                <img class="img"
-                src="{{asset('logo.png')}}" width="40"
-                alt="">
+                <img class="img" src="{{ asset('logo.png') }}" width="40" alt="">
                 <h1 class="titulo"> Reportes de Cotizaciones </h1>
                 <br>
             </div>
@@ -89,7 +86,8 @@
                                 <td class="">{{ $budget->id }}</td>
                                 <td class="">{{ $budget->client->name }}</td>
                                 <td class="
-                                    ">{{ $budget->user->name }}</td>
+                                    ">
+                                    {{ $budget->user ? $budget->user->name : 'Usuario Eliminado' }}</td>
                                 <td class="text-rigth">
                                     {{ $budget->netoAppends }}</td>
                                 <td class="text-rigth">{{ $budget->ivaAppends }}</td>
@@ -97,15 +95,14 @@
                                 <td class="">{{ $budget->statusTrashed->name }}</td>
                                 <td class="">{{ $budget->created_at }}</td>
                             </tr>
-
-                         @endforeach
-                            <tr>
-                                <td colspan="3">Totales</td>
-                                <td class="text-rigth">$ {{ number_format($neto, 0, ',', '.') }}</td>
-                                <td class="text-rigth">$ {{ number_format($iva, 0, ',', '.') }}</td>
-                                <td class="text-rigth">$ {{ number_format($total, 0, ',', '.') }}</td>
-                                <td colspan="2"></td>
-                            </tr>
+                        @endforeach
+                        <tr>
+                            <td colspan="3">Totales</td>
+                            <td class="text-rigth">$ {{ number_format($neto, 0, ',', '.') }}</td>
+                            <td class="text-rigth">$ {{ number_format($iva, 0, ',', '.') }}</td>
+                            <td class="text-rigth">$ {{ number_format($total, 0, ',', '.') }}</td>
+                            <td colspan="2"></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
