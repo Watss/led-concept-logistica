@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use phpDocumentor\Reflection\Types\Boolean;
 use App\Models\Type;
+
 class Product extends Model
 {
     use HasFactory;
@@ -24,6 +25,7 @@ class Product extends Model
         'price',
         'status',
         'image',
+        'bsale_variant_id',
         'type_id'
     ];
 
@@ -44,7 +46,7 @@ class Product extends Model
      */
     public function budgets()
     {
-        return $this->belongsToMany(Budget::class,'details_budgets','product_id', 'budget_id');
+        return $this->belongsToMany(Budget::class, 'details_budgets', 'product_id', 'budget_id');
     }
 
     public function brand()
@@ -68,13 +70,15 @@ class Product extends Model
             return $query->orWhere('name', 'like', "%$search%")->orWhere('sku', 'like', "%$search%");
     }
 
-    public function scopeActive($query){
+    public function scopeActive($query)
+    {
 
-        $query->where('status',1);
+        $query->where('status', 1);
     }
 
-    public function scopeTemporary($query, $value){
+    public function scopeTemporary($query, $value)
+    {
         if ($value != null)
-            return $query->where('temporary','=',$value);
+            return $query->where('temporary', '=', $value);
     }
 }

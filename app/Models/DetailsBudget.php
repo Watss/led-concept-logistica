@@ -20,6 +20,7 @@ class DetailsBudget extends Model
         'budget_id',
         'quantity',
         'product_price',
+        'prefix',
         'product_sku',
         'total',
         'discount',

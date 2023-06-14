@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductStoreRequest;
+use App\Models\LogUpdateProductPrice;
 use App\Models\Type;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Livewire\WithFileUploads;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 
 class ProductController extends Controller
 {
@@ -22,7 +25,7 @@ class ProductController extends Controller
 
     public function __construct()
     {
-    //    $this->middleware(['role:Administrador'])->except('index');
+        //    $this->middleware(['role:Administrador'])->except('index');
     }
 
     public function index(Request $request)
@@ -37,14 +40,15 @@ class ProductController extends Controller
     public function create(Request $request)
     {
         $product = new Product();
-        $this->authorize('create',$product);
+        $this->authorize('create', $product);
 
         $types = Type::all();
 
-        return view('product.create',compact('product','types'));
+        return view('product.create', compact('product', 'types'));
     }
 
-    public function update(ProductStoreRequest $request, Product $product){
+    public function update(ProductStoreRequest $request, Product $product)
+    {
 
         $this->authorize($product);
 
@@ -52,11 +56,11 @@ class ProductController extends Controller
 
         if ($request->image) {
 
-            $imageName =  $request->sku.'-'.time().'.'.$request->image->extension();
+            $imageName =  $request->sku . '-' . time() . '.' . $request->image->extension();
 
-            $path = $imageName ? $request->image->storeAs('public/images', $imageName) :  "" ;
+            $path = $imageName ? $request->image->storeAs('public/images', $imageName) :  "";
 
-            $target_request['image'] = 'storage/images/'.$imageName;
+            $target_request['image'] = 'storage/images/' . $imageName;
         }
 
         $target_request['type_id'] = $request->type_id;
@@ -76,12 +80,11 @@ class ProductController extends Controller
 
         if ($request->image) {
 
-            $imageName =$request->sku.'-'.time().'.'.$request->image->extension();
+            $imageName = $request->sku . '-' . time() . '.' . $request->image->extension();
 
             $path = $request->image->storeAs('public/images', $imageName);
 
-            $target_request['image'] = 'storage/images/'.$imageName;
-
+            $target_request['image'] = 'storage/images/' . $imageName;
         }
 
         $target_request['type_id'] =  $request->type_id;
@@ -89,7 +92,7 @@ class ProductController extends Controller
 
         Product::create($target_request);
 
-        return redirect()->route('products.index')->with('message','Producto creado con éxito');
+        return redirect()->route('products.index')->with('message', 'Producto creado con éxito');
     }
 
     /**
@@ -99,11 +102,11 @@ class ProductController extends Controller
      */
     public function edit(Request $request, Product $product)
     {
-        $this->authorize('edit',$product);
+        $this->authorize('edit', $product);
 
         $types = Type::all();
 
-        return view('product.edit', compact('product','types'));
+        return view('product.edit', compact('product', 'types'));
     }
 
     /**
@@ -112,7 +115,7 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request, Product $product)
-    {   
+    {
 
         $this->authorize($product);
 
@@ -121,34 +124,30 @@ class ProductController extends Controller
         $budgets_detail = $product->detailsBudgets()->get();
 
 
-        if($request->input('confirm') == "1"){
-            
+        if ($request->input('confirm') == "1") {
+
             return redirect()->route('products.index')
-            ->with('warning','Advertencia. El producto ya está siendo utilizado en la(s) cotización(es).')
-            ->with('budgets',$budgets_detail)
-            ->with('idProducto',$product->id)
-            ->with('product',$product);
-            
+                ->with('warning', 'Advertencia. El producto ya está siendo utilizado en la(s) cotización(es).')
+                ->with('budgets', $budgets_detail)
+                ->with('idProducto', $product->id)
+                ->with('product', $product);
         };
 
 
         if ($request->input('products') >=  "1") {
-            
+
             $budgets->delete();
-            
-            $product->delete();  
-            
-            
-        }
-        
-        if($request->input('products') ==  "0"){
 
             $product->delete();
+        }
 
+        if ($request->input('products') ==  "0") {
+
+            $product->delete();
         }
 
         Alert::success('Producto eliminado correctamente');
-        return redirect()->route('products.index')->with('message','Producto eliminado correctamente');
+        return redirect()->route('products.index')->with('message', 'Producto eliminado correctamente');
     }
 
     public function saveImage()
@@ -157,7 +156,8 @@ class ProductController extends Controller
         $this->photo->store('imagesProducts');
     }
 
-    public function searchProduct(Request $request){
+    public function searchProduct(Request $request)
+    {
         $products = Product::Search($request->search)->Temporary(false)->orderBy('name', 'asc')->get();
         return response()->json([
             "success" => true,
@@ -165,15 +165,16 @@ class ProductController extends Controller
         ]);
     }
 
-    public function saveProductJson(ProductStoreRequest $request){
+    public function saveProductJson(ProductStoreRequest $request)
+    {
         $target_request = $request->validated();
 
         if ($request->image) {
-            $imageName = $request->name.'-'.time().'.'.$request->image->extension();
+            $imageName = $request->name . '-' . time() . '.' . $request->image->extension();
 
             $path = $request->image->storeAs('public/images', $imageName);
 
-            $target_request['image'] = 'storage/images/'.$imageName;
+            $target_request['image'] = 'storage/images/' . $imageName;
         }
 
 
@@ -182,5 +183,20 @@ class ProductController extends Controller
         $product = Product::create($target_request);
 
         return $product;
+    }
+
+    public function indexLogs()
+    {
+        $logUpdateProductPrices = LogUpdateProductPrice::paginate(10);
+        return view('logs.index', compact('logUpdateProductPrices'));
+    }
+
+    public function syncPrices()
+    {
+        $this->dispatch(function () {
+            Artisan::call('run:sync-bsale-prices');
+        });
+
+        return redirect()->back()->with('success', 'El comando se ha ejecutado en segundo plano.');
     }
 }
