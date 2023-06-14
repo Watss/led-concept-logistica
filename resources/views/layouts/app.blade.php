@@ -25,10 +25,9 @@
     <div class="wrapper">
         <nav id="sidebar" class="sidebar js-sidebar">
             <div class="sidebar-content js-simplebar">
-                <a class="sidebar-brand" href="{{route('dashboard')}}">
+                <a class="sidebar-brand" href="{{ route('dashboard') }}">
                     <span class="align-middle" style="color: rgba(0,0,0,0.5); !default;"> <img
-                            src="{{ asset('logo.png') }}"
-                            width="40" alt=""> Led Concept</span>
+                            src="{{ asset('logo.png') }}" width="40" alt=""> Led Concept</span>
                 </a>
 
                 <ul class="sidebar-nav">
@@ -50,11 +49,19 @@
                     </li>
 
                     @can('user:index')
-                    <li class="sidebar-item {{ Request::is('users*') ? 'active' : '' }}">
-                        <a class="sidebar-link" href="{{ route('users.index') }}">
-                            <i class="fas fa-users-cog"></i> <span class="align-middle">Usuarios</span>
-                        </a>
-                    </li>
+                        <li class="sidebar-item {{ Request::is('users*') ? 'active' : '' }}">
+                            <a class="sidebar-link" href="{{ route('users.index') }}">
+                                <i class="fas fa-users-cog"></i> <span class="align-middle">Usuarios</span>
+                            </a>
+                        </li>
+                    @endcan
+
+                    @can('user:index')
+                        <li class="sidebar-item {{ Request::is('logs*') ? 'active' : '' }}">
+                            <a class="sidebar-link" href="{{ route('logs.index') }}">
+                                <i class="fas fa-sync"></i> <span class="align-middle">Logs sincronización</span>
+                            </a>
+                        </li>
                     @endcan
 
 
@@ -76,23 +83,23 @@
                     </li>
 
                     @can('reports:clients')
-                    <li class="sidebar-item {{ Request::is('reports/client*') ? 'active' : '' }}">
-                        <a class="sidebar-link" href="{{ route('reports.client') }}">
-                            <i class="align-middle" data-feather="check-square"></i> <span
-                                class="align-middle">Reporte Clientes</span>
-                        </a>
-                    </li>
+                        <li class="sidebar-item {{ Request::is('reports/client*') ? 'active' : '' }}">
+                            <a class="sidebar-link" href="{{ route('reports.client') }}">
+                                <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">Reporte
+                                    Clientes</span>
+                            </a>
+                        </li>
                     @endcan
 
 
 
                     @can('budget-status:index')
-                    <li class="sidebar-item {{ Request::is('budget-status*') ? 'active' : '' }}">
-                        <a class="sidebar-link" href="{{ route('budget-status.index') }}">
-                            <i class="align-middle" data-feather="check-square"></i> <span
-                                class="align-middle">Estados de cotizaciones</span>
-                        </a>
-                    </li>
+                        <li class="sidebar-item {{ Request::is('budget-status*') ? 'active' : '' }}">
+                            <a class="sidebar-link" href="{{ route('budget-status.index') }}">
+                                <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">Estados
+                                    de cotizaciones</span>
+                            </a>
+                        </li>
                     @endcan
 
                 </ul>
@@ -118,12 +125,13 @@
 
                             <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#"
                                 data-bs-toggle="dropdown">
-                                <img src="https://ui-avatars.com/api/?rounded=true&size=32&name={{Auth::user()->name }}"
+                                <img src="https://ui-avatars.com/api/?rounded=true&size=32&name={{ Auth::user()->name }}"
                                     class=" img-fluid rounded me-1" alt="Charles Hall" /> <span class="text-dark">
                                     {{ Auth::user()->name }}</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item " href="{{ route('logout') }}" onclick="event.preventDefault();
+                                <a class="dropdown-item " href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
         							document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
@@ -152,7 +160,8 @@
                     <div class="row text-muted">
                         <div class="col-6 text-start">
                             <p class="mb-0">
-                                <a class="text-muted" href="#" target="_blank"><strong>Led Concept</strong></a> &copy;
+                                <a class="text-muted" href="#" target="_blank"><strong>Led Concept</strong></a>
+                                &copy;
                             </p>
                         </div>
                         <div class="col-6 text-end">

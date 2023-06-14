@@ -6,6 +6,7 @@ use App\Models\LogUpdateProductPrice;
 use App\Models\Product;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class SyncPricesBsale extends Command
 {
@@ -50,6 +51,8 @@ class SyncPricesBsale extends Command
 
         $timesUpdate = 0;
         $timesMatch = 0;
+
+        Log::info('SYNC PRICES');
 
         do {
             $response = Http::withHeaders([
