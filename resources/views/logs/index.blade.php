@@ -5,10 +5,13 @@
             <form action="{{ route('sync.prices') }}" method="POST">
                 @csrf
                 <button role="button" type="submit"
-                    class="btn text-white btn-primary btn-dark d-flex align-items-center justify-content-center"
+                    class="btn text-white btn-primary btn-dark d-flex align-items-center justify-content-center mb-3"
                     style="border-radius: 20px;">
                     <span style="margin-right: 10px;"> Sincronizar Precios </span>
                 </button>
+                <span style="margin-right: 10px;"> No recarges la página al presionar el botón, el proceso
+                    puede demorar unos
+                    minutos </span>
             </form>
         @endcan
 

@@ -141,12 +141,12 @@
                         </div>
                     </div>
                 </div>
-                <button
+                <!-- <button
                     class="btn btn-sm btn-outline-danger"
                     @click="dialog = true"
                 >
                     Eliminar cotización
-                </button>
+                </button> -->
             </div>
         </div>
         <modal-client
