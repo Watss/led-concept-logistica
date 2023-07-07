@@ -27,7 +27,7 @@
             <div class="sidebar-content js-simplebar">
                 <a class="sidebar-brand" href="{{ route('dashboard') }}">
                     <span class="align-middle" style="color: rgba(0,0,0,0.5); !default;"> <img
-                            src="{{ asset('logo.png') }}" width="40" alt=""> Led Concept</span>
+                            src="{{ asset('logo.png') }}" width="40" alt=""> Led Logistica</span>
                 </a>
 
                 <ul class="sidebar-nav">
@@ -42,11 +42,6 @@
                         </a>
                     </li>
 
-                    <li class="sidebar-item {{ Request::is('clients*') ? 'active' : '' }}">
-                        <a class="sidebar-link" href="{{ route('clients.index') }}">
-                            <i class="fas fa-users"></i> <span class="align-middle">Clientes</span>
-                        </a>
-                    </li>
 
                     @can('user:index')
                         <li class="sidebar-item {{ Request::is('users*') ? 'active' : '' }}">
@@ -56,51 +51,17 @@
                         </li>
                     @endcan
 
-                    @can('user:index')
-                        <li class="sidebar-item {{ Request::is('logs*') ? 'active' : '' }}">
-                            <a class="sidebar-link" href="{{ route('logs.index') }}">
-                                <i class="fas fa-sync"></i> <span class="align-middle">Logs sincronización</span>
-                            </a>
-                        </li>
-                    @endcan
-
-
-                    <li class="sidebar-item {{ Request::is('products*') ? 'active' : '' }}">
-                        <a class="sidebar-link " href="{{ route('products.index') }}">
-                            <i class="fas fa-boxes"></i> <span class="align-middle">Productos</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item {{ Request::is('budget/*') ? 'active' : '' }}">
-                        <a class="sidebar-link " href="{{ route('budget.index') }}">
-                            <i class="fas fa-briefcase"></i> <span class="align-middle">Cotizaciones</span>
-                        </a>
-                    </li>
 
 
 
-                    <li class="sidebar-header">
+
+
+
+                    {{--     <li class="sidebar-header">
                         Configuración
-                    </li>
-
-                    @can('reports:clients')
-                        <li class="sidebar-item {{ Request::is('reports/client*') ? 'active' : '' }}">
-                            <a class="sidebar-link" href="{{ route('reports.client') }}">
-                                <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">Reporte
-                                    Clientes</span>
-                            </a>
-                        </li>
-                    @endcan
+                    </li> --}}
 
 
-
-                    @can('budget-status:index')
-                        <li class="sidebar-item {{ Request::is('budget-status*') ? 'active' : '' }}">
-                            <a class="sidebar-link" href="{{ route('budget-status.index') }}">
-                                <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">Estados
-                                    de cotizaciones</span>
-                            </a>
-                        </li>
-                    @endcan
 
                 </ul>
 
@@ -136,8 +97,7 @@
                                     {{ __('Logout') }}
                                 </a>
 
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                    class="d-none">
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @method('post')
                                     @csrf
                                 </form>
