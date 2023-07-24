@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\ProductConfig;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -15,7 +16,8 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(RolesSeeder::class);
-        $this->call(StatusesSeeder::class);
-        $this->call(TypeSeeder::class);
+        $this->call(CompanySeeder::class);
+        $this->call(DocumentTypeSeeder::class);
+        $this->call(ProductConfigSeeder::class);
     }
 }
