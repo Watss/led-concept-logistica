@@ -15,8 +15,8 @@
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
                         <div class="mb-4 text-center">
-                            <img src="{{asset('logo.png')}}" width="80"
-                                alt="">
+                            <img src="{{ asset('logo.png') }}" width="80" alt="">
+                            <div>Led Reportes</div>
                         </div>
                         <!-- Email Address -->
                         <div>
@@ -30,13 +30,12 @@
                         <div class="mt-4">
                             <x-label class="form-label" for="password" :value="__('Password')" />
 
-                            <x-input id="password" class="form-control block mt-1 w-full" type="password" name="password"
-                                required autocomplete="current-password" />
+                            <x-input id="password" class="form-control block mt-1 w-full" type="password"
+                                name="password" required autocomplete="current-password" />
                         </div>
 
                         <!-- Validation Errors -->
                         @if (count($errors) > 0)
-
                             <div class="alert alert-warning mt-4" role="alert">
                                 {{ $errors->first('email') }}
                             </div>

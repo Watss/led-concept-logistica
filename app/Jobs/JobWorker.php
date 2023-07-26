@@ -51,6 +51,7 @@ class JobWorker implements ShouldQueue
             $end12 = Carbon::create($start)->addMonths(12)->format('Y-m-d');
 
             if ($this->report) {
+                Report::where('id', $this->report->id)->update(['failed' => false, 'generated' => false]);
             } else {
                 $this->report = Report::updateOrCreate(
                     [

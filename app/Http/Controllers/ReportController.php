@@ -40,7 +40,15 @@ class ReportController extends Controller
     {
         $user = auth()->user();
 
-        JobWorker::dispatch(null, $request->input('start'), $request->input('emails', []), $user);
+        $reportId = $request->input('report', null);
+
+        if ($reportId) {
+            $report = Report::find($reportId);
+        } else {
+            $report = null;
+        }
+
+        JobWorker::dispatch($report, $request->input('start'), $request->input('emails', []), $user);
         return "correo enviado";
     }
 

@@ -42,7 +42,7 @@ class ReportMail extends Mailable
      */
     public function build()
     {
-        $start = $this->start;
+        $start = $this->report->start;
         $end6 = Carbon::create($start)->addMonths(6)->format('Y-m-d');
         $end12 = Carbon::create($start)->addMonths(12)->format('Y-m-d');
 

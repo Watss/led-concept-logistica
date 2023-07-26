@@ -30,6 +30,7 @@
                     <v-text-field
                         v-model="fechaInicial"
                         label="Fecha inicial"
+                        hint="A partir de esta fecha, se generará el reporte para 6 y 12 meses"
                         type="date"
                     ></v-text-field>
                 </v-col>
@@ -112,7 +113,7 @@
                             <v-icon v-on="on">mdi-dots-vertical</v-icon>
                         </template>
                         <v-list>
-                            <v-list-item @click="volverGenerar">
+                            <v-list-item @click="volverGenerar(item.id)">
                                 <v-list-item-icon>
                                     <v-icon>mdi-refresh</v-icon>
                                 </v-list-item-icon>
@@ -121,7 +122,7 @@
                                     >Volver a Generar</v-list-item-title
                                 >
                             </v-list-item>
-                            <v-list-item
+                            <!-- <v-list-item
                                 @click="descargarArchivo"
                                 v-if="item.generated && !item.failed"
                             >
@@ -131,7 +132,7 @@
                                 <v-list-item-title
                                     >Descargar Archivo</v-list-item-title
                                 >
-                            </v-list-item>
+                            </v-list-item> -->
                         </v-list>
                     </v-menu>
                 </template>
@@ -201,14 +202,15 @@ export default {
                 return moment(d).format("DD-MM-YYYY");
             }
         },
-        generarReporte() {
-            if (this.fechaInicial !== null) {
+        generarReporte(report = null) {
+            if (this.fechaInicial !== null || report !== null) {
                 this.loadingGenerate = true;
                 axios
                     .get("/reporte/generar-excel", {
                         params: {
                             start: this.fechaInicial,
                             emails: this.emails,
+                            report: report,
                         },
                     })
                     .then((res) => {
@@ -253,9 +255,8 @@ export default {
                     console.error(err);
                 });
         },
-        volverGenerar() {
-            // Lógica para la opción "Volver a Generar"
-            // ...
+        volverGenerar(report) {
+            this.generarReporte(report);
         },
         descargarArchivo() {
             // Lógica para la opción "Descargar Archivo"

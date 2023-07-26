@@ -14,7 +14,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="shortcut icon" href="img/icons/icon-48x48.png" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Led Concept</title>
+    <title>Led Reportes</title>
     @livewireStyles
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
@@ -27,7 +27,7 @@
             <div class="sidebar-content js-simplebar">
                 <a class="sidebar-brand" href="{{ route('dashboard') }}">
                     <span class="align-middle" style="color: rgba(0,0,0,0.5); !default;"> <img
-                            src="{{ asset('logo.png') }}" width="40" alt=""> Led Logistica</span>
+                            src="{{ asset('logo.png') }}" width="40" alt=""> Led Reportes</span>
                 </a>
 
                 <ul class="sidebar-nav">
@@ -137,7 +137,7 @@
                     <div class="row text-muted">
                         <div class="col-6 text-start">
                             <p class="mb-0">
-                                <a class="text-muted" href="#" target="_blank"><strong>Led Concept</strong></a>
+                                <a class="text-muted" href="#" target="_blank"><strong>Led Reportes</strong></a>
                                 &copy;
                             </p>
                         </div>
