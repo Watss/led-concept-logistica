@@ -18,6 +18,8 @@ class CreateReportsTable extends Migration
             $table->date('start');
             $table->date('end');
             $table->foreignId('user_id')->constrained('users');
+            $table->boolean('generated')->default(false);
+            $table->boolean('failed')->default(false);
             $table->timestamps();
         });
     }

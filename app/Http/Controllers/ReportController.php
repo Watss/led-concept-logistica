@@ -20,23 +20,28 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class ReportController extends Controller
 {
+    public function index()
+    {
+        $companies = Company::all();
+        return view('reports.index', compact('companies'));
+    }
+
+    public function getReports()
+    {
+        $reports = Report::orderBy('created_at', 'DESC')->get();
+        $reports->map(function ($r) {
+            $r->userName = $r->user->name;
+            return $r;
+        });
+        return $reports;
+    }
+
     public function all_by_dates(Request $request)
     {
+        $user = auth()->user();
 
-        $next = $this->siguienteCadena('V', 8);
-        /* $start = '2022-07-19';
-
-        
-
-
-        $end6 = Carbon::create($start)->addMonths(6)->format('Y-m-d');
-        $end12 = Carbon::create($start)->addMonths(12)->format('Y-m-d');; */
-
-        JobWorker::dispatch();
+        JobWorker::dispatch(null, $request->input('start'), $request->input('emails', []), $user);
         return "correo enviado";
-
-        //return view('excel.restocking-report', compact('productsConfig', 'report', 'next'));
-        //return view('reports.all_by_dates', compact('totalProductos'));
     }
 
     public function testMail()

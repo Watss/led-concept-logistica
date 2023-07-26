@@ -9,7 +9,7 @@ class Report extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['start', 'end', 'user_id'];
+    protected $fillable = ['start', 'end', 'user_id', 'generated'];
 
     // Relación con el modelo de usuario
     public function user()

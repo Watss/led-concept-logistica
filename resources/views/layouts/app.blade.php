@@ -54,7 +54,7 @@
                     @can('user:index')
                         <li class="sidebar-item {{ Request::is('products-config*') ? 'active' : '' }}">
                             <a class="sidebar-link" href="{{ route('products-config.index') }}">
-                                <i class="fas fa-users-cog"></i> <span class="align-middle">Configuración de
+                                <i class="fas fa-cogs"></i> <span class="align-middle">Configuración de
                                     productos</span>
                             </a>
                         </li>
@@ -63,7 +63,7 @@
 
                     <li class="sidebar-item {{ Request::is('reporte/generar') ? 'active' : '' }}">
                         <a class="sidebar-link" href="{{ route('reports.all-by-dates') }}">
-                            <i class="fas fa-users-cog"></i> <span class="align-middle">Generar Reporte Xls</span>
+                            <i class="fas fa-file-excel"></i> <span class="align-middle">Generar Reporte Xls</span>
                         </a>
                     </li>
 

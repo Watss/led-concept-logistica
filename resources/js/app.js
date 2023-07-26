@@ -1,11 +1,13 @@
-require('./bootstrap');
+require("./bootstrap");
 
-require('alpinejs');
-require('./config-template/bootstrap');
-require('./config-template/sidebar');
+require("alpinejs");
+require("./config-template/bootstrap");
+require("./config-template/sidebar");
 import feather from "feather-icons";
-import Vuetify from 'vuetify'
-import 'vuetify/dist/vuetify.min.css'
+import Vuetify from "vuetify";
+import "vuetify/dist/vuetify.min.css";
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
 
 document.addEventListener("DOMContentLoaded", () => {
     feather.replace();
@@ -13,17 +15,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 window.feather = feather;
 
-
-
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-window.Vue = require('vue').default;
-Vue.use(Vuetify)
+window.Vue = require("vue").default;
+Vue.use(Vuetify);
+Vue.use(Toast);
 
 /**
  * The following block of code may be used to automatically register your
@@ -36,7 +36,10 @@ Vue.use(Vuetify)
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('create-budget', require('./components/CreateBudget.vue').default);
+Vue.component(
+    "generate-report",
+    require("./components/GenerateReport.vue").default
+);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -45,6 +48,6 @@ Vue.component('create-budget', require('./components/CreateBudget.vue').default)
  */
 
 const app = new Vue({
-    el: '#app',
-    vuetify: new Vuetify()
+    el: "#app",
+    vuetify: new Vuetify(),
 });

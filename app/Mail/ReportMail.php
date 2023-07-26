@@ -21,14 +21,18 @@ class ReportMail extends Mailable
     use Queueable, SerializesModels;
 
     public $report;
+    public $start;
+    public $user;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($report)
+    public function __construct($report, $start, $user)
     {
         $this->report = $report;
+        $this->start = $start;
+        $this->user = $user;
     }
 
     /**
@@ -38,26 +42,12 @@ class ReportMail extends Mailable
      */
     public function build()
     {
-        $start = '2022-07-19';
-
-
+        $start = $this->start;
         $end6 = Carbon::create($start)->addMonths(6)->format('Y-m-d');
-        $end12 = Carbon::create($start)->addMonths(12)->format('Y-m-d');;
+        $end12 = Carbon::create($start)->addMonths(12)->format('Y-m-d');
 
         $companies = Company::all();
-
-        $report = Report::updateOrCreate(
-            [
-                "start" => $start,
-                "end" => $end12,
-
-            ],
-            [
-                "start" => $start,
-                "end" => $end12,
-                "user_id" => 1
-            ]
-        );
+        $report = $this->report;
 
         $productsConfig = ProductConfig::all()->map(function ($pc) {
 
@@ -78,7 +68,7 @@ class ReportMail extends Mailable
 
         foreach ($companies as $company) {
 
-            $response = Http::post('http://localhost:1807/get-info-by-company', [
+            $response = Http::post('http://159.223.101.53:1807/get-info-by-company', [
                 "company" => [
                     "id" =>  $company->id,
                     "name" =>  $company->name,
@@ -96,7 +86,7 @@ class ReportMail extends Mailable
                 "withStock" => true,
             ]);
 
-            $response12 = Http::post('http://localhost:1807/get-info-by-company', [
+            $response12 = Http::post('http://159.223.101.53:1807/get-info-by-company', [
                 "company" => [
                     "id" =>  $company->id,
                     "name" =>  $company->name,
@@ -271,7 +261,10 @@ class ReportMail extends Mailable
         $file = new RestockingReportExport($productsConfig, $report);
         $file = Excel::raw($file, \Maatwebsite\Excel\Excel::XLSX);
 
-        return $this->view('emails.reportmail')->attachData($file, 'report.xlsx', [
+        Report::where('id', $report->id)->update(['generated' => true]);
+
+
+        return $this->view('emails.reportmail')->attachData($file, "Reporte-Desde-$start-Hasta-$end12.xlsx", [
             "mime" => "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         ]);
     }

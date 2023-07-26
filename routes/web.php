@@ -25,5 +25,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
     Route::resource('users', UserController::class);
     Route::get('/products-config', ProductsConfigTable::class)->name('products-config.index');
-    Route::get('reporte/generar', [ReportController::class, 'all_by_dates'])->name('reports.all-by-dates');
+    Route::get('reporte/generar', [ReportController::class, 'index'])->name('reports.all-by-dates');
+    Route::get('get-reports', [ReportController::class, 'getReports'])->name('reports.get');
+    Route::get('reporte/generar-excel', [ReportController::class, 'all_by_dates'])->name('reports.excel.all-by-dates');
 });
