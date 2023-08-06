@@ -41,6 +41,16 @@ Vue.component(
     require("./components/GenerateReport.vue").default
 );
 
+Vue.component(
+    "companies-component",
+    require("./components/companies/Companies-component.vue").default
+);
+
+Vue.component(
+    "documents-component",
+    require("./components/companies/Documents-component.vue").default
+);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

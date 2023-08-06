@@ -67,6 +67,18 @@
                         </a>
                     </li>
 
+                    <li class="sidebar-item {{ Request::is('companies') ? 'active' : '' }}">
+                        <a class="sidebar-link" href="{{ route('companies.get') }}">
+                            <i class="fas fa-file-excel"></i> <span class="align-middle">Compañias</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item {{ Request::is('document-types') ? 'active' : '' }}">
+                        <a class="sidebar-link" href="{{ route('documents.get') }}">
+                            <i class="fas fa-file-excel"></i> <span class="align-middle">Tipos de documento</span>
+                        </a>
+                    </li>
+
 
 
 
@@ -137,7 +149,8 @@
                     <div class="row text-muted">
                         <div class="col-6 text-start">
                             <p class="mb-0">
-                                <a class="text-muted" href="#" target="_blank"><strong>Led Reportes</strong></a>
+                                <a class="text-muted" href="#" target="_blank"><strong>Led
+                                        Reportes</strong></a>
                                 &copy;
                             </p>
                         </div>
