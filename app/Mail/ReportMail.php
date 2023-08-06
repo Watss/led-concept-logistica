@@ -68,7 +68,7 @@ class ReportMail extends Mailable
 
         foreach ($companies as $company) {
 
-            $response = Http::post('http://159.223.101.53:1807/get-info-by-company', [
+            $response = Http::post('http://localhost:1807/get-info-by-company', [
                 "company" => [
                     "id" =>  $company->id,
                     "name" =>  $company->name,
@@ -86,7 +86,7 @@ class ReportMail extends Mailable
                 "withStock" => true,
             ]);
 
-            $response12 = Http::post('http://159.223.101.53:1807/get-info-by-company', [
+            $response12 = Http::post('http://localhost:1807/get-info-by-company', [
                 "company" => [
                     "id" =>  $company->id,
                     "name" =>  $company->name,
