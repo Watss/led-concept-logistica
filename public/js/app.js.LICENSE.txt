@@ -11,6 +11,13 @@
 */
 
 /*!
+ * The buffer module from node.js, for the browser.
+ *
+ * @author   Feross Aboukhadijeh <http://feross.org>
+ * @license  MIT
+ */
+
+/*!
  * Vue.js v2.7.14
  * (c) 2014-2022 Evan You
  * Released under the MIT License.
@@ -27,6 +34,21 @@
  * Date: 2023-05-11T18:29Z
  */
 
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+
 /*! ../../../directives/resize */
 
 /*! ../../../directives/ripple */
@@ -36,6 +58,8 @@
 /*! ../../../mixins/colorable */
 
 /*! ../../../mixins/localable */
+
+/*! ../../../mixins/mouse */
 
 /*! ../../../mixins/themeable */
 
@@ -118,6 +142,8 @@
 /*! ../../mixins/menuable */
 
 /*! ../../mixins/mobile */
+
+/*! ../../mixins/mouse */
 
 /*! ../../mixins/overlayable */
 
@@ -705,6 +731,8 @@
 
 /*! ./VItem */
 
+/*! ./VItem.sass */
+
 /*! ./VItemGroup */
 
 /*! ./VItemGroup.sass */
@@ -1074,8 +1102,6 @@
 /*! ./mixins/header */
 
 /*! ./monthChange */
-
-/*! ./mouse */
 
 /*! ./mutate */
 
@@ -1457,9 +1483,9 @@
 
 /*! exports provided: xmlns, width, height, viewBox, fill, stroke, stroke-width, stroke-linecap, stroke-linejoin, default */
 
-/*! no static exports found */
+/*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
 
-/*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */
+/*! no static exports found */
 
 /*! vue */
 
@@ -1725,6 +1751,10 @@
 
 /*!***********************************!*\
   !*** (webpack)/buildin/global.js ***!
+  \***********************************/
+
+/*!***********************************!*\
+  !*** ./src/mixins/mouse/index.ts ***!
   \***********************************/
 
 /*!***********************************!*\
@@ -2604,6 +2634,10 @@
   \**********************************************/
 
 /*!**********************************************!*\
+  !*** ./src/components/VItemGroup/VItem.sass ***!
+  \**********************************************/
+
+/*!**********************************************!*\
   !*** ./src/components/VList/VListGroup.sass ***!
   \**********************************************/
 
@@ -2917,10 +2951,6 @@
 
 /*!**************************************************!*\
   !*** ./src/components/VAppBar/VAppBarNavIcon.ts ***!
-  \**************************************************/
-
-/*!**************************************************!*\
-  !*** ./src/components/VCalendar/mixins/mouse.ts ***!
   \**************************************************/
 
 /*!**************************************************!*\
@@ -3715,13 +3745,6 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- */
-
-/**!
- * Sortable 1.10.2
- * @author	RubaXa   <trash@rubaxa.org>
- * @author	owenm    <owen23355@gmail.com>
- * @license MIT
  */
 
 //! moment.js
