@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
-    return redirect()->route('reporte/generar');
+    return redirect()->route('reports.all-by-dates');
 });
 
 require __DIR__ . '/auth.php';
