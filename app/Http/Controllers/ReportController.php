@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\SendMailEvent;
+use App\Exports\ProductConfigExport;
 use App\Exports\RestockingReportExport;
 use App\Jobs\JobWorker;
 use App\Mail\ReportMail;
@@ -81,5 +82,10 @@ class ReportController extends Controller
         }
 
         return $siguienteCadena;
+    }
+
+    public function downloadExcel()
+    {
+        return Excel::download(new ProductConfigExport, 'productos-plantilla.xlsx');
     }
 }

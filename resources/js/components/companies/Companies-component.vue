@@ -8,7 +8,7 @@
                 :items="companies"
                 hide-default-footer
             >
-                <template v-slot:item.actions="{ item }">
+                <!-- <template v-slot:item.actions="{ item }">
                     <v-menu offset-y offset-x offset-overflow attach>
                         <template v-slot:activator="{ on }">
                             <v-icon v-on="on">mdi-dots-vertical</v-icon>
@@ -23,7 +23,7 @@
                             </v-list-item>
                         </v-list>
                     </v-menu>
-                </template>
+                </template> -->
             </v-data-table>
         </v-container>
     </v-app>
@@ -39,7 +39,6 @@ export default {
     },
     data: () => ({
         headers: [
-            { text: "Acciones", align: "center", value: "actions" },
             { text: "Nombre", align: "center", value: "name" },
             { text: "Token", align: "center", value: "token" },
         ],

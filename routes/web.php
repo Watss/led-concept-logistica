@@ -23,6 +23,8 @@ Route::get('/', function () {
 require __DIR__ . '/auth.php';
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('download-template-products', [ReportController::class, 'downloadExcel'])
+        ->name('download-template-products');
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
     Route::resource('users', UserController::class);
     Route::get('/products-config', ProductsConfigTable::class)->name('products-config.index');

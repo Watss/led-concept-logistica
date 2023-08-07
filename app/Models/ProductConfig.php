@@ -8,7 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class ProductConfig extends Model
 {
     use HasFactory;
-    protected $fillable = ["sku_led_concept", "sku_led_center", "legacy_sku_led_concept", "legacy_sku_led_center", "descripcion", "proveedor"];
+    protected $fillable = [
+        "sku_led_concept",
+        "sku_led_center",
+        "legacy_sku_led_concept",
+        "legacy_sku_led_center",
+        "descripcion",
+        "proveedor"
+    ];
 
     public function reportSaleDetails()
     {
@@ -22,6 +29,11 @@ class ProductConfig extends Model
 
     public function scopeSearch($query, $value)
     {
-        return $query->where('descripcion', 'LIKE', '%' . $value . '%')->orWhere('sku_led_concept', 'LIKE', '%' . $value . '%')->orWhere('sku_led_center', 'LIKE', '%' . $value . '%')->orWhere('legacy_sku_led_concept', 'LIKE', '%' . $value . '%')->orWhere('legacy_sku_led_center', 'LIKE', '%' . $value . '%')->orWhere('proveedor', 'LIKE', '%' . $value . '%');
+        return $query->where('descripcion', 'LIKE', '%' . $value . '%')
+            ->orWhere('sku_led_concept', 'LIKE', '%' . $value . '%')
+            ->orWhere('sku_led_center', 'LIKE', '%' . $value . '%')
+            ->orWhere('legacy_sku_led_concept', 'LIKE', '%' . $value . '%')
+            ->orWhere('legacy_sku_led_center', 'LIKE', '%' . $value . '%')
+            ->orWhere('proveedor', 'LIKE', '%' . $value . '%');
     }
 }

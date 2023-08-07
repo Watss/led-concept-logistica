@@ -2,6 +2,19 @@
     <div class="col-12 col-lg-12 col-xxl-12 d-flex">
         <div class="card flex-fill p-4">
             <div class="row justify-content-end mb-3">
+                {{--  <div class="col-8">
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="form-group">
+                            <label for="file">Selecciona un archivo:</label>
+                            <input type="file" name="file" class="form-control-file">
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-2 text-white">
+                            Importar
+                        </button>
+
+                    </form>
+                </div> --}}
                 <div class="col-3">
                     <div class="input-group input-group-navbar">
                         <input type="text" class="form-control" wire:model.debounce.500ms="search"
@@ -10,6 +23,11 @@
                             <i class="fa fa-search"></i>
                         </button>
                     </div>
+                </div>
+                <div class="col-12">
+                    <a href="{{ route('download-template-products') }}" class="btn btn-success text-white mt-2">
+                        Descargar plantilla
+                    </a>
                 </div>
             </div>
             <div class="table-responsive">

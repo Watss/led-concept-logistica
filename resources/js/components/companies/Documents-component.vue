@@ -20,7 +20,7 @@
                             >{{ item.is_sum ? "Suma Venta" : "Resta Venta" }}
                         </v-chip>
                     </template>
-                    <template v-slot:item.actions="{ item }">
+                    <!-- <template v-slot:item.actions="{ item }">
                         <v-menu offset-y offset-x offset-overflow attach>
                             <template v-slot:activator="{ on }">
                                 <v-icon v-on="on">mdi-dots-vertical</v-icon>
@@ -37,7 +37,7 @@
                                 </v-list-item>
                             </v-list>
                         </v-menu>
-                    </template>
+                    </template> -->
                 </v-data-table>
             </slot>
         </v-container>
@@ -54,7 +54,6 @@ export default {
     },
     data: () => ({
         headers: [
-            { text: "Acciones", align: "center", value: "actions" },
             { text: "Nombre", align: "center", value: "name" },
             { text: "Id Bsale", align: "center", value: "id_bsale" },
             { text: "Tipo", align: "center", value: "custom_type" },

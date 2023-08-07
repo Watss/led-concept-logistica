@@ -64,13 +64,13 @@
 
                     <li class="sidebar-item {{ Request::is('companies') ? 'active' : '' }}">
                         <a class="sidebar-link" href="{{ route('companies.get') }}">
-                            <i class="fas fa-file-excel"></i> <span class="align-middle">Compañias</span>
+                            <i class="fas fa-building"></i> <span class="align-middle">Compañias</span>
                         </a>
                     </li>
 
                     <li class="sidebar-item {{ Request::is('document-types') ? 'active' : '' }}">
                         <a class="sidebar-link" href="{{ route('documents.get') }}">
-                            <i class="fas fa-file-excel"></i> <span class="align-middle">Tipos de documento</span>
+                            <i class="fas fa-file"></i> <span class="align-middle">Tipos de documento</span>
                         </a>
                     </li>
 
