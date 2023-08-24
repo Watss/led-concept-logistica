@@ -6,13 +6,24 @@ use App\Models\ProductConfig;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class ProductConfigImport implements ToModel
 {
+    public $isFirstRow = true;
     public function model(array $row)
     {
+
+        // Eliminar la primera fila (encabezados) usando shift()
+        if ($this->isFirstRow) {
+            $this->isFirstRow = false;
+            return null; // O simplemente return; para omitir la importación de la primera fila
+        }
+
         // Buscar si ya existe un registro con el ID proporcionado
         $existingRecord = ProductConfig::find($row[0]);
+
+
 
         if ($existingRecord) {
             // Actualizar el registro existente con los nuevos valores

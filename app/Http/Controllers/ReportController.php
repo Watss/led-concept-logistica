@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\SendMailEvent;
 use App\Exports\ProductConfigExport;
 use App\Exports\RestockingReportExport;
+use App\Imports\ProductConfigImport;
 use App\Jobs\JobWorker;
 use App\Mail\ReportMail;
 use App\Models\Company;
@@ -82,6 +83,17 @@ class ReportController extends Controller
         }
 
         return $siguienteCadena;
+    }
+
+    public function updateMassiveProducts(Request $request)
+    {
+        try {
+            $file = $request->file('file');
+            Excel::import(new ProductConfigImport, $file);
+            return redirect()->back();
+        } catch (\Throwable $th) {
+            return redirect()->back()->withErrors(['error' => $th->getMessage()]);
+        }
     }
 
     public function downloadExcel()

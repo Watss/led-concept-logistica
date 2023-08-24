@@ -2,8 +2,8 @@
     <div class="col-12 col-lg-12 col-xxl-12 d-flex">
         <div class="card flex-fill p-4">
             <div class="row justify-content-end mb-3">
-                {{--  <div class="col-8">
-                    <form action="" method="POST" enctype="multipart/form-data">
+                <div class="col-8">
+                    <form action="{{ route('update-massive-products') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label for="file">Selecciona un archivo:</label>
@@ -14,7 +14,7 @@
                         </button>
 
                     </form>
-                </div> --}}
+                </div>
                 <div class="col-3">
                     <div class="input-group input-group-navbar">
                         <input type="text" class="form-control" wire:model.debounce.500ms="search"
