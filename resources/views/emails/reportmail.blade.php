@@ -2,12 +2,11 @@
 <html>
 
 <head>
-    <title>Correo de demostración</title>
+    <title>Reporte solicitado desde la plataforma reportes Led Concept</title>
 </head>
 
 <body>
-    <h1>Hola testing mail</h1>
-    <p>Este es un email de prueba</p>
+    <h1>Adjuntamos reportes solicitado</h1>
 </body>
 
 </html>
