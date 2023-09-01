@@ -14,6 +14,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ReportMail extends Mailable
@@ -43,8 +44,8 @@ class ReportMail extends Mailable
     public function build()
     {
         $start = $this->report->start;
-        $end6 = Carbon::create($start)->addMonths(6)->format('Y-m-d');
         $end12 = Carbon::create($start)->addMonths(12)->format('Y-m-d');
+        $end6 = Carbon::create($end12)->subMonths(6)->format('Y-m-d');
 
         $companies = Company::all();
         $report = $this->report;
@@ -66,128 +67,133 @@ class ReportMail extends Mailable
         });
 
 
-        foreach ($companies as $company) {
+        try {
+            foreach ($companies as $company) {
+                Log::info("Procesando empresa $company->name");
+                $response = Http::post('http://localhost:1807/get-info-by-company', [
+                    "company" => [
+                        "id" =>  $company->id,
+                        "name" =>  $company->name,
+                        "token" =>  $company->token
+                    ],
+                    "documents" => $company->documentsTypes->map(function ($document) {
+                        return [
+                            "id" => $document->id_bsale,
+                            "name" => $document->name,
+                            "isSum" => $document->is_sum
+                        ];
+                    }),
+                    "start" => $start,
+                    "end" => $end6,
+                    "withStock" => true,
+                ]);
 
-            $response = Http::post('http://localhost:1807/get-info-by-company', [
-                "company" => [
-                    "id" =>  $company->id,
-                    "name" =>  $company->name,
-                    "token" =>  $company->token
-                ],
-                "documents" => $company->documentsTypes->map(function ($document) {
+                $response12 = Http::post('http://localhost:1807/get-info-by-company', [
+                    "company" => [
+                        "id" =>  $company->id,
+                        "name" =>  $company->name,
+                        "token" =>  $company->token
+                    ],
+                    "documents" => $company->documentsTypes->map(function ($document) {
+                        return [
+                            "id" => $document->id_bsale,
+                            "name" => $document->name,
+                            "isSum" => $document->is_sum
+                        ];
+                    }),
+                    "start" => $start,
+                    "end" => $end12,
+                    "withStock" => false
+                ]);
+
+
+                $company->sales = collect(json_decode($response->body(), true)['sales']);
+
+                $company->sales12 = collect(json_decode($response12->body(), true)['sales']);
+
+                $company->sales = $company->sales->map(function ($sale) use ($productsFormatted, $company, $report) {
+                    $code = $sale['code'];
+                    Log::info($sale);
+                    $productConfigId = $productsFormatted
+                        ->filter(function ($pc) use ($code) {
+                            return in_array($code, $pc['codes']);
+                        })
+                        ->first();
+
+                    if (!$productConfigId) {
+                        return null;
+                    }
+
                     return [
-                        "id" => $document->id_bsale,
-                        "name" => $document->name,
-                        "isSum" => $document->is_sum
+                        'quantity' => $sale['sales'],
+                        'code' => $code,
+                        'product_config_id' => $productConfigId['id'],
+                        'report_id' => $report->id,
+                        'company_id' => $company->id,
+                        'months' => "6"
                     ];
-                }),
-                "start" => $start,
-                "end" => $end6,
-                "withStock" => true,
-            ]);
+                })->filter(function ($sale) {
+                    return $sale !== null;
+                });
 
-            $response12 = Http::post('http://localhost:1807/get-info-by-company', [
-                "company" => [
-                    "id" =>  $company->id,
-                    "name" =>  $company->name,
-                    "token" =>  $company->token
-                ],
-                "documents" => $company->documentsTypes->map(function ($document) {
+                $company->sales12 = $company->sales12->map(function ($sale) use ($productsFormatted, $company, $report) {
+                    $code = $sale['code'];
+
+                    $productConfigId = $productsFormatted
+                        ->filter(function ($pc) use ($code) {
+                            return in_array($code, $pc['codes']);
+                        })
+                        ->first();
+
+                    if (!$productConfigId) {
+                        return null;
+                    }
+
                     return [
-                        "id" => $document->id_bsale,
-                        "name" => $document->name,
-                        "isSum" => $document->is_sum
+                        'quantity' => $sale['sales'],
+                        'code' => $code,
+                        'product_config_id' => $productConfigId['id'],
+                        'report_id' => $report->id,
+                        'company_id' => $company->id,
+                        'months' => "12"
                     ];
-                }),
-                "start" => $start,
-                "end" => $end12,
-                "withStock" => false
-            ]);
+                })->filter(function ($sale) {
+                    return $sale !== null;
+                });
 
-            $company->sales = collect(json_decode($response->body(), true)['sales']);
+                ReportSaleDetail::upsert($company->sales->toArray(), ['product_config_id', 'code', 'report_id', 'company_id', 'months'], ['quantity']);
+                ReportSaleDetail::upsert($company->sales12->toArray(), ['product_config_id', 'code', 'report_id', 'company_id', 'months'], ['quantity']);
 
-            $company->sales12 = collect(json_decode($response12->body(), true)['sales']);
+                $company->stocks = collect(json_decode($response->body(), true)['stocks']);
+                $company->stocks = $company->stocks->map(function ($stock) use ($productsFormatted, $company, $report) {
+                    $code = $stock['variant']['code'];
 
-            $company->sales = $company->sales->map(function ($sale) use ($productsFormatted, $company, $report) {
-                $code = $sale['code'];
+                    $productConfigId = $productsFormatted
+                        ->filter(function ($pc) use ($code) {
+                            return in_array($code, $pc['codes']);
+                        })
+                        ->first();
 
-                $productConfigId = $productsFormatted
-                    ->filter(function ($pc) use ($code) {
-                        return in_array($code, $pc['codes']);
-                    })
-                    ->first();
+                    if (!$productConfigId) {
+                        return null;
+                    }
 
-                if (!$productConfigId) {
-                    return null;
-                }
+                    return [
+                        'quantity' => $stock['total'],
+                        'code' => $code,
+                        'product_config_id' => $productConfigId['id'],
+                        'report_id' => $report->id,
+                        'company_id' => $company->id,
+                        'offices_details' => json_encode($stock['offices'])
+                    ];
+                })->filter(function ($stock) {
+                    return $stock !== null;
+                });
 
-                return [
-                    'quantity' => $sale['sales'],
-                    'code' => $code,
-                    'product_config_id' => $productConfigId['id'],
-                    'report_id' => $report->id,
-                    'company_id' => $company->id,
-                    'months' => "6"
-                ];
-            })->filter(function ($sale) {
-                return $sale !== null;
-            });
-
-            $company->sales12 = $company->sales12->map(function ($sale) use ($productsFormatted, $company, $report) {
-                $code = $sale['code'];
-
-                $productConfigId = $productsFormatted
-                    ->filter(function ($pc) use ($code) {
-                        return in_array($code, $pc['codes']);
-                    })
-                    ->first();
-
-                if (!$productConfigId) {
-                    return null;
-                }
-
-                return [
-                    'quantity' => $sale['sales'],
-                    'code' => $code,
-                    'product_config_id' => $productConfigId['id'],
-                    'report_id' => $report->id,
-                    'company_id' => $company->id,
-                    'months' => "12"
-                ];
-            })->filter(function ($sale) {
-                return $sale !== null;
-            });
-
-            ReportSaleDetail::upsert($company->sales->toArray(), ['product_config_id', 'code', 'report_id', 'company_id', 'months'], ['quantity']);
-            ReportSaleDetail::upsert($company->sales12->toArray(), ['product_config_id', 'code', 'report_id', 'company_id', 'months'], ['quantity']);
-
-            $company->stocks = collect(json_decode($response->body(), true)['stocks']);
-            $company->stocks = $company->stocks->map(function ($stock) use ($productsFormatted, $company, $report) {
-                $code = $stock['variant']['code'];
-
-                $productConfigId = $productsFormatted
-                    ->filter(function ($pc) use ($code) {
-                        return in_array($code, $pc['codes']);
-                    })
-                    ->first();
-
-                if (!$productConfigId) {
-                    return null;
-                }
-
-                return [
-                    'quantity' => $stock['total'],
-                    'code' => $code,
-                    'product_config_id' => $productConfigId['id'],
-                    'report_id' => $report->id,
-                    'company_id' => $company->id,
-                    'offices_details' => json_encode($stock['offices'])
-                ];
-            })->filter(function ($stock) {
-                return $stock !== null;
-            });
-
-            ReportStockDetail::upsert($company->stocks->toArray(), ['product_config_id', 'code', 'report_id', 'company_id'], ['quantity', 'offices_details']);
+                ReportStockDetail::upsert($company->stocks->toArray(), ['product_config_id', 'code', 'report_id', 'company_id'], ['quantity', 'offices_details']);
+            }
+        } catch (\Throwable $th) {
+            Log::error($th);
         }
 
         $report->led_concept_offices = $report->reportStockDetails->where('company_id', 1)->first();
