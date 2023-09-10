@@ -28,7 +28,7 @@ class ProductConfigImport implements ToModel
         if ($existingRecord) {
             // Actualizar el registro existente con los nuevos valores
             $existingRecord->update([
-                'descripcion' => $row[1],
+                'descripcion' => $row[1] ?? $existingRecord->descripcion,
                 'proveedor' => $row[2],
                 'sku_led_concept' => $row[3],
                 'sku_led_center' => $row[4],
@@ -39,15 +39,19 @@ class ProductConfigImport implements ToModel
             return null; // Retorna null para evitar la inserción de un nuevo registro
         }
 
-        // Si no existe un registro con el ID, crea uno nuevo
-        return new ProductConfig([
-            //'id' => $row[0],
-            'descripcion' => $row[1],
-            'proveedor' => $row[2],
-            'sku_led_concept' => $row[3],
-            'sku_led_center' => $row[4],
-            'legacy_sku_led_concept' => $row[5],
-            'legacy_sku_led_center' => $row[6],
-        ]);
+        if ($row[1]) {
+            // Si no existe un registro con el ID, crea uno nuevo
+            return new ProductConfig([
+                //'id' => $row[0],
+                'descripcion' => $row[1],
+                'proveedor' => $row[2],
+                'sku_led_concept' => $row[3],
+                'sku_led_center' => $row[4],
+                'legacy_sku_led_concept' => $row[5],
+                'legacy_sku_led_center' => $row[6],
+            ]);
+        } else {
+            return null;
+        }
     }
 }
