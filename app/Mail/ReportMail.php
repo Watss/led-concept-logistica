@@ -83,7 +83,7 @@ class ReportMail extends Mailable
                             "isSum" => $document->is_sum
                         ];
                     }),
-                    "start" => $start,
+                    "start" => $end12,
                     "end" => $end6,
                     "withStock" => true,
                 ]);
