@@ -17,6 +17,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -92,6 +93,7 @@ class ReportController extends Controller
             Excel::import(new ProductConfigImport, $file);
             return redirect()->back();
         } catch (\Throwable $th) {
+            Log::error($th->getMessage());
             return redirect()->back()->withErrors(['error' => $th->getMessage()]);
         }
     }
