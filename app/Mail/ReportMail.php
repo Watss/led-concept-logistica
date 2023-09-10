@@ -45,7 +45,7 @@ class ReportMail extends Mailable
     {
         $start = $this->report->start;
         $end12 = Carbon::create($start)->addMonths(12)->format('Y-m-d');
-        $end6 = Carbon::create($end12)->subMonths(6)->format('Y-m-d');
+        $end6 = Carbon::create($start)->subMonths(6)->format('Y-m-d');
 
         $companies = Company::all();
         $report = $this->report;
@@ -113,13 +113,11 @@ class ReportMail extends Mailable
 
                 $company->sales = $company->sales->map(function ($sale) use ($productsFormatted, $company, $report) {
                     $code = $sale['code'];
-                    Log::info($sale);
                     $productConfigId = $productsFormatted
                         ->filter(function ($pc) use ($code) {
                             return in_array($code, $pc['codes']);
                         })
                         ->first();
-
                     if (!$productConfigId) {
                         return null;
                     }
