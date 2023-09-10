@@ -45,7 +45,7 @@ class ReportMail extends Mailable
     {
         $start = $this->report->start;
         $end12 = Carbon::create($start)->addMonths(12)->format('Y-m-d');
-        $end6 = Carbon::create($start)->subMonths(6)->format('Y-m-d');
+        $end6 = Carbon::create($end12)->subMonths(6)->format('Y-m-d');
 
         $companies = Company::all();
         $report = $this->report;
@@ -268,7 +268,7 @@ class ReportMail extends Mailable
         Report::where('id', $report->id)->update(['generated' => true]);
 
 
-        return $this->view('emails.reportmail')->attachData($file, "Reporte-Desde-$start-Hasta-$end12.xlsx", [
+        return $this->view('emails.reportmail')->attachData($file, "Reporte-Desde-$start-Hasta-$end12-6MESES-$end6.xlsx", [
             "mime" => "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         ]);
     }
