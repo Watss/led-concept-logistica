@@ -70,7 +70,7 @@ class ReportMail extends Mailable
         try {
             foreach ($companies as $company) {
                 Log::info("Procesando empresa $company->name");
-                $response = Http::post('http://localhost:1807/get-info-by-company', [
+                $response = Http::post('https://us-central1-led-concept-reportes.cloudfunctions.net/infoPerCompany', [
                     "company" => [
                         "id" =>  $company->id,
                         "name" =>  $company->name,
@@ -88,7 +88,7 @@ class ReportMail extends Mailable
                     "withStock" => true,
                 ]);
 
-                $response12 = Http::post('http://localhost:1807/get-info-by-company', [
+                $response12 = Http::post('https://us-central1-led-concept-reportes.cloudfunctions.net/infoPerCompany', [
                     "company" => [
                         "id" =>  $company->id,
                         "name" =>  $company->name,
