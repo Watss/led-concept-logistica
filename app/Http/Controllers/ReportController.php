@@ -90,6 +90,14 @@ class ReportController extends Controller
     {
         try {
             $file = $request->file('file');
+            DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+            DB::table('product_configs')->truncate();
+            DB::table('reports')->truncate();
+            DB::table('report_stock_details')->truncate();
+            DB::table('report_sale_details')->truncate();
+            DB::table('jobs')->truncate();
+            DB::table('failed_jobs')->truncate();
+            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
             Excel::import(new ProductConfigImport, $file);
             return redirect()->back();
         } catch (\Throwable $th) {

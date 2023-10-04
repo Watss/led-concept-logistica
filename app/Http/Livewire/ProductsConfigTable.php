@@ -21,7 +21,7 @@ class ProductsConfigTable extends Component
     public function render()
     {
         return view('product_config.table', [
-            'products' => ProductConfig::search($this->search)->latest()->paginate(10),
+            'products' => ProductConfig::search($this->search)->paginate(10),
             'search' => $this->search
         ]);
     }
